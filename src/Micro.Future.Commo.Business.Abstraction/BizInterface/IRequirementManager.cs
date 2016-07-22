@@ -7,12 +7,19 @@ using System.Threading.Tasks;
 
 namespace Micro.Future.Commo.Business.Abstraction.BizInterface
 {
+
+    
+
     public interface IRequirementManager
     {
         BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(int userId);
 
         BizTResult<RequirementInfo> QueryRequirementInfo(int requirementId);
 
-        BizTResult<bool> SaveRequirement(RequirementInfo requirement);
+        BizTResult<bool> AddRequirementInfo(RequirementInfo requirement);
+
+        BizTResult<bool> UpdateRequirementInfo(RequirementInfo requirement);
+
+        BizTResult<IEnumerable<RequirementChainInfo>> QueryRequirementChains(int requirementId);
     }
 }

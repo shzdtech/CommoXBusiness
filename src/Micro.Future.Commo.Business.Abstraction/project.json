@@ -7,7 +7,10 @@
   },
 
   "frameworks": {
-    "net451": {},
+    "net451": {
+      "dependencies": {
+      }
+    },
     "netstandard1.3": {
       "imports": "dnxcore50"
     }

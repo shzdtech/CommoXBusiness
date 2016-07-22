@@ -8,7 +8,11 @@
   },
 
   "frameworks": {
-    "net451": {},
+    "net451": {
+      "dependencies": {
+        "Micro.Future.Business.MongoDB.Commo": "1.0.0-*"
+      }
+    },
     "netstandard1.3": {
       "imports": "dnxcore50"
     }
