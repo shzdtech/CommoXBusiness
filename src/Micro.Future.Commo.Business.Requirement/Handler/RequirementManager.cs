@@ -196,7 +196,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return requirement;
         }
 
-        private List<Filter> ConvertToRequirementFilterDTOs(IEnumerable<RequirementRuleInfo> rules, ref List<string> errors)
+        private List<RequirementFilter> ConvertToRequirementFilterDTOs(IEnumerable<RequirementRuleInfo> rules, ref List<string> errors)
         {
             if (rules == null)
             {
@@ -204,11 +204,11 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 return null;
             }
 
-            List<Filter> filters = new List<Filter>();
-            Filter f = null;
+            List<RequirementFilter> filters = new List<RequirementFilter>();
+            RequirementFilter f = null;
             foreach (var rule in rules)
             {
-                f = new Filter();
+                f = new RequirementFilter();
                 f.FilterId = rule.RuleId;
                 f.FilterKey = rule.Key;
                 f.FilterValue = rule.Value;
@@ -247,7 +247,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return dto;
         }
 
-        private IEnumerable<RequirementRuleInfo> ConvertToRequirementRules(IEnumerable<Filter> filters)
+        private IEnumerable<RequirementRuleInfo> ConvertToRequirementRules(IEnumerable<RequirementFilter> filters)
         {
             if (filters == null)
                 return null;
@@ -260,7 +260,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return rules;
         }
 
-        private RequirementRuleInfo ConvertToRequirementRule(Filter filter)
+        private RequirementRuleInfo ConvertToRequirementRule(RequirementFilter filter)
         {
             RequirementRuleInfo rule = new RequirementRuleInfo();
             rule.RuleId = filter.FilterId;
