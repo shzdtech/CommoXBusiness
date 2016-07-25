@@ -4,17 +4,14 @@
   "dependencies": {
     "Micro.Future.Business.DataAccess.Commo": "1.0.0-*",
     "Micro.Future.Commo.Business.Abstraction": "1.0.0-*",
+    "Micro.Future.Business.MongoDB.Commo": "1.0.0-*",
     "NETStandard.Library": "1.6.0"
   },
 
   "frameworks": {
     "net451": {
       "dependencies": {
-        "Micro.Future.Business.MongoDB.Commo": "1.0.0-*"
       }
-    },
-    "netstandard1.3": {
-      "imports": "dnxcore50"
     }
   }
 }
