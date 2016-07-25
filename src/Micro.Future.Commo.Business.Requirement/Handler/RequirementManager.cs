@@ -94,7 +94,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             bool saveSuccess = false;
             try
             {
-                saveSuccess = mongDBRequirementHandler.AddRequirement(dto);
+                saveSuccess = false;//mongDBRequirementHandler.AddRequirement(dto);
                 //save filters
             }
             catch(Exception ex)
@@ -123,7 +123,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             bool saveSuccess = false;
             try
             {
-                saveSuccess = this.mongDBRequirementHandler.UpdateRequirement(dto);
+                saveSuccess = false;//this.mongDBRequirementHandler.UpdateRequirement(dto);
             }
             catch (Exception ex)
             {
