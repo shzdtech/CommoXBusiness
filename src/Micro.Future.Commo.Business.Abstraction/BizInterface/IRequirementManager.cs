@@ -7,9 +7,6 @@ using System.Threading.Tasks;
 
 namespace Micro.Future.Commo.Business.Abstraction.BizInterface
 {
-
-    
-
     public interface IRequirementManager
     {
         BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(int userId);
