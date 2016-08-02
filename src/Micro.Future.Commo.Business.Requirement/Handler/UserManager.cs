@@ -103,24 +103,25 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             }
 
             var newUser = UserInfoToUser(userInfo);
-            bool regSuccess = this.userStore.userRegister(newUser);
+
+            var regUser = this.userStore.userRegister(newUser);
             
-            if(!regSuccess)
+            if(regUser == null || regUser.UserId == 0)
             {
-                return new BizTResult<bool>(regSuccess, new BizException("注册失败！"));
+                return new BizTResult<bool>(false, new BizException("注册失败！"));
             }
-            return new BizTResult<bool>(regSuccess);
+            return new BizTResult<bool>(true);
         }
 
         public BizTResult<bool> SignIn(UserInfo userInfo)
         {
             var user = UserInfoToUser(userInfo);
-            bool signInSuccess = this.userStore.userLogin(user);
-            if (!signInSuccess)
+            var loginUser = this.userStore.userLogin(user);
+            if (loginUser == null)
             {
-                return new BizTResult<bool>(signInSuccess, new BizException("登录失败！"));
+                return new BizTResult<bool>(false, new BizException("登录失败！"));
             }
-            return new BizTResult<bool>(signInSuccess);
+            return new BizTResult<bool>(true);
         }
 
         public bool UpdateUserInfo(UserInfo user)

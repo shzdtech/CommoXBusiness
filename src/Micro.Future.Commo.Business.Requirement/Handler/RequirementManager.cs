@@ -82,7 +82,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             List<string> errors = null;
             RequirementObject dto = ConvertToRequirementDto(requirement, out errors);
 
-            //List<Filter> filters = ConvertToRequirementFilterDTOs(requirement.Rules, ref errors);
+            List<RequirementFilter> filters = ConvertToRequirementFilterDTOs(requirement.Rules, ref errors);
 
             if (errors != null && errors.Count > 0)
             {
@@ -94,8 +94,19 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             bool saveSuccess = false;
             try
             {
-                saveSuccess = false;//mongDBRequirementHandler.AddRequirement(dto);
+                int requirementId = mongDBRequirementHandler.AddRequirement(dto);
+                if(requirementId > 0)
+                {
+                    saveSuccess = true;
+                }
+                else
+                {
+                    saveSuccess = false;
+                }
+
                 //save filters
+
+
             }
             catch(Exception ex)
             {
@@ -231,12 +242,6 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 errors.Add("UserId is required.");
             }
             dto.UserId = requirement.UserId;
-
-            if (requirement.EnterpriseId == 0)
-            {
-                errors.Add("EnterpriseId is required.");
-            }
-            dto.EnterpriseId = requirement.EnterpriseId;
 
             if (requirement.Type ==  Abstraction.BizObject.RequirementType.NONE)
             {

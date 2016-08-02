@@ -10,10 +10,8 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
     /// </summary>
     public class RequirementChainInfo
     {
-        public int EnterpriseId { get; set; }
-
-        public int Sort { get; set; }
-
-        public int Ranking { get; set; }
+        public int ChainId { get; set; }
+        
+        public List<RequirementInfo> Requirements { get; set; }
     }
 }
