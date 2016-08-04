@@ -48,7 +48,7 @@ namespace Micro.Future.Common.Business.xUnit
             //必须是国有企业
             RequirementRuleInfo rule = new RequirementRuleInfo();
             rule.RuleType = 1;
-            rule.Key = "企业类型";
+            rule.Key = RequirementRuleNames.EnterpriseNature;
             rule.Value = "国企";
             rule.OperationType = RequirementRuleOperation.Equal;
             rules.Add(rule);
@@ -56,10 +56,28 @@ namespace Micro.Future.Common.Business.xUnit
             //注册资本500万以上
             rule = new RequirementRuleInfo();
             rule.RuleType = 1;
-            rule.Key = "注册资本";
+            rule.Key = RequirementRuleNames.EnterpriseRegisteredCaptial;
             rule.Value = "5000000";
             rule.OperationType = RequirementRuleOperation.MoreThan;
             rules.Add(rule);
+
+            //注册地
+            rule = new RequirementRuleInfo();
+            rule.RuleType = 1;
+            rule.Key = RequirementRuleNames.EnterpriseRegisteredState;
+            rule.Value = "上海";
+            rule.OperationType = RequirementRuleOperation.MoreThan;
+            rules.Add(rule);
+
+
+            //支付方式，现金
+            rule = new RequirementRuleInfo();
+            rule.RuleType = 4;
+            rule.Key = RequirementRuleNames.PaymentPayMethod;
+            rule.Value = "现金";
+            rule.OperationType = RequirementRuleOperation.MoreThan;
+            rules.Add(rule);
+
 
             requirement.Rules = rules;
 
