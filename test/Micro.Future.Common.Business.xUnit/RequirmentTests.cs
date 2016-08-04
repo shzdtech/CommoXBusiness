@@ -12,25 +12,26 @@ namespace Micro.Future.Common.Business.xUnit
 {
     public class RequirmentTests
     {
+
+        private static List<UserInfo> fakeUsers = null;
+
         public RequirmentTests()
         {
-            IRequirementManager manager = new RequirementManager();
-            manager.AddRequirementInfo(new Commo.Business.Abstraction.BizObject.RequirementInfo());
-
-            var info = new Commo.Business.Abstraction.BizObject.RequirementInfo();
-            var rules = new List<RequirementRuleInfo>();
-            rules.Add(new RequirementRuleInfo());
-            info.Rules = rules;
+            fakeUsers = CreateFakeUsers(1000, 20);
         }
+
+
 
         [Fact]
         public void Test_AddRequirement()
         {
             IRequirementManager manager = new RequirementManager();
 
+            UserInfo user = fakeUsers[0];
+
             RequirementInfo requirement = new RequirementInfo();
-            requirement.UserId = 1111;
-            requirement.EnterpriseId = 1111;
+            requirement.UserId = user.UserId;
+            requirement.EnterpriseId = user.EnterpriseId;
 
             requirement.ProductName = "铜";
             requirement.Type = RequirementType.Sale;
@@ -67,6 +68,32 @@ namespace Micro.Future.Common.Business.xUnit
             Assert.False(bizResult.HasError);
             Assert.True(bizResult.Result);
 
+        }
+
+
+
+        /// <summary>
+        /// 创建一些测试用户数据
+        /// </summary>
+        /// <param name="fromId">起始的UserId</param>
+        /// <param name="totalCount">创建多少个用户</param>
+        /// <returns></returns>
+        private static List<UserInfo> CreateFakeUsers(int fromId, int totalCount)
+        {
+            List<UserInfo> fakeUsers = new List<UserInfo>();
+
+            UserInfo user = null;
+            for (int i = fromId; i <= fromId + totalCount; i++)
+            {
+                user = new UserInfo();
+                user.UserId = i;
+                user.UserName = i.ToString();
+                user.EnterpriseId = i;
+
+                fakeUsers.Add(user);
+            }
+
+            return fakeUsers;
         }
     }
 
