@@ -74,6 +74,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// </summary>
         public decimal ProductQuantity { get; set; }
 
+        /// <summary>
+        /// 获取单位， 吨
+        /// </summary>
+        public string ProductUnit { get; set; }
+
         #region 仓储信息
 
         /// <summary>
