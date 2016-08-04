@@ -16,6 +16,11 @@ namespace Micro.Future.Common.Business.xUnit
         {
             IRequirementManager manager = new RequirementManager();
             manager.AddRequirementInfo(new Commo.Business.Abstraction.BizObject.RequirementInfo());
+
+            var info = new Commo.Business.Abstraction.BizObject.RequirementInfo();
+            var rules = new List<RequirementRuleInfo>();
+            rules.Add(new RequirementRuleInfo());
+            info.Rules = rules;
         }
 
         [Fact]

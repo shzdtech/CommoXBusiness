@@ -105,7 +105,14 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 }
 
                 //save filters
-
+                if (saveSuccess && filters != null && filters.Count > 0)
+                {
+                    foreach (var filter in filters)
+                    {
+                        filter.RequirementId = requirementId;
+                        //mongDBRequirementHandler.AddRequirementFilter(filter);
+                    }
+                }
 
             }
             catch(Exception ex)
@@ -174,7 +181,27 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         protected RequirementChainInfo ConvertToRequirementChainInfo(ChainObject chainObj)
         {
-            throw new NotImplementedException();
+            RequirementChainInfo info = new RequirementChainInfo();
+            info.ChainId = chainObj.ChainId;
+
+            if(chainObj.RequirementIdChain != null && chainObj.RequirementIdChain.Count > 0)
+            {
+                info.Requirements = new List<RequirementInfo>();
+                foreach(var requirementId in chainObj.RequirementIdChain)
+                {
+                    var bizResult = QueryRequirementInfo(requirementId);
+                    if (bizResult.HasError || bizResult.Result == null)
+                        continue;
+
+                    info.Requirements.Add(bizResult.Result);
+                }
+            }
+
+            info.CreateTime = chainObj.CreateTime;
+            info.ModifyTime = chainObj.ModifyTime;
+            info.IsDeleted = chainObj.Deleted;
+
+            return info;
         }
 
         private IEnumerable<RequirementInfo> ConvertToRequirementInfos(IEnumerable<RequirementObject> dtoList)
@@ -197,9 +224,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             requirement.RequirementId = dto.RequirementId;
             requirement.UserId = dto.UserId;
             requirement.EnterpriseId = dto.EnterpriseId;
-            requirement.ProductId = dto.ProductId;
             requirement.ProductPrice = dto.ProductPrice;
-            requirement.ProductQuota = dto.ProductQuota;
             requirement.CreateTime = dto.CreateTime;
             requirement.ModifyTime = dto.ModifyTime;
             requirement.State = (Abstraction.BizObject.RequirementState)dto.RequirementStateId;
@@ -243,10 +268,18 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             }
             dto.UserId = requirement.UserId;
 
-            if (requirement.Type ==  Abstraction.BizObject.RequirementType.NONE)
+            if (requirement.Type ==  Abstraction.BizObject.RequirementType.None)
             {
                 errors.Add("RequirementType is required.");
             }
+            dto.RequirementTypeId = (int)requirement.Type;
+
+            dto.RequirementId = requirement.RequirementId;
+            dto.EnterpriseId = requirement.EnterpriseId;
+            dto.ProductPrice = (int)requirement.ProductPrice;
+            dto.CreateTime = requirement.CreateTime;
+            dto.ModifyTime = requirement.ModifyTime;
+            dto.RequirementStateId = (int)requirement.State;
             dto.RequirementTypeId = (int)requirement.Type;
 
             return dto;
