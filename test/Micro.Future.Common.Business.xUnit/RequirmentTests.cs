@@ -7,6 +7,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Micro.Future.Business.Common;
+using System.Data;
+using System.Data.OleDb;
+using System.IO;
+using System.Text;
+
+
 
 namespace Micro.Future.Common.Business.xUnit
 {
@@ -113,7 +119,143 @@ namespace Micro.Future.Common.Business.xUnit
 
             return fakeUsers;
         }
+
+        [Fact]
+        public void Test_AddRequirements()
+        {
+            //read csv file to table
+            string[][] table = ReadCvs("E:\\PICT\\new.csv");
+            
+            IRequirementManager manager = new RequirementManager();
+
+            UserInfo user = fakeUsers[0];
+
+            RequirementInfo requirement = new RequirementInfo();
+
+            List<RequirementRuleInfo> rules = new List<RequirementRuleInfo>();
+            RequirementRuleInfo rule = new RequirementRuleInfo();            
+
+            for (int i = 0; i < table.GetLength(0); i++)
+            {
+                //???
+                requirement.UserId = user.UserId;
+                requirement.EnterpriseId = user.EnterpriseId;
+
+                requirement.ProductName = table[i][0];
+                requirement.ProductPrice = Convert.ToDecimal(table[i][1]);
+                requirement.ProductQuantity = Convert.ToDecimal(table[i][2]);
+                requirement.ProductUnit = table[i][3];
+                requirement.WarehouseState = table[i][4];
+                requirement.WarehouseCity = table[i][5];
+                requirement.WarehouseAddress1 = table[i][6];
+
+                if (String.Compare("补贴", table[i][7]) == 0)
+                {
+                    requirement.Type = RequirementType.Subsidy;
+                }
+                if (String.Compare("买", table[i][7]) == 0)
+                {
+                    requirement.Type = RequirementType.Buy;
+                }
+
+                if (String.Compare("卖", table[i][7]) == 0)
+                {
+                    requirement.Type = RequirementType.Sale;
+                }
+
+                if (String.Compare("None", table[i][7]) == 0)
+                { 
+                requirement.Type = RequirementType.None;
+                }
+
+                requirement.TradeAmount = Convert.ToDecimal(table[i][8]);
+
+                //1 = 企业规则、2 = 货物规则、3 = 资金规则、4 = 支付规则
+                rule.RuleType = Convert.ToInt32(table[i][9]);
+                if (String.Compare("企业规则", table[i][10]) == 0)
+                {
+                    rule.Key = 1.ToString();
+                }               
+                if (String.Compare("货物规则", table[i][10]) == 0)
+                {
+                    rule.Key = 2.ToString();
+                }
+                if (String.Compare("资金规则", table[i][10]) == 0)
+                {
+                    rule.Key = 3.ToString();
+                }
+                if (String.Compare("支付规则", table[i][10]) == 0)
+                {
+                    rule.Key = 4.ToString();
+                }
+
+                rule.Value = table[i][11];
+                if (String.Compare("MoreThan", table[i][11]) == 0)
+                {
+                    rule.OperationType = RequirementRuleOperation.MoreThan;
+                }
+                if (String.Compare("LessThan", table[i][11]) == 0)
+                {
+                    rule.OperationType = RequirementRuleOperation.LessThan;
+                }
+                if (String.Compare("Equal", table[i][11]) == 0)
+                {
+                    rule.OperationType = RequirementRuleOperation.Equal;
+                }
+
+               rules.Add(rule);
+
+            }
+        }
+
+
+        public static string[][] ReadCvs(string fullname)
+        {
+            if (!File.Exists(fullname)) return new string[][] { };
+            var lines = File.ReadAllLines(fullname).Skip(1);
+            var list = new List<string[]>();
+            var builder = new StringBuilder();
+            foreach (var line in lines)
+            {
+                builder.Clear();
+                var comma = false;
+                var array = line.ToCharArray();
+                var values = new List<string>();
+                var length = array.Length - 1;
+                var index = 0;
+                while (index < length)
+                {
+                    var item = array[index++];
+                    switch (item)
+                    {
+                        case ',':
+                            if (comma)
+                            {
+                                builder.Append(item);
+                            }
+                            else
+                            {
+                                values.Add(builder.ToString());
+                                builder.Clear();
+                            }
+                            break;
+                        case '"':
+                            comma = !comma;
+                            break;
+                        default:
+                            builder.Append(item);
+                            break;
+                    }
+                }
+                var count = values.Count;
+                if (count == 0) continue;
+                list.Add(values.ToArray());
+            }
+            return list.ToArray();
+        }
+
+
     }
 
-   
+
 }
