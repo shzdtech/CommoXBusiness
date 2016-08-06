@@ -203,7 +203,13 @@ namespace Micro.Future.Common.Business.xUnit
                     rule.OperationType = RequirementRuleOperation.Equal;
                 }
 
-               rules.Add(rule);
+                rules.Add(rule);
+                requirement.Rules = rules;
+
+                BizTResult<bool> bizResult = manager.AddRequirementInfo(requirement);
+
+                Assert.False(bizResult.HasError);
+                Assert.True(bizResult.Result);
 
             }
         }
