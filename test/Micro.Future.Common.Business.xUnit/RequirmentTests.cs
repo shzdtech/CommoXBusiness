@@ -23,12 +23,12 @@ namespace Micro.Future.Common.Business.xUnit
 
         public RequirmentTests()
         {
-            fakeUsers = CreateFakeUsers(1000, 20);
+            fakeUsers = CreateFakeUsers(1000, 50);
         }
 
 
 
-        [Fact]
+
         public void Test_AddRequirement()
         {
             IRequirementManager manager = new RequirementManager();
@@ -124,20 +124,25 @@ namespace Micro.Future.Common.Business.xUnit
         public void Test_AddRequirements()
         {
             //read csv file to table
-            string[][] table = ReadCvs("E:\\PICT\\new.csv");
-            
+            string[][] table = ReadCvs("E:\\PICT\\left.csv");
+
             IRequirementManager manager = new RequirementManager();
 
-            UserInfo user = fakeUsers[0];
+            UserInfo user = null;
 
-            RequirementInfo requirement = new RequirementInfo();
 
-            List<RequirementRuleInfo> rules = new List<RequirementRuleInfo>();
-            RequirementRuleInfo rule = new RequirementRuleInfo();            
+            //for (int i = 0; i < 1000; i++)
 
             for (int i = 0; i < table.GetLength(0); i++)
             {
-                //???
+                RequirementInfo requirement = new RequirementInfo();
+
+                List<RequirementRuleInfo> rules = new List<RequirementRuleInfo>();
+                RequirementRuleInfo rule = new RequirementRuleInfo();
+
+                user = fakeUsers[i % 50];
+
+                //
                 requirement.UserId = user.UserId;
                 requirement.EnterpriseId = user.EnterpriseId;
 
@@ -164,30 +169,33 @@ namespace Micro.Future.Common.Business.xUnit
                 }
 
                 if (String.Compare("None", table[i][7]) == 0)
-                { 
-                requirement.Type = RequirementType.None;
+                {
+                    requirement.Type = RequirementType.None;
                 }
 
                 requirement.TradeAmount = Convert.ToDecimal(table[i][8]);
 
                 //1 = 企业规则、2 = 货物规则、3 = 资金规则、4 = 支付规则
-                rule.RuleType = Convert.ToInt32(table[i][9]);
-                if (String.Compare("企业规则", table[i][10]) == 0)
+
+                if (String.Compare("企业规则", table[i][9]) == 0)
                 {
-                    rule.Key = 1.ToString();
-                }               
-                if (String.Compare("货物规则", table[i][10]) == 0)
-                {
-                    rule.Key = 2.ToString();
+                    rule.RuleType = 1;
+
                 }
-                if (String.Compare("资金规则", table[i][10]) == 0)
+                if (String.Compare("货物规则", table[i][9]) == 0)
                 {
-                    rule.Key = 3.ToString();
+                    rule.RuleType = 2;
                 }
-                if (String.Compare("支付规则", table[i][10]) == 0)
+                if (String.Compare("资金规则", table[i][9]) == 0)
                 {
-                    rule.Key = 4.ToString();
+                    rule.RuleType = 3;
                 }
+                if (String.Compare("支付规则", table[i][9]) == 0)
+                {
+                    rule.RuleType = 4;
+                }
+
+                rule.Key = table[i][10];
 
                 rule.Value = table[i][11];
                 if (String.Compare("MoreThan", table[i][11]) == 0)
@@ -210,8 +218,8 @@ namespace Micro.Future.Common.Business.xUnit
 
                 Assert.False(bizResult.HasError);
                 Assert.True(bizResult.Result);
-
             }
+
         }
 
 
