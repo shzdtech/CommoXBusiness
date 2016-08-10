@@ -236,9 +236,26 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 chain.CreateTime = DateTime.Now.AddMinutes(-50);
                 chain.IsDeleted = false;
                 chain.Requirements = new List<RequirementInfo>();
-                chain.Requirements.Add(myRequirement);
-                chain.Requirements.Add(firstTypeRequirements[i]);
-                chain.Requirements.Add(secondTypeRequirements[i]);
+
+                if(myRequirement.Type == RequirementType.Subsidy)
+                {
+                    chain.Requirements.Add(firstTypeRequirements[i]);
+                    chain.Requirements.Add(myRequirement);
+                    chain.Requirements.Add(secondTypeRequirements[i]);
+                }
+                else if(myRequirement.Type == RequirementType.Buy)
+                {
+                    chain.Requirements.Add(secondTypeRequirements[i]);
+                    chain.Requirements.Add(firstTypeRequirements[i]);
+                    chain.Requirements.Add(myRequirement);
+                }
+                else if (myRequirement.Type == RequirementType.Sale)
+                {
+                    chain.Requirements.Add(myRequirement);
+                    chain.Requirements.Add(firstTypeRequirements[i]);
+                    chain.Requirements.Add(secondTypeRequirements[i]);
+                }
+
                 chain.ModifyTime = DateTime.Now.AddMinutes(-30);
 
                 chainList.Add(chain);
