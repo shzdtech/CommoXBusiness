@@ -64,6 +64,11 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return new BizTResult<RequirementInfo>(requirement);
         }
 
+        public override BizTResult<IEnumerable<RequirementInfo>> QueryAllRequirements()
+        {
+            throw new NotImplementedException();
+        }
+
         public override BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(int userId)
         {
             var findRequirements = this.mongDBRequirementHandler.QueryRequirements(userId.ToString());
@@ -74,10 +79,10 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return new BizTResult<IEnumerable<RequirementInfo>>(requirements);
         }
 
-        public override BizTResult<bool> AddRequirementInfo(RequirementInfo requirement)
+        public override BizTResult<RequirementInfo> AddRequirementInfo(RequirementInfo requirement)
         {
             if (requirement == null)
-                return new BizTResult<bool>(false, new BizException(BizErrorType.BIZ_ERROR, "RequirementInfo is null"));
+                return new BizTResult<RequirementInfo>(null, new BizException(BizErrorType.BIZ_ERROR, "RequirementInfo is null"));
 
             List<string> errors = null;
             RequirementObject dto = ConvertToRequirementDto(requirement, out errors);
@@ -87,40 +92,41 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             if (errors != null && errors.Count > 0)
             {
                 var errorMsg = string.Join(Environment.NewLine, errors);
-                return new BizTResult<bool>(false,
+                return new BizTResult<RequirementInfo>(null,
                    new BizException(BizErrorType.BIZ_ERROR, errorMsg));
             }
 
-            bool saveSuccess = false;
+            //bool saveSuccess = false;
             try
             {
                 int requirementId = mongDBRequirementHandler.AddRequirement(dto);
-                if(requirementId > 0)
-                {
-                    saveSuccess = true;
-                }
-                else
-                {
-                    saveSuccess = false;
-                }
+                requirement.RequirementId = requirementId;
+                //if(requirementId > 0)
+                //{
+                //    saveSuccess = true;
+                //}
+                //else
+                //{
+                //    saveSuccess = false;
+                //}
 
-                //save filters
-                if (saveSuccess && filters != null && filters.Count > 0)
-                {
-                    foreach (var filter in filters)
-                    {
-                        filter.RequirementId = requirementId;
-                        //mongDBRequirementHandler.AddRequirementFilter(filter);
-                    }
-                }
+                ////save filters
+                //if (saveSuccess && filters != null && filters.Count > 0)
+                //{
+                //    foreach (var filter in filters)
+                //    {
+                //        filter.RequirementId = requirementId;
+                //        //mongDBRequirementHandler.AddRequirementFilter(filter);
+                //    }
+                //}
 
             }
             catch(Exception ex)
             {
-                return new BizTResult<bool>(false, new BizException(BizErrorType.DATABASE_ERROR, ex.Message));
+                return new BizTResult<RequirementInfo>(null, new BizException(BizErrorType.DATABASE_ERROR, ex.Message));
             }
 
-            return new BizTResult<bool>(saveSuccess);
+            return new BizTResult<RequirementInfo>(requirement);
         }
 
         public override BizTResult<bool> UpdateRequirementInfo(RequirementInfo requirement)
@@ -229,6 +235,22 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             requirement.ModifyTime = dto.ModifyTime;
             requirement.State = (Abstraction.BizObject.RequirementState)dto.RequirementStateId;
             requirement.Type = (Abstraction.BizObject.RequirementType)dto.RequirementTypeId;
+
+            requirement.ProductName = dto.ProductName;
+            requirement.ProductType = dto.ProductType;
+            requirement.ProductSpecification = dto.ProductSpecification;
+            requirement.ProductQuantity = dto.ProductQuantity;
+            requirement.ProductUnit = dto.ProductUnit;
+
+
+            requirement.WarehouseState = dto.WarehouseState;
+            requirement.WarehouseCity = dto.WarehouseCity;
+            requirement.WarehouseAddress1 = dto.WarehouseAddress1;
+            requirement.WarehouseAddress2 = dto.WarehouseAddress2;
+
+            requirement.TradeAmount = dto.TradeAmount;
+            requirement.Subsidies = dto.Subsidies;
+
             return requirement;
         }
 
@@ -281,6 +303,22 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             dto.ModifyTime = requirement.ModifyTime;
             dto.RequirementStateId = (int)requirement.State;
             dto.RequirementTypeId = (int)requirement.Type;
+
+
+            dto.ProductName = requirement.ProductName;
+            dto.ProductType = requirement.ProductType;
+            dto.ProductSpecification = requirement.ProductSpecification;
+            dto.ProductQuantity = requirement.ProductQuantity;
+            dto.ProductUnit = requirement.ProductUnit;
+
+
+            dto.WarehouseState = requirement.WarehouseState;
+            dto.WarehouseCity = requirement.WarehouseCity;
+            dto.WarehouseAddress1 = requirement.WarehouseAddress1;
+            dto.WarehouseAddress2 = requirement.WarehouseAddress2;
+
+            dto.TradeAmount = requirement.TradeAmount;
+            dto.Subsidies = requirement.Subsidies;
 
             return dto;
         }

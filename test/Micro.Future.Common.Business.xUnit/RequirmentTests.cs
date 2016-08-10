@@ -26,8 +26,38 @@ namespace Micro.Future.Common.Business.xUnit
             fakeUsers = CreateFakeUsers(1000, 50);
         }
 
+        [Fact]
+        public void Test_QueryRequirementsByUser()
+        {
 
+            //1675
 
+            int userId = 0;
+            IRequirementManager manager = new RequirementManager();
+            var bizResult =  manager.QueryRequirements(userId);
+
+            Assert.False(bizResult.HasError);
+            Assert.NotNull(bizResult.Result);
+
+            var requirements = bizResult.Result;
+            int count = requirements.Count();
+            Assert.NotEqual<int>(count, 0);
+        }
+
+        //[Fact]
+        public void Test_QueryRequirementInfo()
+        {
+            //1675
+            int requirementId = 1675;
+            IRequirementManager manager = new RequirementManager();
+            var bizResult = manager.QueryRequirementInfo(requirementId);
+
+            Assert.False(bizResult.HasError);
+            Assert.NotNull(bizResult.Result);
+
+            var requirements = bizResult.Result;
+            Assert.NotEqual<int>(requirements.RequirementId, 0);
+        }
 
         public void Test_AddRequirement()
         {
@@ -87,10 +117,10 @@ namespace Micro.Future.Common.Business.xUnit
 
             requirement.Rules = rules;
 
-            BizTResult<bool> bizResult = manager.AddRequirementInfo(requirement);
+            BizTResult<RequirementInfo> bizResult = manager.AddRequirementInfo(requirement);
 
             Assert.False(bizResult.HasError);
-            Assert.True(bizResult.Result);
+            Assert.NotNull(bizResult.Result);
 
         }
 
@@ -120,7 +150,7 @@ namespace Micro.Future.Common.Business.xUnit
             return fakeUsers;
         }
 
-        [Fact]
+        
         public void Test_AddRequirements()
         {
             //read csv file to table
@@ -214,10 +244,10 @@ namespace Micro.Future.Common.Business.xUnit
                 rules.Add(rule);
                 requirement.Rules = rules;
 
-                BizTResult<bool> bizResult = manager.AddRequirementInfo(requirement);
+                BizTResult<RequirementInfo> bizResult = manager.AddRequirementInfo(requirement);
 
                 Assert.False(bizResult.HasError);
-                Assert.True(bizResult.Result);
+                Assert.NotNull(bizResult.Result);
             }
 
         }
