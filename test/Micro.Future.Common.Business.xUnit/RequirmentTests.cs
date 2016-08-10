@@ -26,7 +26,7 @@ namespace Micro.Future.Common.Business.xUnit
             fakeUsers = CreateFakeUsers(1000, 50);
         }
 
-        [Fact]
+        //[Fact]
         public void Test_QueryRequirementsByUser()
         {
             //1675
@@ -57,11 +57,11 @@ namespace Micro.Future.Common.Business.xUnit
             Assert.NotEqual<int>(requirements.RequirementId, 0);
         }
 
-        //[Fact]
+        [Fact]
         public void Test_QueryRequirementChains()
         {
             //1675
-            int requirementId = 1;
+            int requirementId = 180;
             IRequirementManager manager = new RequirementManager();
             var bizResult = manager.QueryRequirementChains(requirementId);
 

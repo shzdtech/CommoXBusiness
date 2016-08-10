@@ -66,7 +66,12 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public override BizTResult<IEnumerable<RequirementInfo>> QueryAllRequirements()
         {
-            throw new NotImplementedException();
+            var findRequirements = this.mongDBRequirementHandler.QueryAllRequirements();
+            if (findRequirements == null)
+                return new BizTResult<IEnumerable<RequirementInfo>>(null, null);
+
+            var requirements = ConvertToRequirementInfos(findRequirements);
+            return new BizTResult<IEnumerable<RequirementInfo>>(requirements);
         }
 
         public override BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(int userId)
@@ -159,13 +164,111 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public override BizTResult<IEnumerable<RequirementChainInfo>> QueryRequirementChains(int requirementId)
         {
-            var findChainObjects = this.mongDBRequirementHandler.QueryRequirementChains(requirementId);
-            if (findChainObjects == null)
-                return new BizTResult<IEnumerable<RequirementChainInfo>>(null, null);
-
-            var chains = ConvertToRequirementChainInfos(findChainObjects);
+            IEnumerable<RequirementChainInfo> chains = FakeRequirementChains(requirementId);
             return new BizTResult<IEnumerable<RequirementChainInfo>>(chains);
+
+
+            //var findChainObjects = this.mongDBRequirementHandler.QueryRequirementChains(requirementId);
+            //if (findChainObjects == null)
+            //    return new BizTResult<IEnumerable<RequirementChainInfo>>(null, null);
+
+            //var chains = ConvertToRequirementChainInfos(findChainObjects);
+            //return new BizTResult<IEnumerable<RequirementChainInfo>>(chains);
         }
+
+        private IEnumerable<RequirementChainInfo> FakeRequirementChains(int requirementId)
+        {
+            RequirementInfo myRequirement = GetRequirementInfo(requirementId);
+            if (myRequirement == null)
+                return null;
+
+            var findRequirements = GetAllRequirement();
+            if (findRequirements == null)
+                return null;
+
+            var allRequirementList = findRequirements.ToList();
+            if (allRequirementList == null)
+                return null;
+
+            List<RequirementType> targetTypes = new List<RequirementType>();
+            if (myRequirement.Type == RequirementType.Sale)
+            {
+                targetTypes.Add(RequirementType.Buy);
+                targetTypes.Add(RequirementType.Subsidy);
+            }
+            else if(myRequirement.Type == RequirementType.Buy)
+            {
+                targetTypes.Add(RequirementType.Sale);
+                targetTypes.Add(RequirementType.Subsidy);
+            }
+            else if (myRequirement.Type == RequirementType.Subsidy)
+            {
+                targetTypes.Add(RequirementType.Sale);
+                targetTypes.Add(RequirementType.Buy);
+            }
+
+            
+
+            List<RequirementInfo> firstTypeRequirements = allRequirementList.Where(f => f.Type == targetTypes[0]).ToList();
+            List<RequirementInfo> secondTypeRequirements = allRequirementList.Where(f => f.Type == targetTypes[1]).ToList();
+
+            if (firstTypeRequirements == null || firstTypeRequirements.Count == 0)
+                return null;
+
+            if (secondTypeRequirements == null || secondTypeRequirements.Count == 0)
+                return null;
+
+            List<string> chianId = new List<string>();
+            
+
+            int length = firstTypeRequirements.Count;
+            if (secondTypeRequirements.Count < length)
+                length = secondTypeRequirements.Count;
+
+            List<RequirementChainInfo> chainList = new List<RequirementChainInfo>();
+
+            RequirementChainInfo chain = null;
+            for (int i = 0; i < length; i++)
+            {
+                chain = new RequirementChainInfo();
+                chain.ChainId = i;
+                chain.CreateTime = DateTime.Now.AddMinutes(-50);
+                chain.IsDeleted = false;
+                chain.Requirements = new List<RequirementInfo>();
+                chain.Requirements.Add(myRequirement);
+                chain.Requirements.Add(firstTypeRequirements[i]);
+                chain.Requirements.Add(secondTypeRequirements[i]);
+                chain.ModifyTime = DateTime.Now.AddMinutes(-30);
+
+                chainList.Add(chain);
+
+                if (i >= 20)
+                    break;
+            }
+
+            return chainList;
+
+        }
+
+        private RequirementInfo GetRequirementInfo(int requirementId)
+        {
+            var bizResult = QueryRequirementInfo(requirementId);
+            if (bizResult.HasError || bizResult.Result == null)
+                return null;
+
+            return bizResult.Result;
+        }
+
+        private IEnumerable<RequirementInfo> GetAllRequirement()
+        {
+            var bizResult = QueryAllRequirements();
+            if (bizResult.HasError || bizResult.Result == null)
+                return null;
+
+            return bizResult.Result;
+
+        }
+
 
         #endregion
 
