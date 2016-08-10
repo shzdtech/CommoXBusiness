@@ -29,9 +29,7 @@ namespace Micro.Future.Common.Business.xUnit
         [Fact]
         public void Test_QueryRequirementsByUser()
         {
-
             //1675
-
             int userId = 0;
             IRequirementManager manager = new RequirementManager();
             var bizResult =  manager.QueryRequirements(userId);
@@ -58,6 +56,22 @@ namespace Micro.Future.Common.Business.xUnit
             var requirements = bizResult.Result;
             Assert.NotEqual<int>(requirements.RequirementId, 0);
         }
+
+        //[Fact]
+        public void Test_QueryRequirementChains()
+        {
+            //1675
+            int requirementId = 1;
+            IRequirementManager manager = new RequirementManager();
+            var bizResult = manager.QueryRequirementChains(requirementId);
+
+            Assert.False(bizResult.HasError);
+            Assert.NotNull(bizResult.Result);
+
+            var requirements = bizResult.Result;
+            Assert.NotEqual<int>(requirements.Count(), 0);
+        }
+
 
         public void Test_AddRequirement()
         {
