@@ -193,13 +193,15 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             List<RequirementType> targetTypes = new List<RequirementType>();
             if (myRequirement.Type == RequirementType.Sale)
             {
-                targetTypes.Add(RequirementType.Buy);
                 targetTypes.Add(RequirementType.Subsidy);
+                targetTypes.Add(RequirementType.Buy);
+                
             }
             else if(myRequirement.Type == RequirementType.Buy)
             {
-                targetTypes.Add(RequirementType.Sale);
                 targetTypes.Add(RequirementType.Subsidy);
+                targetTypes.Add(RequirementType.Sale);
+               
             }
             else if (myRequirement.Type == RequirementType.Subsidy)
             {
