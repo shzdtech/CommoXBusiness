@@ -207,8 +207,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 targetTypes.Add(RequirementType.Buy);
             }
 
-            
-
+            allRequirementList.RemoveAll(f => f.UserId == myRequirement.UserId);
             List<RequirementInfo> firstTypeRequirements = allRequirementList.Where(f => f.Type == targetTypes[0]).ToList();
             List<RequirementInfo> secondTypeRequirements = allRequirementList.Where(f => f.Type == targetTypes[1]).ToList();
 
@@ -265,7 +264,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             if (bizResult.HasError || bizResult.Result == null)
                 return null;
 
-            return bizResult.Result;
+            DateTime datetime = DateTime.Parse("2016/8/10");
+
+            return bizResult.Result.Where(f => DateTime.Compare(f.CreateTime, datetime) > 0).ToList();
 
         }
 
@@ -321,6 +322,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             List<RequirementInfo> requirements = new List<RequirementInfo>();
             foreach (var dto in dtoList)
             {
+                if (string.IsNullOrWhiteSpace(dto.ProductName))
+                    continue;
+
                 requirements.Add(ConvertToRequirementInfo(dto));
             }
             return requirements;
@@ -329,6 +333,8 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         private RequirementInfo ConvertToRequirementInfo(RequirementObject dto)
         {
+           
+
             RequirementInfo requirement = new RequirementInfo();
             requirement.RequirementId = dto.RequirementId;
             requirement.UserId = dto.UserId;

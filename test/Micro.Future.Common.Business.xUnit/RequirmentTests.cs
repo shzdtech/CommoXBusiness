@@ -164,11 +164,11 @@ namespace Micro.Future.Common.Business.xUnit
             return fakeUsers;
         }
 
-        
+        //[Fact]
         public void Test_AddRequirements()
         {
             //read csv file to table
-            string[][] table = ReadCvs("E:\\PICT\\left.csv");
+            string[][] table = ReadCvs("D:\\left.csv");
 
             IRequirementManager manager = new RequirementManager();
 
@@ -179,6 +179,11 @@ namespace Micro.Future.Common.Business.xUnit
 
             for (int i = 0; i < table.GetLength(0); i++)
             {
+                if (String.Compare("None", table[i][7]) == 0)
+                {
+                    continue;
+                }
+
                 RequirementInfo requirement = new RequirementInfo();
 
                 List<RequirementRuleInfo> rules = new List<RequirementRuleInfo>();
@@ -186,12 +191,14 @@ namespace Micro.Future.Common.Business.xUnit
 
                 user = fakeUsers[i % 50];
 
+                requirement.CreateTime = DateTime.Now;
+
                 //
                 requirement.UserId = user.UserId;
                 requirement.EnterpriseId = user.EnterpriseId;
 
                 requirement.ProductName = table[i][0];
-                requirement.ProductPrice = Convert.ToDecimal(table[i][1]);
+                requirement.ProductPrice = 1000;
                 requirement.ProductQuantity = Convert.ToDecimal(table[i][2]);
                 requirement.ProductUnit = table[i][3];
                 requirement.WarehouseState = table[i][4];
