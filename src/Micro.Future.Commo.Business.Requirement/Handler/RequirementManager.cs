@@ -164,16 +164,14 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public override BizTResult<IEnumerable<RequirementChainInfo>> QueryRequirementChains(int requirementId)
         {
-            IEnumerable<RequirementChainInfo> chains = FakeRequirementChains(requirementId);
-            return new BizTResult<IEnumerable<RequirementChainInfo>>(chains);
-
-
-            //var findChainObjects = this.mongDBRequirementHandler.QueryRequirementChains(requirementId);
-            //if (findChainObjects == null)
-            //    return new BizTResult<IEnumerable<RequirementChainInfo>>(null, null);
-
-            //var chains = ConvertToRequirementChainInfos(findChainObjects);
+            //IEnumerable<RequirementChainInfo> chains = FakeRequirementChains(requirementId);
             //return new BizTResult<IEnumerable<RequirementChainInfo>>(chains);
+            var findChainObjects = this.mongDBRequirementHandler.QueryRequirementChains(requirementId);
+            if (findChainObjects == null)
+                return new BizTResult<IEnumerable<RequirementChainInfo>>(null, null);
+
+            var chains = ConvertToRequirementChainInfos(findChainObjects);
+            return new BizTResult<IEnumerable<RequirementChainInfo>>(chains);
         }
 
         private IEnumerable<RequirementChainInfo> FakeRequirementChains(int requirementId)
@@ -333,7 +331,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return info;
         }
 
-        private IEnumerable<RequirementInfo> ConvertToRequirementInfos(IEnumerable<RequirementObject> dtoList)
+        public static IEnumerable<RequirementInfo> ConvertToRequirementInfos(IEnumerable<RequirementObject> dtoList)
         {
             if (dtoList == null)
                 return null;
@@ -350,7 +348,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         }
 
 
-        private RequirementInfo ConvertToRequirementInfo(RequirementObject dto)
+        public static RequirementInfo ConvertToRequirementInfo(RequirementObject dto)
         {
            
 
