@@ -28,7 +28,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         public RequirementManager(RequirementHandler requirementHandler)
         {
             mongDBRequirementHandler = requirementHandler;
-            mongDBRequirementHandler.OnChainChanged += MongDBRequirementHandler_OnChainChanged;
+            //mongDBRequirementHandler.OnChainChanged += MongDBRequirementHandler_OnChainChanged;
         }
 
 
@@ -164,8 +164,6 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public override BizTResult<IEnumerable<RequirementChainInfo>> QueryRequirementChains(int requirementId)
         {
-            //IEnumerable<RequirementChainInfo> chains = FakeRequirementChains(requirementId);
-            //return new BizTResult<IEnumerable<RequirementChainInfo>>(chains);
             var findChainObjects = this.mongDBRequirementHandler.QueryRequirementChains(requirementId);
             if (findChainObjects == null)
                 return new BizTResult<IEnumerable<RequirementChainInfo>>(null, null);

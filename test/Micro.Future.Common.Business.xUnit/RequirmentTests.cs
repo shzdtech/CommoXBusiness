@@ -46,7 +46,7 @@ namespace Micro.Future.Common.Business.xUnit
         public void Test_QueryRequirementInfo()
         {
             //1675
-            int requirementId = 1675;
+            int requirementId = 5743;
             IRequirementManager manager = new RequirementManager();
             var bizResult = manager.QueryRequirementInfo(requirementId);
 
@@ -57,11 +57,11 @@ namespace Micro.Future.Common.Business.xUnit
             Assert.NotEqual<int>(requirements.RequirementId, 0);
         }
 
-        [Fact]
+        //[Fact]
         public void Test_QueryRequirementChains()
         {
             //1675
-            int requirementId = 180;
+            int requirementId = 5743;
             IRequirementManager manager = new RequirementManager();
             var bizResult = manager.QueryRequirementChains(requirementId);
 
@@ -72,7 +72,7 @@ namespace Micro.Future.Common.Business.xUnit
             Assert.NotEqual<int>(requirements.Count(), 0);
         }
 
-
+        [Fact]
         public void Test_AddRequirement()
         {
             IRequirementManager manager = new RequirementManager();
@@ -83,14 +83,17 @@ namespace Micro.Future.Common.Business.xUnit
             requirement.UserId = user.UserId;
             requirement.EnterpriseId = user.EnterpriseId;
 
-            requirement.ProductName = "铜";
-            requirement.Type = RequirementType.Sale;
-            requirement.WarehouseState = "浙江";
-            requirement.WarehouseCity = "杭州";
-            requirement.WarehouseAddress1 = "滨江区文山路xxx号";
-            requirement.ProductPrice = 1000m;
-            requirement.ProductQuantity = 100;
-            requirement.ProductUnit = "吨";
+            //requirement.ProductName = "铜";
+            requirement.Type = RequirementType.Subsidy;
+            //requirement.WarehouseState = "浙江";
+            //requirement.WarehouseCity = "杭州";
+            //requirement.WarehouseAddress1 = "滨江区文山路xxx号";
+            //requirement.ProductPrice = 1000m;
+            //requirement.ProductQuantity = 100;
+            //requirement.ProductUnit = "吨";
+
+            requirement.TradeAmount = 200000;
+            //requirement.Subsidies = 20;
 
 
             List<RequirementRuleInfo> rules = new List<RequirementRuleInfo>();
