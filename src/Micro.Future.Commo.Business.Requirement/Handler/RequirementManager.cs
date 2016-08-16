@@ -337,9 +337,6 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             List<RequirementInfo> requirements = new List<RequirementInfo>();
             foreach (var dto in dtoList)
             {
-                if (string.IsNullOrWhiteSpace(dto.ProductName))
-                    continue;
-
                 requirements.Add(ConvertToRequirementInfo(dto));
             }
             return requirements;
