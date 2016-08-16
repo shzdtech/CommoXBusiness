@@ -13,11 +13,14 @@ namespace Micro.Future.Commo.Business.Abstraction.Handler
         public delegate void RequirementChainChangedEventHandler(IEnumerable<RequirementChainInfo> chain);
         #region IRequirementManager implements
 
+
+        public abstract BizTResult<IEnumerable<RequirementInfo>> QueryAllRequirements();
+
         public abstract BizTResult<RequirementInfo> QueryRequirementInfo(int requirementId);
 
         public abstract BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(int userId);
 
-        public abstract BizTResult<bool> AddRequirementInfo(RequirementInfo requirement);
+        public abstract BizTResult<RequirementInfo> AddRequirementInfo(RequirementInfo requirement);
 
         public abstract BizTResult<bool> UpdateRequirementInfo(RequirementInfo requirement);
 

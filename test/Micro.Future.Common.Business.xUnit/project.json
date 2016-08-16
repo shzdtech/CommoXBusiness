@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
 
   "buildOptions": {
@@ -6,25 +6,13 @@
   },
   "dependencies": {
     "xunit": "2.2.0-beta2-build3300",
+    "Micro.Future.Commo.Business.Requirement": "1.0.0-*",
+    "Micro.Future.Commo.Business.Abstraction": "1.0.0-*",
+    "Micro.Future.Business.Common": "1.0.0-*",
     "dotnet-test-xunit": "2.2.0-preview2-build1029"
   },
   "testRunner": "xunit",
   "frameworks": {
-    "netcoreapp1.0": {
-      "imports": [
-        "dnxcore50",
-        "portable-net451+win8"
-      ],
-      "dependencies": {
-        "Microsoft.NETCore.App": {
-          "version": "1.0.0",
-          "type": "platform"
-        },
-        "moq.netcore": "4.4.0-beta8",
-        "System.Diagnostics.Process": "4.1.0",
-        "System.Diagnostics.TraceSource": "4.0.0"
-      }
-    },
     "net451": {
       "dependencies": {
         "Moq": "4.5.10"
