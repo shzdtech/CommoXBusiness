@@ -12,6 +12,9 @@
     "net451": {
       "dependencies": {
       }
+    },
+    "netstandard1.6": {
+      "imports": "dnxcore50"
     }
   }
 }
