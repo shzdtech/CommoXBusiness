@@ -89,5 +89,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// 企业状态
         /// </summary>
         public int StateId { get; set; }
+
+        public string Email { get; set; }
     }
 }
