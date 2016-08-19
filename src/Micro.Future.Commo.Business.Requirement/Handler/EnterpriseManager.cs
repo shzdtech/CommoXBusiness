@@ -13,22 +13,22 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 {
     public class EnterpriseManager : IEnterpriseManager
     {
-        private IEnterprise enterpriseHandler = null;
+        private IEnterprise _enterpriseService = null;
 
         public EnterpriseManager()
         {
-            enterpriseHandler = new EnterpriseHandler();
+            _enterpriseService = new EnterpriseHandler();
         }
 
-        public EnterpriseManager(IEnterprise enterpriseDAL)
+        public EnterpriseManager(IEnterprise enterpriseService)
         {
-            enterpriseHandler = enterpriseDAL;
+            _enterpriseService = enterpriseService;
         }
 
         public BizTResult<int> AddEnterprise(EnterpriseInfo enterprise)
         {
             var entity = EnterpriseToEntityObject(enterprise);
-            var result = enterpriseHandler.AddEnterprise(entity); 
+            var result = _enterpriseService.AddEnterprise(entity); 
 
             if(result != null && result.EnterpriseId > 0)
             {
@@ -42,14 +42,14 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public EnterpriseInfo QueryEnterpriseInfo(int enterpriseId)
         {
-            var entity = enterpriseHandler.QueryEnterpriseInfo(enterpriseId);
+            var entity = _enterpriseService.QueryEnterpriseInfo(enterpriseId);
             return EnterpriseToBizObject(entity);
         }
 
         public BizTResult<bool> UpdateEnterprise(EnterpriseInfo enterprise)
         {
             var entity = EnterpriseToEntityObject(enterprise);
-            var result = enterpriseHandler.UpdateEnterprise(entity);
+            var result = _enterpriseService.UpdateEnterprise(entity);
             if (result != null && result.EnterpriseId > 0)
             {
                 return new BizTResult<bool>(true);

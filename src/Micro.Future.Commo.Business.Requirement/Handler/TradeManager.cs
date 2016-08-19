@@ -12,10 +12,24 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 {
     public class TradeManager : ITradeManager
     {
+        private ITrade _tradeService = null;
+        private IOrder _orderService = null;
+
+        public TradeManager()
+        {
+            _tradeService = new TradeHandler();
+            _orderService = new OrderHandler();
+        }
+
+        public TradeManager(ITrade tradeService, IOrder orderService)
+        {
+            _tradeService = tradeService;
+            _orderService = orderService;
+        }
+
         public OrderInfo GetOrderInfo(int orderId)
         {
-            IOrder orderHandler = new OrderHandler();
-            Order orderObj = orderHandler.queryOrder(orderId);
+            Order orderObj = _orderService.queryOrder(orderId);
             return CovnertOrderToInfo(orderObj);
         }
 
@@ -42,7 +56,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             };
         }
 
-        private Order CovnertOrderToInfo(OrderInfo info)
+        private Order CovnertOrderToObject(OrderInfo info)
         {
             return new Order()
             {
@@ -67,14 +81,22 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public IList<OrderInfo> GetOrders(int tradeId)
         {
-            IOrder orderHandler = new OrderHandler();
-            throw new NotImplementedException();
+            IList<Order> orders = _orderService.queryTradeOrder(tradeId);
+            if (orders == null || orders.Count == 0)
+                return null;
+
+            IList<OrderInfo> orderInfoList = new List<OrderInfo>();
+            foreach(var order in orders)
+            {
+                orderInfoList.Add(CovnertOrderToInfo(order));
+            }
+
+            return orderInfoList;
         }
 
         public TradeInfo GetTradeInfo(int tradeId)
         {
-            ITrade tradeHandler = new TradeHandler();
-            Trade tradeObj = tradeHandler.queryTrade(tradeId);
+            Trade tradeObj = _tradeService.queryTrade(tradeId);
             if (tradeObj == null)
                 return null;
 
@@ -83,14 +105,25 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public IList<TradeInfo> GetTrades(string userId)
         {
-            ITrade tradeHandler = new TradeHandler();
-            throw new NotImplementedException();
+            IList<Trade> trades = _tradeService.queryAllTrade(userId);
+            if (trades == null || trades.Count == 0)
+                return null;
+
+            List<TradeInfo> tradeInfos = new List<TradeInfo>();
+            TradeInfo tradeInfo = null;
+            foreach(var trade in trades)
+            {
+                tradeInfo = ConvertTradeToInfo(trade);
+                tradeInfo.Orders = GetOrders(trade.TradeId);
+                tradeInfos.Add(tradeInfo);
+            }
+
+            return tradeInfos;
         }
 
         public bool UpdateTradeState(int tradeId, string state)
         {
-            ITrade tradeHandler = new TradeHandler();
-            return tradeHandler.updateTradeState(tradeId, state);
+            return _tradeService.updateTradeState(tradeId, state);
         }
 
         private TradeInfo ConvertTradeToInfo(Trade t)
