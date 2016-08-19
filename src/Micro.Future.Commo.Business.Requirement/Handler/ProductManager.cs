@@ -75,8 +75,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public ProductInfo GetProductInfo(int productId)
         {
-            IProduct handler = new ProductHandler();
-            Product p = handler.queryProduct(productId);
+            Product p = _productService.queryProduct(productId);
             if (p == null)
                 return null;
 
@@ -85,9 +84,8 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public bool UpdateProductInfo(ProductInfo product)
         {
-            IProduct handler = new ProductHandler();
             Product p = ConvertProductInfoToObject(product);
-            Product newProd = handler.updateProduct(p);
+            Product newProd = _productService.updateProduct(p);
             return newProd != null;
         }
 
