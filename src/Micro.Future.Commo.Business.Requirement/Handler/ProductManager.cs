@@ -28,7 +28,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return product;
         }
 
-        public IList<ProductInfo> GetProduct(int userId, string productType)
+        public IList<ProductInfo> GetProduct(string userId, string productType)
         {
             throw new NotImplementedException();
         }

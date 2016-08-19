@@ -81,7 +81,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return ConvertTradeToInfo(tradeObj);
         }
 
-        public IList<TradeInfo> GetTrades(int userId)
+        public IList<TradeInfo> GetTrades(string userId)
         {
             ITrade tradeHandler = new TradeHandler();
             throw new NotImplementedException();

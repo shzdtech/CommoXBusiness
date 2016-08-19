@@ -112,7 +112,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return infoList;
         }
 
-        public IList<RequirementChainInfo> QueryChains(int userId)
+        public IList<RequirementChainInfo> QueryChains(string userId)
         {
             IChainDAL chainDAL = new ChainDAL();
             IList<ChainObject> chainList = chainDAL.QueryChains(userId);

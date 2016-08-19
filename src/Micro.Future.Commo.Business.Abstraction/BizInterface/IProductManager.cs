@@ -26,7 +26,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         /// 查询所有的产品列表
         /// </summary>
         /// <returns></returns>
-        IList<ProductInfo> GetProduct(int userId, string productType);
+        IList<ProductInfo> GetProduct(string userId, string productType);
 
         bool UpdateProductInfo(ProductInfo product);
     }

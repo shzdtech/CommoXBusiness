@@ -17,6 +17,6 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
 
         RequirementChainInfo GetChainInfo(int chainId);
 
-        IList<RequirementChainInfo> QueryChains(int userId);
+        IList<RequirementChainInfo> QueryChains(string userId);
     }
 }
