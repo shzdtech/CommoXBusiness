@@ -16,16 +16,16 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
     {
         public event RequirementChainChangedEventHandler OnRequirementChainChanged;
 
-        protected RequirementHandler mongDBRequirementHandler = null;
+        protected MatcherHandler mongDBRequirementHandler = null;
 
         #region constructor
 
         public RequirementManager() : base()
         {
-            mongDBRequirementHandler = new RequirementHandler();
+            mongDBRequirementHandler = new MatcherHandler();
         }
 
-        public RequirementManager(RequirementHandler requirementHandler)
+        public RequirementManager(MatcherHandler requirementHandler)
         {
             mongDBRequirementHandler = requirementHandler;
             //mongDBRequirementHandler.OnChainChanged += MongDBRequirementHandler_OnChainChanged;
