@@ -12,14 +12,25 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 {
     public class ProductManager : IProductManager
     {
+        private IProduct _productService = null;
+
+        public ProductManager()
+        {
+            _productService = new ProductHandler();
+        }
+
+        public ProductManager(IProduct productService)
+        {
+            _productService = productService;
+        }
+
         public ProductInfo AddProduct(ProductInfo product)
         {
             if (product == null || product.Validate().HasError)
                 return null;
-
-            IProduct productHandler = new ProductHandler();
+            
             Product p = ConvertProductInfoToObject(product);
-            var newProduct = productHandler.saveProduct(p);
+            var newProduct = _productService.saveProduct(p);
             if (newProduct != null && newProduct.ProductId > 0)
             {
                 product.ProductId = newProduct.ProductId;
@@ -28,15 +39,43 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return product;
         }
 
-        public IList<ProductInfo> GetProduct(int userId, string productType)
+        public IList<ProductInfo> GetAllProducts()
         {
-            throw new NotImplementedException();
+            IList<Product> products = _productService.queryAllProduct();
+            if (products == null || products.Count == 0)
+                return null;
+
+            List<ProductInfo> productInfoList = new List<ProductInfo>();
+            foreach(var p in products)
+            {
+                productInfoList.Add(ConvertProductToInfo(p));
+            }
+
+            return productInfoList;
+        }
+
+        public IList<ProductTypeInfo> GetAllProductTypes()
+        {
+            IList<ProductType> productTypes =  _productService.queryAllProductType();
+            if (productTypes == null || productTypes.Count == 0)
+                return null;
+
+            IList<ProductTypeInfo> typeInfoList = new List<ProductTypeInfo>();
+            foreach(ProductType pType in productTypes)
+            {
+                ProductTypeInfo typeInfo = new ProductTypeInfo();
+                typeInfo.ProductTypeId = pType.ProductTypeId;
+                typeInfo.ProductTypeName = pType.ProductTypeName;
+                typeInfo.ParentId = pType.ParentId;
+                typeInfoList.Add(typeInfo);
+            }
+
+            return typeInfoList;
         }
 
         public ProductInfo GetProductInfo(int productId)
         {
-            IProduct handler = new ProductHandler();
-            Product p = handler.queryProduct(productId);
+            Product p = _productService.queryProduct(productId);
             if (p == null)
                 return null;
 
@@ -45,9 +84,8 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public bool UpdateProductInfo(ProductInfo product)
         {
-            IProduct handler = new ProductHandler();
             Product p = ConvertProductInfoToObject(product);
-            Product newProd = handler.updateProduct(p);
+            Product newProd = _productService.updateProduct(p);
             return newProd != null;
         }
 

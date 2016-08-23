@@ -16,16 +16,16 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
     {
         public event RequirementChainChangedEventHandler OnRequirementChainChanged;
 
-        protected RequirementHandler mongDBRequirementHandler = null;
+        protected MatcherHandler mongDBRequirementHandler = null;
 
         #region constructor
 
         public RequirementManager() : base()
         {
-            mongDBRequirementHandler = new RequirementHandler();
+            mongDBRequirementHandler = new MatcherHandler();
         }
 
-        public RequirementManager(RequirementHandler requirementHandler)
+        public RequirementManager(MatcherHandler requirementHandler)
         {
             mongDBRequirementHandler = requirementHandler;
             //mongDBRequirementHandler.OnChainChanged += MongDBRequirementHandler_OnChainChanged;
@@ -74,9 +74,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return new BizTResult<IEnumerable<RequirementInfo>>(requirements);
         }
 
-        public override BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(int userId)
+        public override BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(string userId)
         {
-            var findRequirements = this.mongDBRequirementHandler.QueryRequirements(userId.ToString());
+            var findRequirements = this.mongDBRequirementHandler.QueryRequirements(userId);
             if (findRequirements == null)
                 return new BizTResult<IEnumerable<RequirementInfo>>(null, null);
 
@@ -405,7 +405,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             errors = new List<string>();
 
             //user id
-            if (requirement.UserId == 0)
+            if (string.IsNullOrEmpty(requirement.UserId))
             {
                 errors.Add("UserId is required.");
             }

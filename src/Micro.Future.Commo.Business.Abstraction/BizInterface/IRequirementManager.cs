@@ -11,7 +11,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
     {
         BizTResult<IEnumerable<RequirementInfo>> QueryAllRequirements();
 
-        BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(int userId);
+        BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(string userId);
 
         BizTResult<RequirementInfo> QueryRequirementInfo(int requirementId);
 

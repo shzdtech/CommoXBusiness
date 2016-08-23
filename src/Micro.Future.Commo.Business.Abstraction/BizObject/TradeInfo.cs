@@ -47,7 +47,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         ///// <summary>
         ///// 相关的订单
         ///// </summary>
-        public List<OrderInfo> Orders { get; set; }
+        public IList<OrderInfo> Orders { get; set; }
 
     }
 }

@@ -30,7 +30,7 @@ namespace Micro.Future.Common.Business.xUnit
         public void Test_QueryRequirementsByUser()
         {
             //1675
-            int userId = 0;
+            string userId = "0";
             IRequirementManager manager = new RequirementManager();
             var bizResult =  manager.QueryRequirements(userId);
 
@@ -153,16 +153,16 @@ namespace Micro.Future.Common.Business.xUnit
         {
             List<UserInfo> fakeUsers = new List<UserInfo>();
 
-            UserInfo user = null;
-            for (int i = fromId; i <= fromId + totalCount; i++)
-            {
-                user = new UserInfo();
-                user.UserId = i;
-                user.UserName = i.ToString();
-                user.EnterpriseId = i;
+            //UserInfo user = null;
+            //for (int i = fromId; i <= fromId + totalCount; i++)
+            //{
+            //    user = new UserInfo();
+            //    user.UserId = i;
+            //    user.UserName = i.ToString();
+            //    user.EnterpriseId = i;
 
-                fakeUsers.Add(user);
-            }
+            //    fakeUsers.Add(user);
+            //}
 
             return fakeUsers;
         }

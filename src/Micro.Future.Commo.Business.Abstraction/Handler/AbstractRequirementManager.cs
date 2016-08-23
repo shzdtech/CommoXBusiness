@@ -18,7 +18,7 @@ namespace Micro.Future.Commo.Business.Abstraction.Handler
 
         public abstract BizTResult<RequirementInfo> QueryRequirementInfo(int requirementId);
 
-        public abstract BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(int userId);
+        public abstract BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(string userId);
 
         public abstract BizTResult<RequirementInfo> AddRequirementInfo(RequirementInfo requirement);
 

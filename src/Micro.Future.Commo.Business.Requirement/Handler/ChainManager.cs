@@ -18,26 +18,39 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 {
     public class ChainManager : IChainManager
     {
+        private IChainDAL _chainService = null;
+        private ITrade _tradeService = null;
+        private IOrder _orderService = null;
+
+        public ChainManager()
+        {
+            _chainService = new ChainDAL();
+            _tradeService = new TradeHandler();
+            _orderService = new OrderHandler();
+        }
+
+        public ChainManager(IChainDAL chainService, ITrade tradeService, IOrder orderService)
+        {
+            _chainService = chainService;
+            _tradeService = tradeService;
+            _orderService = orderService;
+        }
+
         public bool ConfirmRequirement(int chainId, int requirementId, out int tradeId)
         {
             tradeId = 0;
 
-            IChainDAL chainDAL = new ChainDAL();
-
             bool isAllConfirmed = false;
-            bool isConfirmed = chainDAL.ConfirmChainRequirement(chainId, requirementId, out isAllConfirmed);
+            bool isConfirmed = _chainService.ConfirmChainRequirement(chainId, requirementId, out isAllConfirmed);
             if(isConfirmed && isAllConfirmed)
             {
                 //生成订单
                 RequirementChainInfo chain = GetChainInfo(chainId);
 
-                ITrade tradeHandler = new TradeHandler();
-                IOrder orderHander = new OrderHandler();
-
                 Trade trade = new Trade();
                 trade.TradeTime = DateTime.Now;
 
-                Trade newTrade = tradeHandler.submitTrade(trade);
+                Trade newTrade = _tradeService.submitTrade(trade);
                 if (newTrade == null || newTrade.TradeId <= 0)
                 {
                     throw new BizException("生产订单失败！");
@@ -55,7 +68,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                     order.CreateTime = trade.TradeTime;
                     order.EnterpriseId = requirement.EnterpriseId;
                     order.ModifyTime = trade.TradeTime;
-                    orderHander.submitOrder(order);
+                    _orderService.submitOrder(order);
                 }
             }
 
@@ -64,8 +77,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public RequirementChainInfo GetChainInfo(int chainId)
         {
-            IChainDAL chainDAL = new ChainDAL();
-            ChainObject chainObj = chainDAL.GetChain(chainId);
+            ChainObject chainObj = _chainService.GetChain(chainId);
             if (chainObj == null)
                 return null;
             return ConvertChainObjectToInfo(chainObj);
@@ -98,8 +110,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public IList<RequirementInfo> GetRequirements(int chainId)
         {
-            IChainDAL chainDAL = new ChainDAL();
-            IList<RequirementObject> requirementObjects = chainDAL.GetChainRequirements(chainId);
+            IList<RequirementObject> requirementObjects = _chainService.GetChainRequirements(chainId);
             if (requirementObjects == null || requirementObjects.Count == 0)
                 return null;
 
@@ -112,10 +123,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return infoList;
         }
 
-        public IList<RequirementChainInfo> QueryChains(int userId)
+        public IList<RequirementChainInfo> QueryChains(string userId)
         {
-            IChainDAL chainDAL = new ChainDAL();
-            IList<ChainObject> chainList = chainDAL.QueryChains(userId);
+            IList<ChainObject> chainList = _chainService.QueryChains(userId);
             if (chainList == null || chainList.Count == 0)
                 return null;
 

@@ -17,7 +17,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// <summary>
         /// 用户Id
         /// </summary>
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// 企业Id
@@ -46,7 +46,9 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
 
         #endregion
 
-        #region 货物相关属性，出资、出货需要填写
+
+
+        #region 销售
 
         /// <summary>
         /// 货物名称，
@@ -60,11 +62,13 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         public string ProductType { get; set; }
 
         /// <summary>
+        /// 不需要了？
         /// 货物规格：Cu_Ag>=99.95%
         /// </summary>
         public string ProductSpecification { get; set; }
 
         /// <summary>
+        /// 不需要了？
         /// 货物单价：
         /// </summary>
         public decimal ProductPrice { get; set; }
@@ -75,6 +79,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         public decimal ProductQuantity { get; set; }
 
         /// <summary>
+        /// 不需要了？
         /// 获取单位， 吨
         /// </summary>
         public string ProductUnit { get; set; }
@@ -103,40 +108,89 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
 
         #endregion
 
-        #endregion
-
-        #region 出货类型需求需要的属性
-
-
-
-
 
         #endregion
 
-        #region 出资类型需求需要的属性
+        #region 采购
 
-
-
-
-        #endregion
 
         /// <summary>
-        /// 出资和补贴两种需求都使用这个字段.
-        /// 
-        /// 出资方：出资总金额，我要购买xxx货物xxx吨，出资1亿
-        /// 补贴方：贸易量，我要多少贸易量（1个亿的贸易量）
+        /// 资金金额
+        /// </summary>
+        public decimal PaymentAmount { get; set; }
+
+        /// <summary>
+        /// 货款支付时间
+        /// </summary>
+        public string PaymentDateTime { get; set; }
+
+        /// <summary>
+        /// 支付方式
+        /// </summary>
+        public string PaymentType { get; set; }
+
+
+
+        #endregion
+
+        #region 购销
+
+        /// <summary>
+        /// 合同总金额
         /// </summary>
         public decimal TradeAmount { get; set; }
 
-        #region 补贴
+        /// <summary>
+        /// 合同利润
+        /// </summary>
+        public decimal TradeProfit { get; set; }
+
+        /// <summary>
+        /// 企业类型
+        /// </summary>
+        public string EnterpriseType { get; set; }
+
+        /// <summary>
+        /// 经营范围
+        /// </summary>
+        public string BusinessRange { get; set; }
 
 
         /// <summary>
+        /// 不需要了？
         /// 补贴额度，比如：我要1个亿的贸易量，我补贴贸易量的5%
         /// </summary>
         public decimal Subsidies { get; set; }
 
         #endregion
+
+
+        #region 3种类型 公共属性
+
+        /// <summary>
+        /// 仓库开户
+        /// </summary>
+        public string WarehouseAccount { get; set; }
+
+        /// <summary>
+        /// 发票面额
+        /// </summary>
+        public string InvoiceValue { get; set; }
+
+        /// <summary>
+        /// 发票开具时间
+        /// </summary>
+        public string InvoiceIssueDateTime { get; set; }
+
+        /// <summary>
+        /// 发票交接方式
+        /// </summary>
+        public string InvoiceTransferMode { get; set; }
+
+        #endregion
+
+
+      
 
         /// <summary>
         /// 需求的撮合规则
