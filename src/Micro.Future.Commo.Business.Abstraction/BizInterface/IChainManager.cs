@@ -41,7 +41,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         IList<RequirementChainInfo> QueryChainsByRequirementId(int requirementId, ChainStatusType type);
 
         /// <summary>
-        /// 查询所有撮合链，不分用户，部分需求
+        /// 查询所有撮合链，不分用户，不分需求
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
@@ -62,7 +62,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         bool UnlockChain(int chainId);
 
         /// <summary>
-        /// 确认撮合连，生产订单并且返回tradeId
+        /// 确认撮合连，生成订单并且返回tradeId
         /// </summary>
         /// <param name="chainId"></param>
         /// <param name="tradeId"></param>
