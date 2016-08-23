@@ -17,8 +17,6 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
 
         BizTResult<RequirementInfo> AddRequirementInfo(RequirementInfo requirement);
 
-        BizTResult<bool> UpdateRequirementInfo(RequirementInfo requirement);
-
         BizTResult<IEnumerable<RequirementChainInfo>> QueryRequirementChains(int requirementId);
     }
 }

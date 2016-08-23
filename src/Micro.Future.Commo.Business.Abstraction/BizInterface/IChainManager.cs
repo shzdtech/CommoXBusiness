@@ -9,14 +9,64 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
     public interface IChainManager
     {
         /// <summary>
-        /// 确认撮合链中的一个需求，当所有需求都已确认时，生成订单并返回订单Id
+        /// 查询撮合连中的所有需求信息
         /// </summary>
-        bool ConfirmRequirement(int chainId, int requirementId, out int tradeId);
-
+        /// <param name="chainId"></param>
+        /// <returns></returns>
         IList<RequirementInfo> GetRequirements(int chainId);
 
+        /// <summary>
+        /// 查询撮合链详情
+        /// </summary>
+        /// <param name="chainId"></param>
+        /// <returns></returns>
         RequirementChainInfo GetChainInfo(int chainId);
 
-        IList<RequirementChainInfo> QueryChains(string userId);
+        /// <summary>
+        /// 获取某一个用户下面的所有需求的撮合连
+        /// 根据 ChainStatusType=LOCKED 可以获取已锁定的
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        IList<RequirementChainInfo> QueryChainsByUserId(string userId, ChainStatusType type);
+
+        /// <summary>
+        /// 获取某一个需求的撮合连
+        /// 根据 ChainStatusType=LOCKED 可以仅获取已锁定的
+        /// </summary>
+        /// <param name="requirementId"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        IList<RequirementChainInfo> QueryChainsByRequirementId(int requirementId, ChainStatusType type);
+
+        /// <summary>
+        /// 查询所有撮合链，不分用户，部分需求
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        IList<RequirementChainInfo> QueryAllChains(ChainStatusType type);
+
+        /// <summary>
+        /// 锁定撮合连
+        /// </summary>
+        /// <param name="chainId"></param>
+        /// <returns></returns>
+        bool LockChain(int chainId);
+
+        /// <summary>
+        /// 解锁撮合连
+        /// </summary>
+        /// <param name="chainId"></param>
+        /// <returns></returns>
+        bool UnlockChain(int chainId);
+
+        /// <summary>
+        /// 确认撮合连，生产订单并且返回tradeId
+        /// </summary>
+        /// <param name="chainId"></param>
+        /// <param name="tradeId"></param>
+        /// <returns></returns>
+        bool ComfirmChain(int chainId, out int tradeId);
     }
 }

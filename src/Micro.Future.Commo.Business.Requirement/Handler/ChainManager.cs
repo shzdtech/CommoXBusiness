@@ -21,59 +21,25 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         private IChainDAL _chainService = null;
         private ITrade _tradeService = null;
         private IOrder _orderService = null;
+        private IMatcher _matcherService = null;
 
         public ChainManager()
         {
             _chainService = new ChainDAL();
             _tradeService = new TradeHandler();
             _orderService = new OrderHandler();
+            _matcherService = new MatcherHandler();
+               
         }
 
-        public ChainManager(IChainDAL chainService, ITrade tradeService, IOrder orderService)
+        public ChainManager(IChainDAL chainService, ITrade tradeService, IOrder orderService, IMatcher matcherService)
         {
             _chainService = chainService;
             _tradeService = tradeService;
             _orderService = orderService;
+            _matcherService = matcherService;
         }
-
-        public bool ConfirmRequirement(int chainId, int requirementId, out int tradeId)
-        {
-            tradeId = 0;
-
-            bool isAllConfirmed = false;
-            bool isConfirmed = _chainService.ConfirmChainRequirement(chainId, requirementId, out isAllConfirmed);
-            if(isConfirmed && isAllConfirmed)
-            {
-                //生成订单
-                RequirementChainInfo chain = GetChainInfo(chainId);
-
-                Trade trade = new Trade();
-                trade.TradeTime = DateTime.Now;
-
-                Trade newTrade = _tradeService.submitTrade(trade);
-                if (newTrade == null || newTrade.TradeId <= 0)
-                {
-                    throw new BizException("生产订单失败！");
-                }
-
-                tradeId = newTrade.TradeId;
-
-                Order order = null;
-                foreach(RequirementInfo requirement in chain.Requirements)
-                {
-                    order = new Order();
-                    order.TradeId = tradeId;
-                    order.UserId = requirement.UserId;
-                    order.RequirementType = requirement.Type.ToString();
-                    order.CreateTime = trade.TradeTime;
-                    order.EnterpriseId = requirement.EnterpriseId;
-                    order.ModifyTime = trade.TradeTime;
-                    _orderService.submitOrder(order);
-                }
-            }
-
-            return isConfirmed;
-        }
+        
 
         public RequirementChainInfo GetChainInfo(int chainId)
         {
@@ -123,18 +89,83 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return infoList;
         }
 
-        public IList<RequirementChainInfo> QueryChains(string userId)
+        public bool LockChain(int chainId)
         {
-            IList<ChainObject> chainList = _chainService.QueryChains(userId);
-            if (chainList == null || chainList.Count == 0)
+            return _matcherService.LockMatcherChain(chainId);
+        }
+
+        public bool UnlockChain(int chainId)
+        {
+            return _matcherService.UnLockMatcherChain(chainId);
+        }
+
+        public bool ComfirmChain(int chainId,out int tradeId)
+        {
+            tradeId = 0;
+            bool isConfirmed = _matcherService.ConfirmMatcherChain(chainId);
+            if(isConfirmed)
+            {
+                //生成订单
+                RequirementChainInfo chain = GetChainInfo(chainId);
+
+                Trade trade = new Trade();
+                trade.TradeTime = DateTime.Now;
+
+                Trade newTrade = _tradeService.submitTrade(trade);
+                if (newTrade == null || newTrade.TradeId <= 0)
+                {
+                    throw new BizException("生产订单失败！");
+                }
+
+                tradeId = newTrade.TradeId;
+
+                Order order = null;
+                foreach (RequirementInfo requirement in chain.Requirements)
+                {
+                    order = new Order();
+                    order.TradeId = tradeId;
+                    order.UserId = requirement.UserId;
+                    order.RequirementType = requirement.Type.ToString();
+                    order.CreateTime = trade.TradeTime;
+                    order.EnterpriseId = requirement.EnterpriseId;
+                    order.ModifyTime = trade.TradeTime;
+                    _orderService.submitOrder(order);
+                }
+
+            }
+            return isConfirmed;
+        }
+
+        public IList<RequirementChainInfo> QueryChainsByRequirementId(int requirementId, ChainStatusType type)
+        {
+            IList<ChainObject> chainList = _matcherService.GetMatcherChainsByRequirementId(requirementId, (ChainStatus)type, true);
+            return ConvertChainObjectsToChainInfoList(chainList);
+        }
+
+        private IList<RequirementChainInfo> ConvertChainObjectsToChainInfoList(IList<ChainObject> chainObjects)
+        {
+            if (chainObjects == null || chainObjects.Count == 0)
                 return null;
 
             IList<RequirementChainInfo> infoList = new List<RequirementChainInfo>();
-            foreach(var chainObj in chainList)
+            foreach (var chainObject in chainObjects)
             {
-                infoList.Add(ConvertChainObjectToInfo(chainObj));
+                infoList.Add(ConvertChainObjectToInfo(chainObject));
             }
+
             return infoList;
+        }
+
+        public IList<RequirementChainInfo> QueryChainsByUserId(string userId, ChainStatusType type)
+        {
+            IList<ChainObject> chainList = _matcherService.GetMatcherChainsByUserId(userId, (ChainStatus)type, true);
+            return ConvertChainObjectsToChainInfoList(chainList);
+        }
+
+        public IList<RequirementChainInfo> QueryAllChains(ChainStatusType type)
+        {
+            IList<ChainObject> chainList = _matcherService.GetMatcherChains((ChainStatus)type, true);
+            return ConvertChainObjectsToChainInfoList(chainList);
         }
     }
 }

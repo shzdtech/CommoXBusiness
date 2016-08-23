@@ -9,6 +9,7 @@ using Micro.Future.Business.DataAccess.Commo;
 using Micro.Future.Business.MongoDB.Commo.Handler;
 using Micro.Future.Business.MongoDB.Commo.BizObjects;
 using Micro.Future.Commo.Business.Abstraction.Handler;
+using mongodbObjects = Micro.Future.Business.MongoDB.Commo.BizObjects;
 
 namespace Micro.Future.Commo.Business.Requirement.Handler
 {
@@ -134,136 +135,16 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return new BizTResult<RequirementInfo>(requirement);
         }
 
-        public override BizTResult<bool> UpdateRequirementInfo(RequirementInfo requirement)
-        {
-            if (requirement == null)
-                return new BizTResult<bool>(false, new BizException(BizErrorType.BIZ_ERROR, "RequirementInfo is null"));
-
-            List<string> errors = null;
-            RequirementObject dto = ConvertToRequirementDto(requirement, out errors);
-
-            if (errors != null && errors.Count > 0)
-            {
-                var errorMsg = string.Join(Environment.NewLine, errors);
-                return new BizTResult<bool>(false,
-                   new BizException(BizErrorType.BIZ_ERROR, errorMsg));
-            }
-
-            bool saveSuccess = false;
-            try
-            {
-                saveSuccess = false;//this.mongDBRequirementHandler.UpdateRequirement(dto);
-            }
-            catch (Exception ex)
-            {
-                return new BizTResult<bool>(false, new BizException(BizErrorType.DATABASE_ERROR, ex.Message));
-            }
-
-            return new BizTResult<bool>(saveSuccess);
-        }
-
         public override BizTResult<IEnumerable<RequirementChainInfo>> QueryRequirementChains(int requirementId)
         {
-            var findChainObjects = this.mongDBRequirementHandler.QueryRequirementChains(requirementId);
+            var findChainObjects = this.mongDBRequirementHandler.GetMatcherChainsByRequirementId(requirementId, ChainStatus.OPEN);//.QueryRequirementChains(requirementId);
             if (findChainObjects == null)
                 return new BizTResult<IEnumerable<RequirementChainInfo>>(null, null);
 
             var chains = ConvertToRequirementChainInfos(findChainObjects);
             return new BizTResult<IEnumerable<RequirementChainInfo>>(chains);
         }
-
-        private IEnumerable<RequirementChainInfo> FakeRequirementChains(int requirementId)
-        {
-            RequirementInfo myRequirement = GetRequirementInfo(requirementId);
-            if (myRequirement == null)
-                return null;
-
-            var findRequirements = GetAllRequirement();
-            if (findRequirements == null)
-                return null;
-
-            var allRequirementList = findRequirements.ToList();
-            if (allRequirementList == null)
-                return null;
-
-            List<RequirementType> targetTypes = new List<RequirementType>();
-            if (myRequirement.Type == RequirementType.Sale)
-            {
-                targetTypes.Add(RequirementType.Subsidy);
-                targetTypes.Add(RequirementType.Buy);
-                
-            }
-            else if(myRequirement.Type == RequirementType.Buy)
-            {
-                targetTypes.Add(RequirementType.Subsidy);
-                targetTypes.Add(RequirementType.Sale);
-               
-            }
-            else if (myRequirement.Type == RequirementType.Subsidy)
-            {
-                targetTypes.Add(RequirementType.Sale);
-                targetTypes.Add(RequirementType.Buy);
-            }
-
-            allRequirementList.RemoveAll(f => f.UserId == myRequirement.UserId);
-            List<RequirementInfo> firstTypeRequirements = allRequirementList.Where(f => f.Type == targetTypes[0]).ToList();
-            List<RequirementInfo> secondTypeRequirements = allRequirementList.Where(f => f.Type == targetTypes[1]).ToList();
-
-            if (firstTypeRequirements == null || firstTypeRequirements.Count == 0)
-                return null;
-
-            if (secondTypeRequirements == null || secondTypeRequirements.Count == 0)
-                return null;
-
-            List<string> chianId = new List<string>();
-            
-
-            int length = firstTypeRequirements.Count;
-            if (secondTypeRequirements.Count < length)
-                length = secondTypeRequirements.Count;
-
-            List<RequirementChainInfo> chainList = new List<RequirementChainInfo>();
-
-            RequirementChainInfo chain = null;
-            for (int i = 0; i < length; i++)
-            {
-                chain = new RequirementChainInfo();
-                chain.ChainId = i;
-                chain.CreateTime = DateTime.Now.AddMinutes(-50);
-                chain.IsDeleted = false;
-                chain.Requirements = new List<RequirementInfo>();
-
-                if(myRequirement.Type == RequirementType.Subsidy)
-                {
-                    chain.Requirements.Add(firstTypeRequirements[i]);
-                    chain.Requirements.Add(myRequirement);
-                    chain.Requirements.Add(secondTypeRequirements[i]);
-                }
-                else if(myRequirement.Type == RequirementType.Buy)
-                {
-                    chain.Requirements.Add(secondTypeRequirements[i]);
-                    chain.Requirements.Add(firstTypeRequirements[i]);
-                    chain.Requirements.Add(myRequirement);
-                }
-                else if (myRequirement.Type == RequirementType.Sale)
-                {
-                    chain.Requirements.Add(myRequirement);
-                    chain.Requirements.Add(firstTypeRequirements[i]);
-                    chain.Requirements.Add(secondTypeRequirements[i]);
-                }
-
-                chain.ModifyTime = DateTime.Now.AddMinutes(-30);
-
-                chainList.Add(chain);
-
-                if (i >= 20)
-                    break;
-            }
-
-            return chainList;
-
-        }
-
+        
         private RequirementInfo GetRequirementInfo(int requirementId)
         {
             var bizResult = QueryRequirementInfo(requirementId);
@@ -415,15 +296,15 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             {
                 errors.Add("RequirementType is required.");
             }
-            dto.RequirementTypeId = (int)requirement.Type;
+            dto.RequirementTypeId = (mongodbObjects.RequirementType)requirement.Type;
 
             dto.RequirementId = requirement.RequirementId;
             dto.EnterpriseId = requirement.EnterpriseId;
             dto.ProductPrice = (int)requirement.ProductPrice;
             dto.CreateTime = requirement.CreateTime;
             dto.ModifyTime = requirement.ModifyTime;
-            dto.RequirementStateId = (int)requirement.State;
-            dto.RequirementTypeId = (int)requirement.Type;
+            dto.RequirementStateId = (mongodbObjects.RequirementStatus)requirement.State;
+            dto.RequirementTypeId = (mongodbObjects.RequirementType)requirement.Type;
 
 
             dto.ProductName = requirement.ProductName;

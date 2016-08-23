@@ -11,6 +11,9 @@ namespace Micro.Future.Commo.Business.Abstraction.Handler
     public abstract class AbstractRequirementManager : IRequirementManager
     {
         public delegate void RequirementChainChangedEventHandler(IEnumerable<RequirementChainInfo> chain);
+
+        
+
         #region IRequirementManager implements
 
 
@@ -21,8 +24,7 @@ namespace Micro.Future.Commo.Business.Abstraction.Handler
         public abstract BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(string userId);
 
         public abstract BizTResult<RequirementInfo> AddRequirementInfo(RequirementInfo requirement);
-
-        public abstract BizTResult<bool> UpdateRequirementInfo(RequirementInfo requirement);
+        
 
         public abstract BizTResult<IEnumerable<RequirementChainInfo>> QueryRequirementChains(int requirementId);
 
