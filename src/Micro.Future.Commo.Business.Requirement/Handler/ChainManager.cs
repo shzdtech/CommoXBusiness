@@ -56,6 +56,8 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             info.CreateTime = chainObj.CreateTime;
             info.ModifyTime = chainObj.ModifyTime;
             info.IsDeleted = chainObj.Deleted;
+            info.Version = chainObj.Version;
+            info.ChainStatus = (ChainStatusType)chainObj.ChainStateId;
             
             if(chainObj.RequirementIdChain!=null && chainObj.RequirementIdChain.Count > 0)
             {

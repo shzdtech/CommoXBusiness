@@ -31,6 +31,13 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         public DateTime ModifyTime { get; set; }
 
         /// <summary>
+        /// 状态
+        /// </summary>
+        public ChainStatusType ChainStatus { get; set; }
+
+        public int Version { get; set; }
+
+        /// <summary>
         /// 是否删除
         /// </summary>
         public bool IsDeleted { get; set; }
