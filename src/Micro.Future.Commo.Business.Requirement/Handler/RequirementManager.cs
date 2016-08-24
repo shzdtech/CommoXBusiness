@@ -224,8 +224,6 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public static RequirementInfo ConvertToRequirementInfo(RequirementObject dto)
         {
-           
-
             RequirementInfo requirement = new RequirementInfo();
             requirement.RequirementId = dto.RequirementId;
             requirement.UserId = dto.UserId;
@@ -241,6 +239,20 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             requirement.ProductSpecification = dto.ProductSpecification;
             requirement.ProductQuantity = dto.ProductQuantity;
             requirement.ProductUnit = dto.ProductUnit;
+
+
+
+            requirement.PaymentAmount = dto.PaymentAmount;
+            requirement.PaymentDateTime = dto.PaymentDateTime;
+            requirement.PaymentType = dto.PaymentType;
+            requirement.TradeProfit = dto.TradeProfit;
+            requirement.EnterpriseType = dto.EnterpriseType;
+            requirement.BusinessRange = dto.BusinessRange;
+            requirement.WarehouseAccount = dto.WarehouseAccount;
+            requirement.InvoiceValue = dto.InvoiceValue;
+            requirement.InvoiceIssueDateTime = dto.InvoiceIssueDateTime;
+            requirement.InvoiceTransferMode = dto.InvoiceTransferMode;
+
 
 
             requirement.WarehouseState = dto.WarehouseState;
@@ -310,6 +322,18 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             dto.ProductSpecification = requirement.ProductSpecification;
             dto.ProductQuantity = requirement.ProductQuantity;
             dto.ProductUnit = requirement.ProductUnit;
+
+            dto.PaymentAmount = requirement.PaymentAmount;
+            dto.PaymentDateTime = requirement.PaymentDateTime;
+            dto.PaymentType = requirement.PaymentType;
+            dto.TradeProfit = requirement.TradeProfit;
+            dto.EnterpriseType = requirement.EnterpriseType;
+            dto.BusinessRange = requirement.BusinessRange;
+            dto.WarehouseAccount = requirement.WarehouseAccount;
+            dto.InvoiceValue = requirement.InvoiceValue;
+            dto.InvoiceIssueDateTime = requirement.InvoiceIssueDateTime;
+            dto.InvoiceTransferMode = requirement.InvoiceTransferMode;
+
 
 
             dto.WarehouseState = requirement.WarehouseState;
