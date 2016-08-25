@@ -23,15 +23,6 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         private IOrder _orderService = null;
         private IMatcher _matcherService = null;
 
-        public ChainManager()
-        {
-            _chainService = new ChainDAL();
-            _tradeService = new TradeHandler();
-            _orderService = new OrderHandler();
-            _matcherService = new MatcherHandler();
-               
-        }
-
         public ChainManager(IChainDAL chainService, ITrade tradeService, IOrder orderService, IMatcher matcherService)
         {
             _chainService = chainService;

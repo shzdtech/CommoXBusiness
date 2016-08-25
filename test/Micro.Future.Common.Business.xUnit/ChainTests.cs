@@ -15,7 +15,7 @@ namespace Micro.Future.Common.Business.xUnit
 
         public ChainTests()
         {
-            _chainManager = new ChainManager();
+            //_chainManager = new ChainManager();
         }
 
         //[Fact]

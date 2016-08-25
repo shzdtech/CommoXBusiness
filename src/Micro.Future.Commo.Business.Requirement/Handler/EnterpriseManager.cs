@@ -15,11 +15,6 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
     {
         private IEnterprise _enterpriseService = null;
 
-        public EnterpriseManager()
-        {
-            _enterpriseService = new EnterpriseHandler();
-        }
-
         public EnterpriseManager(IEnterprise enterpriseService)
         {
             _enterpriseService = enterpriseService;

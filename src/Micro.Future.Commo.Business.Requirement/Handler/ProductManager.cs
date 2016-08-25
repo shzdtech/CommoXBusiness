@@ -14,11 +14,6 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
     {
         private IProduct _productService = null;
 
-        public ProductManager()
-        {
-            _productService = new ProductHandler();
-        }
-
         public ProductManager(IProduct productService)
         {
             _productService = productService;

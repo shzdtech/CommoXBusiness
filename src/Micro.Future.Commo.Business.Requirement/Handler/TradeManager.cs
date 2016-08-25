@@ -15,12 +15,6 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         private ITrade _tradeService = null;
         private IOrder _orderService = null;
 
-        public TradeManager()
-        {
-            _tradeService = new TradeHandler();
-            _orderService = new OrderHandler();
-        }
-
         public TradeManager(ITrade tradeService, IOrder orderService)
         {
             _tradeService = tradeService;
