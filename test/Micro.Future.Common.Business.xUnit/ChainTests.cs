@@ -16,11 +16,6 @@ namespace Micro.Future.Common.Business.xUnit
 
         public ChainTests()
         {
-            //_chainManager = new ChainManager();
-
-            services.AddTransient<IChainManager, ChainManager>();
-
-            serviceProvider = services.BuildServiceProvider();
             _chainManager = serviceProvider.GetService<IChainManager>();
         }
 
@@ -30,7 +25,7 @@ namespace Micro.Future.Common.Business.xUnit
             var allChains = _chainManager.QueryAllChains(Commo.Business.Abstraction.BizObject.ChainStatusType.OPEN);
         }
 
-        [Fact]
+        //[Fact]
         public void Test_QueryChainsByUserId()
         {
             string userId = "103";

@@ -1,5 +1,7 @@
-﻿using Micro.Future.Commo.Business.Abstraction.BizObject;
+﻿using Micro.Future.Commo.Business.Abstraction.BizInterface;
+using Micro.Future.Commo.Business.Abstraction.BizObject;
 using Micro.Future.Commo.Business.Requirement;
+using Micro.Future.Commo.Business.Requirement.Handler;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -25,6 +27,10 @@ namespace Micro.Future.Common.Business.xUnit
             };
 
             services.AddBizServices(options);
+
+            services.AddTransient<IChainManager, ChainManager>();
+            services.AddTransient<IEnterpriseManager, EnterpriseManager>();
+
             serviceProvider = services.BuildServiceProvider();
         }
     }
