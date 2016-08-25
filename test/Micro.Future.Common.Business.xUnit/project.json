@@ -9,6 +9,7 @@
     "Micro.Future.Commo.Business.Requirement": "1.0.0-*",
     "Micro.Future.Commo.Business.Abstraction": "1.0.0-*",
     "Micro.Future.Business.Common": "1.0.0-*",
+    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
     "dotnet-test-xunit": "2.2.0-preview2-build1029"
   },
   "testRunner": "xunit",

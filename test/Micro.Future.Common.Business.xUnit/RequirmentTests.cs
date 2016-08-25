@@ -72,7 +72,7 @@ namespace Micro.Future.Common.Business.xUnit
             Assert.NotEqual<int>(requirements.Count(), 0);
         }
 
-        [Fact]
+        //[Fact]
         public void Test_AddRequirement()
         {
             IRequirementManager manager = new RequirementManager();

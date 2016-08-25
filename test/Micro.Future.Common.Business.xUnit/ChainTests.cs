@@ -6,16 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Micro.Future.Common.Business.xUnit
 {
-    public class ChainTests
+    public class ChainTests : BaseTest
     {
         private IChainManager _chainManager = null;
 
         public ChainTests()
         {
             //_chainManager = new ChainManager();
+
+            services.AddTransient<IChainManager, ChainManager>();
+
+            serviceProvider = services.BuildServiceProvider();
+            _chainManager = serviceProvider.GetService<IChainManager>();
         }
 
         //[Fact]
@@ -24,7 +30,7 @@ namespace Micro.Future.Common.Business.xUnit
             var allChains = _chainManager.QueryAllChains(Commo.Business.Abstraction.BizObject.ChainStatusType.OPEN);
         }
 
-        //[Fact]
+        [Fact]
         public void Test_QueryChainsByUserId()
         {
             string userId = "103";
@@ -68,7 +74,7 @@ namespace Micro.Future.Common.Business.xUnit
             }
         }
 
-        [Fact]
+        //[Fact]
         public void Test_ConfirmChain()
         {
             int chainId = 11028;
