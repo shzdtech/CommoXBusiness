@@ -22,7 +22,7 @@ namespace Micro.Future.Common.Business.xUnit
         //[Fact]
         public void Test_QueryAllChains()
         {
-            var allChains = _chainManager.QueryAllChains(Commo.Business.Abstraction.BizObject.ChainStatusType.OPEN);
+            var allChains = _chainManager.QueryAllChains(Commo.Business.Abstraction.BizObject.ChainStatusType.CONFIRMED);
         }
 
         //[Fact]
@@ -33,7 +33,7 @@ namespace Micro.Future.Common.Business.xUnit
         }
 
 
-        //[Fact]
+        [Fact]
         public void Test_LockUnlockChain()
         {
             int chainId = 11028;
@@ -61,6 +61,14 @@ namespace Micro.Future.Common.Business.xUnit
                 chainInfo = _chainManager.GetChainInfo(chainId);
                 Assert.Equal<ChainStatusType>(chainInfo.ChainStatus, ChainStatusType.OPEN);
 
+                var lockSuccess = _chainManager.LockChain(chainId);
+                Assert.True(lockSuccess);
+
+                chainInfo = _chainManager.GetChainInfo(chainId);
+                Assert.Equal<ChainStatusType>(chainInfo.ChainStatus, ChainStatusType.LOCKED);
+            }
+            else if(chainInfo.ChainStatus == ChainStatusType.CONFIRMED)
+            {
                 var lockSuccess = _chainManager.LockChain(chainId);
                 Assert.True(lockSuccess);
 

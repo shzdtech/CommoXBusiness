@@ -30,6 +30,7 @@ namespace Micro.Future.Common.Business.xUnit
 
             services.AddTransient<IChainManager, ChainManager>();
             services.AddTransient<IEnterpriseManager, EnterpriseManager>();
+            services.AddTransient<ITradeManager, TradeManager>();
 
             serviceProvider = services.BuildServiceProvider();
         }
