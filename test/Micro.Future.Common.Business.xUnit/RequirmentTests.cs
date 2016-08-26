@@ -167,115 +167,128 @@ namespace Micro.Future.Common.Business.xUnit
             return fakeUsers;
         }
 
-        //[Fact]
+
+        [Fact]
         public void Test_AddRequirements()
         {
             //read csv file to table
-            string[][] table = ReadCvs("D:\\left.csv");
+            string[][] tableuser = ReadCvs("E:\\PICT\\csv\\User.csv");
+            string[][] tablebuy = ReadCvs("E:\\PICT\\csv\\buy.csv");
+            string[][] tablesal = ReadCvs("E:\\PICT\\csv\\sal.csv");
+            string[][] tablesub = ReadCvs("E:\\PICT\\csv\\sub.csv");
 
             IRequirementManager manager = new RequirementManager();
-
-            UserInfo user = null;
-
-
-            //for (int i = 0; i < 1000; i++)
-
-            for (int i = 0; i < table.GetLength(0); i++)
+            for (int i = 0; i < 3; i++)
             {
-                if (String.Compare("None", table[i][7]) == 0)
+                for (int j = 50; j < 60; j++)
                 {
-                    continue;
+                 
+                    RequirementInfo requirementbuy = new RequirementInfo();
+                    //add 10 buy requriements 
+                    requirementbuy.UserId = tableuser[i][0];
+                    requirementbuy.EnterpriseId = Convert.ToInt16(tableuser[i][1]);
+
+                    requirementbuy.CreateTime = DateTime.Now;
+                    List<RequirementRuleInfo> rulesbuy = new List<RequirementRuleInfo>();
+                    RequirementRuleInfo rulebuy = new RequirementRuleInfo();
+
+                    requirementbuy.State = RequirementState.Normal;
+                    requirementbuy.Type = RequirementType.Buy;
+                    requirementbuy.PaymentAmount = Convert.ToDecimal(tablebuy[j][2]);
+                    requirementbuy.PaymentDateTime = tablebuy[j][3];
+                    requirementbuy.PaymentType = tablebuy[j][4];
+                    requirementbuy.WarehouseAccount = tablebuy[j][5];
+                    requirementbuy.ProductType = tablebuy[j][6];
+                    requirementbuy.ProductName = tablebuy[j][7];
+                    requirementbuy.ProductSpecification = tablebuy[j][8];
+                    requirementbuy.ProductQuantity = Convert.ToDecimal(tablebuy[j][9]);
+                    requirementbuy.WarehouseAddress1 = tablebuy[j][10];
+                    requirementbuy.InvoiceValue = tablebuy[j][11];
+                    requirementbuy.InvoiceIssueDateTime = tablebuy[j][12];
+                    requirementbuy.InvoiceTransferMode = tablebuy[j][13];
+
+                    rulebuy.RuleType = 1;
+                    rulebuy.Key = tablebuy[j][15];
+                    rulebuy.Value = tablebuy[j][16];
+
+                    rulesbuy.Add(rulebuy);
+                    requirementbuy.Rules = rulesbuy;
+
+                    BizTResult<RequirementInfo> bizResultbuy = manager.AddRequirementInfo(requirementbuy);
+
+                    Assert.False(bizResultbuy.HasError);
+                    Assert.NotNull(bizResultbuy.Result);
+
+                    //add 10 sal requirements
+                    RequirementInfo requirementsal = new RequirementInfo();
+
+                    requirementsal.UserId = tableuser[i][0];
+                    requirementsal.EnterpriseId = Convert.ToInt16(tableuser[i][1]);
+
+                    requirementsal.CreateTime = DateTime.Now;
+                    List<RequirementRuleInfo> rulessal = new List<RequirementRuleInfo>();
+                    RequirementRuleInfo rulesal = new RequirementRuleInfo();
+
+                    requirementsal.State = RequirementState.Normal;
+                    requirementsal.Type = RequirementType.Sale;
+                    requirementsal.ProductType = tablesal[j][2];
+                    requirementsal.ProductName = tablesal[j][3];
+                    requirementsal.ProductSpecification = tablesal[j][4];
+                    requirementsal.ProductQuantity = Convert.ToDecimal(tablesal[j][5]);
+                    requirementsal.WarehouseAddress1 = tablesal[j][6];
+                    requirementsal.InvoiceValue = tablesal[j][7];
+                    requirementsal.InvoiceIssueDateTime = tablesal[j][8];
+                    requirementsal.InvoiceTransferMode = tablesal[j][9];
+
+                    rulesal.RuleType = 1;
+                    rulesal.Key = tablesal[j][11];
+                    rulesal.Value = tablesal[j][12];
+
+                    rulessal.Add(rulesal);
+                    requirementsal.Rules = rulessal;
+
+                    BizTResult<RequirementInfo> bizResultsal = manager.AddRequirementInfo(requirementsal);
+
+                    Assert.False(bizResultsal.HasError);
+                    Assert.NotNull(bizResultsal.Result);
+
+                    //add 10 sub requirements
+                    RequirementInfo requirementsub = new RequirementInfo();
+
+                    requirementsub.UserId = tableuser[i][0];
+                    requirementsub.EnterpriseId = Convert.ToInt16(tableuser[i][1]);
+
+                    requirementsub.CreateTime = DateTime.Now;
+                    List<RequirementRuleInfo> rulessub = new List<RequirementRuleInfo>();
+                    RequirementRuleInfo rulesub = new RequirementRuleInfo();
+
+                    requirementsub.State = RequirementState.Normal;
+                    requirementsub.Type = RequirementType.Subsidy;
+                    requirementsub.TradeAmount = Convert.ToDecimal(tablesub[j][0]);
+                    requirementsub.TradeProfit = Convert.ToDecimal(tablesub[j][1]);
+                    requirementsub.EnterpriseType = tablesub[j][2];
+                    requirementsub.BusinessRange = tablesub[j][3];
+                    requirementsub.InvoiceValue = tablesub[j][4];
+                    requirementsub.InvoiceIssueDateTime = tablesub[j][5];
+                    requirementsub.InvoiceTransferMode = tablesub[j][6];
+
+                    rulesub.RuleType = 1;
+                    rulesub.Key = tablesal[j][11];
+                    rulesub.Value = tablesal[j][12];
+
+                    rulessub.Add(rulesub);
+                    requirementsub.Rules = rulessub;
+
+                    BizTResult<RequirementInfo> bizResultsub = manager.AddRequirementInfo(requirementsub);
+
+                    Assert.False(bizResultsub.HasError);
+                    Assert.NotNull(bizResultsub.Result);
+
                 }
-
-                RequirementInfo requirement = new RequirementInfo();
-
-                List<RequirementRuleInfo> rules = new List<RequirementRuleInfo>();
-                RequirementRuleInfo rule = new RequirementRuleInfo();
-
-                user = fakeUsers[i % 50];
-
-                requirement.CreateTime = DateTime.Now;
-
-                //
-                requirement.UserId = user.UserId;
-                requirement.EnterpriseId = user.EnterpriseId;
-
-                requirement.ProductName = table[i][0];
-                requirement.ProductPrice = 1000;
-                requirement.ProductQuantity = Convert.ToDecimal(table[i][2]);
-                requirement.ProductUnit = table[i][3];
-                requirement.WarehouseState = table[i][4];
-                requirement.WarehouseCity = table[i][5];
-                requirement.WarehouseAddress1 = table[i][6];
-
-                if (String.Compare("补贴", table[i][7]) == 0)
-                {
-                    requirement.Type = RequirementType.Subsidy;
-                }
-                if (String.Compare("买", table[i][7]) == 0)
-                {
-                    requirement.Type = RequirementType.Buy;
-                }
-
-                if (String.Compare("卖", table[i][7]) == 0)
-                {
-                    requirement.Type = RequirementType.Sale;
-                }
-
-                if (String.Compare("None", table[i][7]) == 0)
-                {
-                    requirement.Type = RequirementType.None;
-                }
-
-                requirement.TradeAmount = Convert.ToDecimal(table[i][8]);
-
-                //1 = 企业规则、2 = 货物规则、3 = 资金规则、4 = 支付规则
-
-                if (String.Compare("企业规则", table[i][9]) == 0)
-                {
-                    rule.RuleType = 1;
-
-                }
-                if (String.Compare("货物规则", table[i][9]) == 0)
-                {
-                    rule.RuleType = 2;
-                }
-                if (String.Compare("资金规则", table[i][9]) == 0)
-                {
-                    rule.RuleType = 3;
-                }
-                if (String.Compare("支付规则", table[i][9]) == 0)
-                {
-                    rule.RuleType = 4;
-                }
-
-                rule.Key = table[i][10];
-
-                rule.Value = table[i][11];
-                if (String.Compare("MoreThan", table[i][11]) == 0)
-                {
-                    rule.OperationType = RequirementRuleOperation.MoreThan;
-                }
-                if (String.Compare("LessThan", table[i][11]) == 0)
-                {
-                    rule.OperationType = RequirementRuleOperation.LessThan;
-                }
-                if (String.Compare("Equal", table[i][11]) == 0)
-                {
-                    rule.OperationType = RequirementRuleOperation.Equal;
-                }
-
-                rules.Add(rule);
-                requirement.Rules = rules;
-
-                BizTResult<RequirementInfo> bizResult = manager.AddRequirementInfo(requirement);
-
-                Assert.False(bizResult.HasError);
-                Assert.NotNull(bizResult.Result);
+               
             }
 
         }
-
 
         public static string[][] ReadCvs(string fullname)
         {
@@ -285,43 +298,11 @@ namespace Micro.Future.Common.Business.xUnit
             var builder = new StringBuilder();
             foreach (var line in lines)
             {
-                builder.Clear();
-                var comma = false;
-                var array = line.ToCharArray();
-                var values = new List<string>();
-                var length = array.Length - 1;
-                var index = 0;
-                while (index < length)
-                {
-                    var item = array[index++];
-                    switch (item)
-                    {
-                        case ',':
-                            if (comma)
-                            {
-                                builder.Append(item);
-                            }
-                            else
-                            {
-                                values.Add(builder.ToString());
-                                builder.Clear();
-                            }
-                            break;
-                        case '"':
-                            comma = !comma;
-                            break;
-                        default:
-                            builder.Append(item);
-                            break;
-                    }
-                }
-                var count = values.Count;
-                if (count == 0) continue;
-                list.Add(values.ToArray());
+                string[] sArray = line.Split(',');
+                list.Add(sArray);
             }
             return list.ToArray();
         }
-
 
     }
 
