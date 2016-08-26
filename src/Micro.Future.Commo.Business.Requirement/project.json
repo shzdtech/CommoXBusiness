@@ -6,7 +6,9 @@
     "Micro.Future.Commo.Business.Abstraction": "1.0.0-*",
     "Micro.Future.Business.MongoDB.Commo": "1.0.0-*",
     "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
-    "NETStandard.Library": "1.6.0"
+    "NETStandard.Library": "1.6.0",
+    "Micro.Future.Business.MatchMaker.Abstraction": "1.0.0-*",
+    "Micro.Future.Business.MatchMaker.Commo": "1.0.0-*"
   },
 
   "frameworks": {

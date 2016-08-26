@@ -28,9 +28,11 @@ namespace Micro.Future.Common.Business.xUnit
 
             services.AddBizServices(options);
 
+            //for testing use
             services.AddTransient<IChainManager, ChainManager>();
             services.AddTransient<IEnterpriseManager, EnterpriseManager>();
             services.AddTransient<ITradeManager, TradeManager>();
+            services.AddTransient<IMatchMakerManager, MatchMakerManager>();
 
             serviceProvider = services.BuildServiceProvider();
         }

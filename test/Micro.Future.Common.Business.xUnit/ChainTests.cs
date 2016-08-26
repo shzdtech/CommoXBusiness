@@ -32,8 +32,16 @@ namespace Micro.Future.Common.Business.xUnit
             var allChains = _chainManager.QueryChainsByUserId(userId, Commo.Business.Abstraction.BizObject.ChainStatusType.OPEN);
         }
 
-
         [Fact]
+        public void Test_QueryChainsByRequirementId()
+        {
+            int requirementId = 5862;
+
+            var chains = _chainManager.QueryChainsByRequirementId(requirementId, ChainStatusType.CONFIRMED);
+        }
+
+
+        //[Fact]
         public void Test_LockUnlockChain()
         {
             int chainId = 11028;
