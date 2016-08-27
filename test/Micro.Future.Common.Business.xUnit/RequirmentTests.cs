@@ -266,15 +266,15 @@ namespace Micro.Future.Common.Business.xUnit
                     requirementsub.Type = RequirementType.Subsidy;
                     requirementsub.TradeAmount = Convert.ToDecimal(tablesub[j][0]);
                     requirementsub.TradeProfit = Convert.ToDecimal(tablesub[j][1]);
-                    requirementsub.EnterpriseType = tablesub[j][2];
+                  // requirementsub.EnterpriseType = tablesub[j][2];
                     requirementsub.BusinessRange = tablesub[j][3];
                     requirementsub.InvoiceValue = tablesub[j][4];
                     requirementsub.InvoiceIssueDateTime = tablesub[j][5];
                     requirementsub.InvoiceTransferMode = tablesub[j][6];
 
                     rulesub.RuleType = 1;
-                    rulesub.Key = tablesal[j][11];
-                    rulesub.Value = tablesal[j][12];
+                    rulesub.Key = "企业类型";
+                    rulesub.Value = tablesub[j][2];
 
                     rulessub.Add(rulesub);
                     requirementsub.Rules = rulessub;
