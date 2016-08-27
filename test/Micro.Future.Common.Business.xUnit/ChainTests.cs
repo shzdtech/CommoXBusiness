@@ -25,11 +25,11 @@ namespace Micro.Future.Common.Business.xUnit
             var allChains = _chainManager.QueryAllChains(Commo.Business.Abstraction.BizObject.ChainStatusType.CONFIRMED);
         }
 
-        //[Fact]
+        [Fact]
         public void Test_QueryChainsByUserId()
         {
-            string userId = "103";
-            var allChains = _chainManager.QueryChainsByUserId(userId, Commo.Business.Abstraction.BizObject.ChainStatusType.OPEN);
+            string userId = "66770166-b0ce-47be-b3a9-c913e245cab3";
+            var allChains = _chainManager.QueryChainsByUserId(userId, Commo.Business.Abstraction.BizObject.ChainStatusType.LOCKED);
         }
 
         [Fact]

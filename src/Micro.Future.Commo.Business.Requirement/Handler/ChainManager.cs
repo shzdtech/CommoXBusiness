@@ -118,7 +118,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                     order = new Order();
                     order.TradeId = tradeId;
                     order.UserId = requirement.UserId;
-                    order.RequirementType = requirement.Type.ToString();
+                    //order.RequirementType = requirement.Type.ToString();
                     order.CreateTime = trade.TradeTime;
                     order.EnterpriseId = requirement.EnterpriseId;
                     order.ModifyTime = trade.TradeTime;
