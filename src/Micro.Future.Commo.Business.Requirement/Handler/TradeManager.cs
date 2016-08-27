@@ -24,10 +24,10 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         public OrderInfo GetOrderInfo(int orderId)
         {
             Order orderObj = _orderService.queryOrder(orderId);
-            return CovnertOrderToInfo(orderObj);
+            return CovnertOrderObjectToInfo(orderObj);
         }
 
-        private OrderInfo CovnertOrderToInfo(Order orderObj)
+        private OrderInfo CovnertOrderObjectToInfo(Order orderObj)
         {
             return new OrderInfo()
             {
@@ -70,7 +70,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             };
         }
 
-        private Order CovnertOrderToObject(OrderInfo info)
+        private Order CovnertOrderInfoToObject(OrderInfo info)
         {
             return new Order()
             {
@@ -122,7 +122,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             IList<OrderInfo> orderInfoList = new List<OrderInfo>();
             foreach(var order in orders)
             {
-                orderInfoList.Add(CovnertOrderToInfo(order));
+                orderInfoList.Add(CovnertOrderObjectToInfo(order));
             }
 
             return orderInfoList;

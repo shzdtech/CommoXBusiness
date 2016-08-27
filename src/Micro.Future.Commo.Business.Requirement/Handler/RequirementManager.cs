@@ -13,15 +13,15 @@ using mongodbObjects = Micro.Future.Business.MongoDB.Commo.BizObjects;
 
 namespace Micro.Future.Commo.Business.Requirement.Handler
 {
-    public class RequirementManager : AbstractRequirementManager
+    public class RequirementManager : IRequirementManager
     {
-        public event RequirementChainChangedEventHandler OnRequirementChainChanged;
-
         protected MatcherHandler _matcherService = null;
+
+        public event Action<IList<RequirementChainInfo>> OnChainChanged;
 
         #region constructor
 
-        public RequirementManager() : base()
+        public RequirementManager()
         {
             _matcherService = new MatcherHandler();
         }
@@ -34,7 +34,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         private void _matcherService_OnChainChanged(IEnumerable<ChainObject> chains, MatcherHandler.ChainUpdateStatus status)
         {
-            if (OnRequirementChainChanged != null)
+            if (OnChainChanged != null)
             {
                 List<RequirementChainInfo> chainInfoList = new List<RequirementChainInfo>();
                 RequirementChainInfo info = null;
@@ -44,7 +44,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                     chainInfoList.Add(info);
                 }
 
-                OnRequirementChainChanged(chainInfoList);
+                OnChainChanged(chainInfoList);
             }
         }
 
@@ -52,7 +52,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         #region implements
 
-        public override BizTResult<RequirementInfo> QueryRequirementInfo(int requirementId)
+        public BizTResult<RequirementInfo> QueryRequirementInfo(int requirementId)
         {
             var findRequirement = this._matcherService.QueryRequirementInfo(requirementId);
             if (findRequirement == null)
@@ -63,7 +63,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return new BizTResult<RequirementInfo>(requirement);
         }
 
-        public override BizTResult<IEnumerable<RequirementInfo>> QueryAllRequirements()
+        public BizTResult<IEnumerable<RequirementInfo>> QueryAllRequirements()
         {
             var findRequirements = this._matcherService.QueryAllRequirements();
             if (findRequirements == null)
@@ -73,7 +73,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return new BizTResult<IEnumerable<RequirementInfo>>(requirements);
         }
 
-        public override BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(string userId)
+        public BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(string userId)
         {
             var findRequirements = this._matcherService.QueryRequirements(userId);
             if (findRequirements == null)
@@ -83,7 +83,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return new BizTResult<IEnumerable<RequirementInfo>>(requirements);
         }
 
-        public override BizTResult<RequirementInfo> AddRequirementInfo(RequirementInfo requirement)
+        public BizTResult<RequirementInfo> AddRequirementInfo(RequirementInfo requirement)
         {
             if (requirement == null)
                 return new BizTResult<RequirementInfo>(null, new BizException(BizErrorType.BIZ_ERROR, "RequirementInfo is null"));
@@ -133,7 +133,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return new BizTResult<RequirementInfo>(requirement);
         }
 
-        public override BizTResult<IEnumerable<RequirementChainInfo>> QueryRequirementChains(int requirementId)
+        public BizTResult<IEnumerable<RequirementChainInfo>> QueryRequirementChains(int requirementId)
         {
             var findChainObjects = this._matcherService.GetMatcherChainsByRequirementId(requirementId, ChainStatus.OPEN);//.QueryRequirementChains(requirementId);
             if (findChainObjects == null)

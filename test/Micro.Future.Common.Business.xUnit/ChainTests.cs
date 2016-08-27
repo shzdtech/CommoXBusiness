@@ -29,7 +29,7 @@ namespace Micro.Future.Common.Business.xUnit
         public void Test_QueryChainsByUserId()
         {
             string userId = "66770166-b0ce-47be-b3a9-c913e245cab3";
-            var allChains = _chainManager.QueryChainsByUserId(userId, Commo.Business.Abstraction.BizObject.ChainStatusType.LOCKED);
+            var allChains = _chainManager.QueryChainsByUserId(userId, Commo.Business.Abstraction.BizObject.ChainStatusType.OPEN);
         }
 
         [Fact]

@@ -9,6 +9,8 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
 {
     public interface IRequirementManager
     {
+        event Action<IList<RequirementChainInfo>> OnChainChanged;
+
         BizTResult<IEnumerable<RequirementInfo>> QueryAllRequirements();
 
         BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(string userId);
