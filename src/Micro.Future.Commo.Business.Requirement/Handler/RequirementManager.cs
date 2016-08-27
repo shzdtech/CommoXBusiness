@@ -316,6 +316,11 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             dto.RequirementStateId = (mongodbObjects.RequirementStatus)requirement.State;
             dto.RequirementTypeId = (mongodbObjects.RequirementType)requirement.Type;
 
+            if(requirement.Type == Abstraction.BizObject.RequirementType.Sale)
+            {
+                dto.TradeAmount = requirement.ProductPrice * requirement.ProductQuantity;
+            }
+
 
             dto.ProductName = requirement.ProductName;
             dto.ProductType = requirement.ProductType;

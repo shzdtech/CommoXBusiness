@@ -39,17 +39,17 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// <summary>
         /// 正常
         /// </summary>
-        Normal = 1,
+        OPEN = 0,
 
         /// <summary>
         /// 已删除
         /// </summary>
-        Deleted = 2,
+        LOCKED = 1,
 
         /// <summary>
         /// 撮合中
         /// </summary>
-        Mapping = 3
+        CONFIRMED = 2
     }
 
     /// <summary>

@@ -192,7 +192,7 @@ namespace Micro.Future.Common.Business.xUnit
                     List<RequirementRuleInfo> rulesbuy = new List<RequirementRuleInfo>();
                     RequirementRuleInfo rulebuy = new RequirementRuleInfo();
 
-                    requirementbuy.State = RequirementState.Normal;
+                    requirementbuy.State = RequirementState.OPEN;
                     requirementbuy.Type = RequirementType.Buy;
                     requirementbuy.PaymentAmount = Convert.ToDecimal(tablebuy[j][2]);
                     requirementbuy.PaymentDateTime = tablebuy[j][3];
@@ -229,7 +229,7 @@ namespace Micro.Future.Common.Business.xUnit
                     List<RequirementRuleInfo> rulessal = new List<RequirementRuleInfo>();
                     RequirementRuleInfo rulesal = new RequirementRuleInfo();
 
-                    requirementsal.State = RequirementState.Normal;
+                    requirementsal.State = RequirementState.OPEN;
                     requirementsal.Type = RequirementType.Sale;
                     requirementsal.ProductType = tablesal[j][2];
                     requirementsal.ProductName = tablesal[j][3];
@@ -262,7 +262,7 @@ namespace Micro.Future.Common.Business.xUnit
                     List<RequirementRuleInfo> rulessub = new List<RequirementRuleInfo>();
                     RequirementRuleInfo rulesub = new RequirementRuleInfo();
 
-                    requirementsub.State = RequirementState.Normal;
+                    requirementsub.State = RequirementState.OPEN;
                     requirementsub.Type = RequirementType.Subsidy;
                     requirementsub.TradeAmount = Convert.ToDecimal(tablesub[j][0]);
                     requirementsub.TradeProfit = Convert.ToDecimal(tablesub[j][1]);

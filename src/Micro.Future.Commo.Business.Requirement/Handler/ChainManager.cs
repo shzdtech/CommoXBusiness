@@ -103,9 +103,6 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
                 Trade trade = new Trade();
                 trade.TradeTime = DateTime.Now;
-                trade.ParticipatorCount = chain.Requirements.Count;
-                
-
 
                 Trade newTrade = _tradeService.submitTrade(trade);
                 if (newTrade == null || newTrade.TradeId <= 0)
@@ -138,7 +135,8 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public IList<RequirementChainInfo> QueryChainsByRequirementId(int requirementId, ChainStatusType type)
         {
-            IList<ChainObject> chainList = _matcherService.GetMatcherChainsByRequirementId(requirementId, (ChainStatus)type, true);
+            bool latestVersion = type == ChainStatusType.OPEN ? true : false;
+            IList<ChainObject> chainList = _matcherService.GetMatcherChainsByRequirementId(requirementId, (ChainStatus)type, latestVersion);
             return ConvertChainObjectsToChainInfoList(chainList);
         }
 
@@ -158,13 +156,15 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public IList<RequirementChainInfo> QueryChainsByUserId(string userId, ChainStatusType type)
         {
-            IList<ChainObject> chainList = _matcherService.GetMatcherChainsByUserId(userId, (ChainStatus)type, true);
+            bool latestVersion = type == ChainStatusType.OPEN ? true : false;
+            IList<ChainObject> chainList = _matcherService.GetMatcherChainsByUserId(userId, (ChainStatus)type, latestVersion);
             return ConvertChainObjectsToChainInfoList(chainList);
         }
 
         public IList<RequirementChainInfo> QueryAllChains(ChainStatusType type)
         {
-            IList<ChainObject> chainList = _matcherService.GetMatcherChains((ChainStatus)type, true);
+            bool latestVersion = type == ChainStatusType.OPEN ? true : false;
+            IList<ChainObject> chainList = _matcherService.GetMatcherChains((ChainStatus)type, latestVersion);
             return ConvertChainObjectsToChainInfoList(chainList);
         }
     }
