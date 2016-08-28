@@ -172,127 +172,152 @@ namespace Micro.Future.Common.Business.xUnit
         public void Test_AddRequirements()
         {
             //read csv file to table
-            string[][] tableuser = ReadCvs("E:\\PICT\\csv\\User.csv");
-            string[][] tablebuy = ReadCvs("E:\\PICT\\csv\\buy.csv");
-            string[][] tablesal = ReadCvs("E:\\PICT\\csv\\sal.csv");
-            string[][] tablesub = ReadCvs("E:\\PICT\\csv\\sub.csv");
+            string folder = Path.Combine(GetImportPath(), "TestData");
+            string[][] tableuser = ReadCvs(Path.Combine(folder, "User.csv"));
+            string[][] tablebuy = ReadCvs(Path.Combine(folder, "buy.csv"));
+            string[][] tablesal = ReadCvs(Path.Combine(folder, "sal.csv"));
+            string[][] tablesub = ReadCvs(Path.Combine(folder, "sub.csv"));
 
             IRequirementManager manager = new RequirementManager();
 
-            int internalcnt = 0;
-            for (int i = 0; i < 3; i++)
-            {                
-                for (int j = 0+ internalcnt; j < 3 + internalcnt; j++)
-                {
+            int totalUsers = tableuser.Length;
 
-                    RequirementInfo requirementbuy = new RequirementInfo();
-                    //add 10 buy requriements 
-                    requirementbuy.UserId = tableuser[i][0];
-                    requirementbuy.EnterpriseId = Convert.ToInt16(tableuser[i][1]);
+            //add 10 buy requriements 
+            for (int i = 0; i < tablebuy.Length; i++)
+            {
+                int currentUserIndex = i % 3;
+                var currentUser = tableuser[currentUserIndex];
 
-                    requirementbuy.CreateTime = DateTime.Now;
-                    List<RequirementRuleInfo> rulesbuy = new List<RequirementRuleInfo>();
-                    RequirementRuleInfo rulebuy = new RequirementRuleInfo();
+                string userId = currentUser[0];
+                int enterpriseId = int.Parse(currentUser[1]);
 
-                    requirementbuy.State = RequirementState.OPEN;
-                    requirementbuy.Type = RequirementType.Buy;
-                    requirementbuy.PaymentAmount = Convert.ToDecimal(tablebuy[j][2]);
-                    requirementbuy.PaymentDateTime = tablebuy[j][3];
-                    requirementbuy.PaymentType = tablebuy[j][4];
-                    requirementbuy.WarehouseAccount = tablebuy[j][5];
-                    requirementbuy.ProductType = tablebuy[j][6];
-                    requirementbuy.ProductName = tablebuy[j][7];
-                    requirementbuy.ProductSpecification = tablebuy[j][8];
-                    requirementbuy.ProductPrice = Convert.ToDecimal(tablebuy[j][9]);
-                    requirementbuy.ProductQuantity = Convert.ToDecimal(tablebuy[j][10]);
-                    requirementbuy.WarehouseAddress1 = tablebuy[j][11];
-                    requirementbuy.InvoiceValue = tablebuy[j][12];
-                    requirementbuy.InvoiceIssueDateTime = tablebuy[j][13];
-                    requirementbuy.InvoiceTransferMode = tablebuy[j][14];
 
-                    rulebuy.RuleType = 1;
-                    rulebuy.Key = tablebuy[j][16];
-                    rulebuy.Value = tablebuy[j][17];
+                var testData = tablebuy[i];
+                RequirementInfo requirementbuy = new RequirementInfo();
+                requirementbuy.UserId = userId;
+                requirementbuy.EnterpriseId = enterpriseId;
+                requirementbuy.CreateTime = DateTime.Now;
 
-                    rulesbuy.Add(rulebuy);
-                    requirementbuy.Rules = rulesbuy;
+                List<RequirementRuleInfo> rulesbuy = new List<RequirementRuleInfo>();
+                RequirementRuleInfo rulebuy = new RequirementRuleInfo();
 
-                    BizTResult<RequirementInfo> bizResultbuy = manager.AddRequirementInfo(requirementbuy);
+                requirementbuy.State = RequirementState.OPEN;
+                requirementbuy.Type = RequirementType.Buy;
+                requirementbuy.PaymentAmount = Convert.ToDecimal(testData[2]);
+                requirementbuy.PaymentDateTime = testData[3];
+                requirementbuy.PaymentType = testData[4];
+                requirementbuy.WarehouseAccount = testData[5];
+                requirementbuy.ProductType = testData[6];
+                requirementbuy.ProductName = testData[7];
+                requirementbuy.ProductSpecification = testData[8];
+                requirementbuy.ProductPrice = Convert.ToDecimal(testData[9]);
+                requirementbuy.ProductQuantity = Convert.ToDecimal(testData[10]);
+                requirementbuy.WarehouseAddress1 = testData[11];
+                requirementbuy.InvoiceValue = testData[12];
+                requirementbuy.InvoiceIssueDateTime = testData[13];
+                requirementbuy.InvoiceTransferMode = testData[14];
 
-                    Assert.False(bizResultbuy.HasError);
-                    Assert.NotNull(bizResultbuy.Result);
+                rulebuy.RuleType = 1;
+                rulebuy.Key = testData[16];
+                rulebuy.Value = testData[17];
 
-                    //add 10 sal requirements
-                    RequirementInfo requirementsal = new RequirementInfo();
+                rulesbuy.Add(rulebuy);
+                requirementbuy.Rules = rulesbuy;
 
-                    requirementsal.UserId = tableuser[i][0];
-                    requirementsal.EnterpriseId = Convert.ToInt16(tableuser[i][1]);
+                var bizResultbuy = manager.AddRequirementInfo(requirementbuy);
 
-                    requirementsal.CreateTime = DateTime.Now;
-                    List<RequirementRuleInfo> rulessal = new List<RequirementRuleInfo>();
-                    RequirementRuleInfo rulesal = new RequirementRuleInfo();
-
-                    requirementsal.State = RequirementState.OPEN;
-                    requirementsal.Type = RequirementType.Sale;
-                    requirementsal.ProductType = tablesal[j][2];
-                    requirementsal.ProductName = tablesal[j][3];
-                    requirementsal.ProductSpecification = tablesal[j][4];
-                    requirementsal.ProductPrice = Convert.ToDecimal(tablesal[j][5]);
-                    requirementsal.ProductQuantity = Convert.ToDecimal(tablesal[j][6]);
-                    requirementsal.WarehouseAddress1 = tablesal[j][7];
-                    requirementsal.InvoiceValue = tablesal[j][8];
-                    requirementsal.InvoiceIssueDateTime = tablesal[j][9];
-                    requirementsal.InvoiceTransferMode = tablesal[j][10];
-
-                    rulesal.RuleType = 1;
-                    rulesal.Key = tablesal[j][12];
-                    rulesal.Value = tablesal[j][13];
-
-                    rulessal.Add(rulesal);
-                    requirementsal.Rules = rulessal;
-
-                    BizTResult<RequirementInfo> bizResultsal = manager.AddRequirementInfo(requirementsal);
-
-                    Assert.False(bizResultsal.HasError);
-                    Assert.NotNull(bizResultsal.Result);
-
-                    //add 10 sub requirements
-                    RequirementInfo requirementsub = new RequirementInfo();
-
-                    requirementsub.UserId = tableuser[i][0];
-                    requirementsub.EnterpriseId = Convert.ToInt16(tableuser[i][1]);
-
-                    requirementsub.CreateTime = DateTime.Now;
-                    List<RequirementRuleInfo> rulessub = new List<RequirementRuleInfo>();
-                    RequirementRuleInfo rulesub = new RequirementRuleInfo();
-
-                    requirementsub.State = RequirementState.OPEN;
-                    requirementsub.Type = RequirementType.Subsidy;
-                    requirementsub.TradeAmount = Convert.ToDecimal(tablesub[j][0]);
-                    requirementsub.TradeProfit = Convert.ToDecimal(tablesub[j][1]);
-                    requirementsub.BusinessRange = tablesub[j][2];
-                    requirementsub.InvoiceValue = tablesub[j][3];
-                    requirementsub.InvoiceIssueDateTime = tablesub[j][4];
-                    requirementsub.InvoiceTransferMode = tablesub[j][5];
-
-                    rulesub.RuleType = 1;
-                    rulesub.Key = tablesub[j][6]; ;
-                    rulesub.Value = tablesub[j][7];
-
-                    rulessub.Add(rulesub);
-                    requirementsub.Rules = rulessub;
-
-                    BizTResult<RequirementInfo> bizResultsub = manager.AddRequirementInfo(requirementsub);
-
-                    Assert.False(bizResultsub.HasError);
-                    Assert.NotNull(bizResultsub.Result);
-
-                }
-
-                internalcnt = internalcnt + 3;
-
+                Assert.False(bizResultbuy.HasError);
+                Assert.NotNull(bizResultbuy.Result);
             }
 
+
+            //add 10 sal requirements
+            for (int i = 0; i < tablesal.Length; i++)
+            {
+                int currentUserIndex = i % 3;
+                var currentUser = tableuser[currentUserIndex];
+
+                string userId = currentUser[0];
+                int enterpriseId = int.Parse(currentUser[1]);
+
+
+                var testData = tablesal[i];
+                
+                RequirementInfo requirementsal = new RequirementInfo();
+
+                requirementsal.UserId = userId;
+                requirementsal.EnterpriseId = enterpriseId;
+
+                requirementsal.CreateTime = DateTime.Now;
+                List<RequirementRuleInfo> rulessal = new List<RequirementRuleInfo>();
+                RequirementRuleInfo rulesal = new RequirementRuleInfo();
+
+                requirementsal.State = RequirementState.OPEN;
+                requirementsal.Type = RequirementType.Sale;
+                requirementsal.ProductType = testData[2];
+                requirementsal.ProductName = testData[3];
+                requirementsal.ProductSpecification = testData[4];
+                requirementsal.ProductPrice = Convert.ToDecimal(testData[5]);
+                requirementsal.ProductQuantity = Convert.ToDecimal(testData[6]);
+                requirementsal.WarehouseAddress1 = testData[7];
+                requirementsal.InvoiceValue = testData[8];
+                requirementsal.InvoiceIssueDateTime = testData[9];
+                requirementsal.InvoiceTransferMode = testData[10];
+
+                rulesal.RuleType = 1;
+                rulesal.Key = testData[12];
+                rulesal.Value = testData[13];
+
+                rulessal.Add(rulesal);
+                requirementsal.Rules = rulessal;
+
+                BizTResult<RequirementInfo> bizResultsal = manager.AddRequirementInfo(requirementsal);
+
+                Assert.False(bizResultsal.HasError);
+                Assert.NotNull(bizResultsal.Result);
+            }
+
+            //add 10 sub requirements
+            for (int i = 0; i < tablesub.Length; i++)
+            {
+                int currentUserIndex = i % 3;
+                var currentUser = tableuser[currentUserIndex];
+
+                string userId = currentUser[0];
+                int enterpriseId = int.Parse(currentUser[1]);
+
+
+                var testData = tablesub[i];
+                
+                RequirementInfo requirementsub = new RequirementInfo();
+
+                requirementsub.UserId = userId;
+                requirementsub.EnterpriseId = enterpriseId;
+                requirementsub.CreateTime = DateTime.Now;
+                List<RequirementRuleInfo> rulessub = new List<RequirementRuleInfo>();
+                RequirementRuleInfo rulesub = new RequirementRuleInfo();
+
+                requirementsub.State = RequirementState.OPEN;
+                requirementsub.Type = RequirementType.Subsidy;
+                requirementsub.TradeAmount = Convert.ToDecimal(testData[0]);
+                requirementsub.TradeProfit = Convert.ToDecimal(testData[1]);
+                requirementsub.BusinessRange = testData[2];
+                requirementsub.InvoiceValue = testData[3];
+                requirementsub.InvoiceIssueDateTime = testData[4];
+                requirementsub.InvoiceTransferMode = testData[5];
+
+                rulesub.RuleType = 1;
+                rulesub.Key = testData[6]; ;
+                rulesub.Value = testData[7];
+
+                rulessub.Add(rulesub);
+                requirementsub.Rules = rulessub;
+
+                BizTResult<RequirementInfo> bizResultsub = manager.AddRequirementInfo(requirementsub);
+
+                Assert.False(bizResultsub.HasError);
+                Assert.NotNull(bizResultsub.Result);
+            }
         }
 
         public static string[][] ReadCvs(string fullname)
@@ -309,6 +334,13 @@ namespace Micro.Future.Common.Business.xUnit
             return list.ToArray();
         }
 
+
+        public static string GetImportPath()
+        {
+            string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
+
+            return baseFolder.Substring(0, baseFolder.LastIndexOf(@"bin\Debug"));
+        }
     }
 
 
