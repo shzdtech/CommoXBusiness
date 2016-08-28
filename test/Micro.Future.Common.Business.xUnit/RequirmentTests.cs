@@ -178,11 +178,13 @@ namespace Micro.Future.Common.Business.xUnit
             string[][] tablesub = ReadCvs("E:\\PICT\\csv\\sub.csv");
 
             IRequirementManager manager = new RequirementManager();
+
+            int internalcnt = 0;
             for (int i = 0; i < 3; i++)
-            {
-                for (int j = 50; j < 60; j++)
+            {                
+                for (int j = 0+ internalcnt; j < 3 + internalcnt; j++)
                 {
-                 
+
                     RequirementInfo requirementbuy = new RequirementInfo();
                     //add 10 buy requriements 
                     requirementbuy.UserId = tableuser[i][0];
@@ -201,15 +203,16 @@ namespace Micro.Future.Common.Business.xUnit
                     requirementbuy.ProductType = tablebuy[j][6];
                     requirementbuy.ProductName = tablebuy[j][7];
                     requirementbuy.ProductSpecification = tablebuy[j][8];
-                    requirementbuy.ProductQuantity = Convert.ToDecimal(tablebuy[j][9]);
-                    requirementbuy.WarehouseAddress1 = tablebuy[j][10];
-                    requirementbuy.InvoiceValue = tablebuy[j][11];
-                    requirementbuy.InvoiceIssueDateTime = tablebuy[j][12];
-                    requirementbuy.InvoiceTransferMode = tablebuy[j][13];
+                    requirementbuy.ProductPrice = Convert.ToDecimal(tablebuy[j][9]);
+                    requirementbuy.ProductQuantity = Convert.ToDecimal(tablebuy[j][10]);
+                    requirementbuy.WarehouseAddress1 = tablebuy[j][11];
+                    requirementbuy.InvoiceValue = tablebuy[j][12];
+                    requirementbuy.InvoiceIssueDateTime = tablebuy[j][13];
+                    requirementbuy.InvoiceTransferMode = tablebuy[j][14];
 
                     rulebuy.RuleType = 1;
-                    rulebuy.Key = tablebuy[j][15];
-                    rulebuy.Value = tablebuy[j][16];
+                    rulebuy.Key = tablebuy[j][16];
+                    rulebuy.Value = tablebuy[j][17];
 
                     rulesbuy.Add(rulebuy);
                     requirementbuy.Rules = rulesbuy;
@@ -234,15 +237,16 @@ namespace Micro.Future.Common.Business.xUnit
                     requirementsal.ProductType = tablesal[j][2];
                     requirementsal.ProductName = tablesal[j][3];
                     requirementsal.ProductSpecification = tablesal[j][4];
-                    requirementsal.ProductQuantity = Convert.ToDecimal(tablesal[j][5]);
-                    requirementsal.WarehouseAddress1 = tablesal[j][6];
-                    requirementsal.InvoiceValue = tablesal[j][7];
-                    requirementsal.InvoiceIssueDateTime = tablesal[j][8];
-                    requirementsal.InvoiceTransferMode = tablesal[j][9];
+                    requirementsal.ProductPrice = Convert.ToDecimal(tablesal[j][5]);
+                    requirementsal.ProductQuantity = Convert.ToDecimal(tablesal[j][6]);
+                    requirementsal.WarehouseAddress1 = tablesal[j][7];
+                    requirementsal.InvoiceValue = tablesal[j][8];
+                    requirementsal.InvoiceIssueDateTime = tablesal[j][9];
+                    requirementsal.InvoiceTransferMode = tablesal[j][10];
 
                     rulesal.RuleType = 1;
-                    rulesal.Key = tablesal[j][11];
-                    rulesal.Value = tablesal[j][12];
+                    rulesal.Key = tablesal[j][12];
+                    rulesal.Value = tablesal[j][13];
 
                     rulessal.Add(rulesal);
                     requirementsal.Rules = rulessal;
@@ -266,15 +270,14 @@ namespace Micro.Future.Common.Business.xUnit
                     requirementsub.Type = RequirementType.Subsidy;
                     requirementsub.TradeAmount = Convert.ToDecimal(tablesub[j][0]);
                     requirementsub.TradeProfit = Convert.ToDecimal(tablesub[j][1]);
-                  // requirementsub.EnterpriseType = tablesub[j][2];
-                    requirementsub.BusinessRange = tablesub[j][3];
-                    requirementsub.InvoiceValue = tablesub[j][4];
-                    requirementsub.InvoiceIssueDateTime = tablesub[j][5];
-                    requirementsub.InvoiceTransferMode = tablesub[j][6];
+                    requirementsub.BusinessRange = tablesub[j][2];
+                    requirementsub.InvoiceValue = tablesub[j][3];
+                    requirementsub.InvoiceIssueDateTime = tablesub[j][4];
+                    requirementsub.InvoiceTransferMode = tablesub[j][5];
 
                     rulesub.RuleType = 1;
-                    rulesub.Key = "企业类型";
-                    rulesub.Value = tablesub[j][2];
+                    rulesub.Key = tablesub[j][6]; ;
+                    rulesub.Value = tablesub[j][7];
 
                     rulessub.Add(rulesub);
                     requirementsub.Rules = rulessub;
@@ -285,7 +288,9 @@ namespace Micro.Future.Common.Business.xUnit
                     Assert.NotNull(bizResultsub.Result);
 
                 }
-               
+
+                internalcnt = internalcnt + 3;
+
             }
 
         }
