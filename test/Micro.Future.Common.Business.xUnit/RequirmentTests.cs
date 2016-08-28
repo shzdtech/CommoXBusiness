@@ -185,7 +185,7 @@ namespace Micro.Future.Common.Business.xUnit
             //add 10 buy requriements 
             for (int i = 0; i < tablebuy.Length; i++)
             {
-                int currentUserIndex = i % 3;
+                int currentUserIndex = i % totalUsers;
                 var currentUser = tableuser[currentUserIndex];
 
                 string userId = currentUser[0];
@@ -234,7 +234,7 @@ namespace Micro.Future.Common.Business.xUnit
             //add 10 sal requirements
             for (int i = 0; i < tablesal.Length; i++)
             {
-                int currentUserIndex = i % 3;
+                int currentUserIndex = i % totalUsers;
                 var currentUser = tableuser[currentUserIndex];
 
                 string userId = currentUser[0];
@@ -280,7 +280,7 @@ namespace Micro.Future.Common.Business.xUnit
             //add 10 sub requirements
             for (int i = 0; i < tablesub.Length; i++)
             {
-                int currentUserIndex = i % 3;
+                int currentUserIndex = i % totalUsers;
                 var currentUser = tableuser[currentUserIndex];
 
                 string userId = currentUser[0];
