@@ -204,6 +204,7 @@ namespace Micro.Future.Common.Business.xUnit
                 requirementbuy.State = RequirementState.OPEN;
                 requirementbuy.Type = RequirementType.Buy;
                 requirementbuy.PaymentAmount = Convert.ToDecimal(testData[2]);
+                requirementbuy.TradeAmount = requirementbuy.PaymentAmount;
                 requirementbuy.PaymentDateTime = testData[3];
                 requirementbuy.PaymentType = testData[4];
                 requirementbuy.WarehouseAccount = testData[5];

@@ -318,9 +318,23 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
             if(requirement.Type == Abstraction.BizObject.RequirementType.Sale)
             {
-                dto.TradeAmount = requirement.ProductPrice * requirement.ProductQuantity;
-            }
+                if (requirement.TradeAmount == 0)
+                    dto.TradeAmount = requirement.ProductPrice * requirement.ProductQuantity;
+                else
+                    dto.TradeAmount = requirement.TradeAmount;
 
+            }
+            else if(requirement.Type == Abstraction.BizObject.RequirementType.Buy)
+            {
+                if (requirement.TradeAmount == 0 && requirement.PaymentAmount != 0)
+                    dto.TradeAmount = requirement.PaymentAmount;
+                else
+                    dto.TradeAmount = requirement.TradeAmount;
+            }
+            else
+            {
+                dto.TradeAmount = requirement.TradeAmount;
+            }
 
             dto.ProductName = requirement.ProductName;
             dto.ProductType = requirement.ProductType;
@@ -328,7 +342,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             dto.ProductQuantity = requirement.ProductQuantity;
             dto.ProductUnit = requirement.ProductUnit;
 
-            dto.PaymentAmount = requirement.PaymentAmount;
+            
             dto.PaymentDateTime = requirement.PaymentDateTime;
             dto.PaymentType = requirement.PaymentType;
             dto.TradeProfit = requirement.TradeProfit;
@@ -346,7 +360,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             dto.WarehouseAddress1 = requirement.WarehouseAddress1;
             dto.WarehouseAddress2 = requirement.WarehouseAddress2;
 
-            dto.TradeAmount = requirement.TradeAmount;
+            //dto.TradeAmount = requirement.TradeAmount;
             dto.Subsidies = requirement.Subsidies;
 
             return dto;
