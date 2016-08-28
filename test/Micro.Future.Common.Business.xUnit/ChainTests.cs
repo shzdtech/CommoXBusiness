@@ -41,10 +41,10 @@ namespace Micro.Future.Common.Business.xUnit
         }
 
 
-        //[Fact]
+        [Fact]
         public void Test_LockUnlockChain()
         {
-            int chainId = 11028;
+            int chainId = 11223;
             var chainInfo = _chainManager.GetChainInfo(chainId);
 
             if(chainInfo.ChainStatus == ChainStatusType.OPEN)
@@ -85,10 +85,10 @@ namespace Micro.Future.Common.Business.xUnit
             }
         }
 
-        //[Fact]
+        [Fact]
         public void Test_ConfirmChain()
         {
-            int chainId = 11028;
+            int chainId = 11223;
             int tradeId = 0;
             var isConfirmed = _chainManager.ComfirmChain(chainId, out tradeId);
 

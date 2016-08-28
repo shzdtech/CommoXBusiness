@@ -5,6 +5,15 @@ using System.Threading.Tasks;
 
 namespace Micro.Future.Commo.Business.Abstraction.BizObject
 {
+
+    public enum OrderStatusType
+    {
+        PROCESS = 100,
+        FINISHED  = 101,
+        WAITING = 102
+    }
+
+
     public class OrderInfo
     {
         public int OrderId { get; set; }

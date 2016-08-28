@@ -113,18 +113,49 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 tradeId = newTrade.TradeId;
 
                 Order order = null;
+                int sequence = 0;
                 foreach (RequirementInfo requirement in chain.Requirements)
                 {
-                    order = new Order();
-                    order.TradeId = tradeId;
-                    order.UserId = requirement.UserId;
+                    sequence += 1;
+                    order = new Order()
+                    {
+                        BusinessRange = requirement.BusinessRange,
+                        CreateTime = trade.TradeTime,
+                        EnterpriseId = requirement.EnterpriseId,
+                        EnterpriseType = requirement.EnterpriseType,
+                        InvoiceIssueDateTime = requirement.InvoiceIssueDateTime,
+                        InvoiceTransferMode = requirement.InvoiceTransferMode,
+                        InvoiceValue = requirement.InvoiceValue,
+                        ModifyTime = DateTime.Now,
+                        OrderStateId = (int)OrderStatusType.WAITING,
+                        PaymentAmount = requirement.PaymentAmount,
+                        PaymentDateTime = requirement.PaymentDateTime,
+                        PaymentType = requirement.PaymentType,
+                        ProductName = requirement.ProductName,
+                        ProductPrice = requirement.ProductPrice,
+                        ProductQuantity = requirement.ProductQuantity,
+                        ProductSpecification = requirement.ProductSpecification,
+                        ProductType = requirement.ProductType,
+                        ProductUnit = requirement.ProductUnit,
+                        RequirementId = requirement.RequirementId,
+                        RequirementRemarks = requirement.RequirementRemarks,
+                        RequirementStateId = (int)requirement.State,
+                        RequirementTypeId = (int)requirement.Type,
+                        Subsidies = requirement.Subsidies,
+                        TradeAmount = requirement.TradeAmount,
+                        TradeId = tradeId,
+                        TradeProfit = requirement.TradeProfit,
+                        UserId = requirement.UserId,
+                        WarehouseAccount = requirement.WarehouseAccount,
+                        WarehouseAddress1 = requirement.WarehouseAddress1,
+                        WarehouseAddress2 = requirement.WarehouseAddress2,
+                        WarehouseCity = requirement.WarehouseCity,
+                        WarehouseState = requirement.WarehouseState,
+                        TradeSequence = sequence
+                    };
 
-
-                    //order.RequirementType = requirement.Type.ToString();
                     order.CreateTime = trade.TradeTime;
-                    order.EnterpriseId = requirement.EnterpriseId;
                     order.ModifyTime = trade.TradeTime;
-
 
                     _orderService.submitOrder(order);
                 }

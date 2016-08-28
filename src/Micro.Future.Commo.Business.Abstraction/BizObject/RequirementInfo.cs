@@ -189,7 +189,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
 
         #endregion
 
-
+        public string RequirementRemarks { get; set; }
       
 
         /// <summary>
