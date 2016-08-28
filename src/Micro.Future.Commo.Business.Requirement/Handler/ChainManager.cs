@@ -137,6 +137,40 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         {
             bool latestVersion = type == ChainStatusType.OPEN ? true : false;
             IList<ChainObject> chainList = _matcherService.GetMatcherChainsByRequirementId(requirementId, (ChainStatus)type, latestVersion);
+
+            foreach(var chainObject in chainList)
+            {
+                if (chainObject.RequirementIdChain == null || chainObject.RequirementIdChain.Count == 0)
+                    continue;
+
+                int totalRequirements = chainObject.RequirementIdChain.Count;
+                int findRequirementPos = chainObject.RequirementIdChain.FindIndex(f => f == requirementId);
+
+                int upstreamIndex = findRequirementPos - 1;
+                int downstreamIndex = findRequirementPos + 1;
+
+                List<int> newRequirementIds = new List<int>();
+                List<string> newUserIds = new List<string>();
+
+                if (upstreamIndex >= 0)
+                {
+                    newRequirementIds.Add(chainObject.RequirementIdChain[upstreamIndex]);
+                    newUserIds.Add(chainObject.UserIdChain[upstreamIndex]);
+                }
+
+                newRequirementIds.Add(chainObject.RequirementIdChain[findRequirementPos]);
+                newUserIds.Add(chainObject.UserIdChain[findRequirementPos]);
+
+                if (downstreamIndex <= totalRequirements-1)
+                {
+                    newRequirementIds.Add(chainObject.RequirementIdChain[downstreamIndex]);
+                    newUserIds.Add(chainObject.UserIdChain[downstreamIndex]);
+                }
+
+                chainObject.RequirementIdChain = newRequirementIds;
+                chainObject.UserIdChain = newUserIds;
+            }
+
             return ConvertChainObjectsToChainInfoList(chainList);
         }
 
@@ -158,6 +192,40 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         {
             bool latestVersion = type == ChainStatusType.OPEN ? true : false;
             IList<ChainObject> chainList = _matcherService.GetMatcherChainsByUserId(userId, (ChainStatus)type, latestVersion);
+
+            foreach (var chainObject in chainList)
+            {
+                if (chainObject.UserIdChain == null || chainObject.UserIdChain.Count == 0)
+                    continue;
+
+                int totalUsers = chainObject.UserIdChain.Count;
+                int findUserIndex = chainObject.UserIdChain.FindIndex(f => f == userId);
+
+                int upstreamIndex = findUserIndex - 1;
+                int downstreamIndex = findUserIndex + 1;
+
+                List<int> newRequirementIds = new List<int>();
+                List<string> newUserIds = new List<string>();
+
+                if (upstreamIndex >= 0)
+                {
+                    newRequirementIds.Add(chainObject.RequirementIdChain[upstreamIndex]);
+                    newUserIds.Add(chainObject.UserIdChain[upstreamIndex]);
+                }
+
+                newRequirementIds.Add(chainObject.RequirementIdChain[findUserIndex]);
+                newUserIds.Add(chainObject.UserIdChain[findUserIndex]);
+
+                if (downstreamIndex <= totalUsers - 1)
+                {
+                    newRequirementIds.Add(chainObject.RequirementIdChain[downstreamIndex]);
+                    newUserIds.Add(chainObject.UserIdChain[downstreamIndex]);
+                }
+
+                chainObject.RequirementIdChain = newRequirementIds;
+                chainObject.UserIdChain = newUserIds;
+            }
+
             return ConvertChainObjectsToChainInfoList(chainList);
         }
 
