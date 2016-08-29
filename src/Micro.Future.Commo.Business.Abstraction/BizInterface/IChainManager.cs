@@ -32,6 +32,15 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         IList<RequirementChainInfo> QueryChainsByUserId(string userId, ChainStatusType type);
 
         /// <summary>
+        /// 获取某一个用户下面的所有需求的撮合连
+        /// 根据 ChainStatusType=LOCKED 可以获取已锁定的
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        IList<RequirementChainInfo> QueryChainsByEnterpriseId(int enterpriseId, ChainStatusType type);
+
+        /// <summary>
         /// 获取某一个需求的撮合连
         /// 根据 ChainStatusType=LOCKED 可以仅获取已锁定的
         /// </summary>

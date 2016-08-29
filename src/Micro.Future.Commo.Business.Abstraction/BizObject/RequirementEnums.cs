@@ -37,17 +37,17 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
     public enum RequirementState
     {
         /// <summary>
-        /// 正常
+        /// 新创建/未锁定
         /// </summary>
         OPEN = 0,
 
         /// <summary>
-        /// 已删除
+        /// 已锁定
         /// </summary>
         LOCKED = 1,
 
         /// <summary>
-        /// 撮合中
+        /// 已确认
         /// </summary>
         CONFIRMED = 2
     }

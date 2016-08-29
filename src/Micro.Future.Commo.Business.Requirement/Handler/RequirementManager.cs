@@ -164,6 +164,17 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         }
 
+        public SearchResult<RequirementInfo> SearchRequirements(RequirementSearchCriteria searchCriteria)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public IList<RequirementInfo> QueryRequirementsByEnterpriseId(int enterpriseId, RequirementState state)
+        {
+            throw new NotImplementedException();
+        }
+
 
         #endregion
 
@@ -389,6 +400,8 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             rule.State = (RequirementRuleState)filter.StateId;
             return rule;
         }
+
+
 
         #endregion
     }

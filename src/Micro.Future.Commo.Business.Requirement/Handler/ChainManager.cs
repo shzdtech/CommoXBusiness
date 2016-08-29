@@ -266,5 +266,10 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             IList<ChainObject> chainList = _matcherService.GetMatcherChains((ChainStatus)type, latestVersion);
             return ConvertChainObjectsToChainInfoList(chainList);
         }
+
+        public IList<RequirementChainInfo> QueryChainsByEnterpriseId(int enterpriseId, ChainStatusType type)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
