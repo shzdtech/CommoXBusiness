@@ -77,6 +77,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             info.EnterpriseState = (EnterpriseStateType)entity.StateId;
             info.EmailAddress = entity.EmailAddress;
             info.MobilePhone = entity.MobilePhone;
+            info.LicenseImagePath = entity.LicenseImagePath;
             return info;
         }
 
@@ -104,6 +105,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             entity.StateId = (int)info.EnterpriseState;
             entity.EmailAddress = info.EmailAddress;
             entity.MobilePhone = info.MobilePhone;
+            entity.LicenseImagePath = info.LicenseImagePath;
             return entity;
         }
     }

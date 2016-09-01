@@ -94,5 +94,10 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         public string EmailAddress { get; set; }
 
         public string MobilePhone { get; set; }
+
+        /// <summary>
+        /// 营业执照等证件保存路径
+        /// </summary>
+        public string LicenseImagePath { get; set; }
     }
 }
