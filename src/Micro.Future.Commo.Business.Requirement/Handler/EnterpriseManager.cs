@@ -45,14 +45,12 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         {
             var entity = EnterpriseToEntityObject(enterprise);
             var result = _enterpriseService.UpdateEnterprise(entity);
-            if (result != null && result.EnterpriseId > 0)
-            {
-                return new BizTResult<bool>(true);
-            }
-            else
-            {
-                return new BizTResult<bool>(false, new BizException("保存失败！"));
-            }
+            return new BizTResult<bool>(result);
+        }
+
+        public bool UpdateEnterpriseState(int enterpriseId, EnterpriseStateType stateType)
+        {
+            return _enterpriseService.UpdateEnterpriseState(enterpriseId, (int)stateType);
         }
 
         private EnterpriseInfo EnterpriseToBizObject(Enterprise entity)
@@ -76,7 +74,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             info.RegisterNumber = entity.RegisterNumber;
             info.RegisterTime = entity.RegisterTime;
             info.ReputationGrade = entity.ReputationGrade;
-            info.StateId = entity.StateId;
+            info.EnterpriseState = (EnterpriseStateType)entity.StateId;
+            info.EmailAddress = entity.EmailAddress;
+            info.MobilePhone = entity.MobilePhone;
             return info;
         }
 
@@ -101,7 +101,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             entity.RegisterNumber = info.RegisterNumber;
             entity.RegisterTime = info.RegisterTime;
             entity.ReputationGrade = info.ReputationGrade;
-            entity.StateId = info.StateId;
+            entity.StateId = (int)info.EnterpriseState;
+            entity.EmailAddress = info.EmailAddress;
+            entity.MobilePhone = info.MobilePhone;
             return entity;
         }
     }

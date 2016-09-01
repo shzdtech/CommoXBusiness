@@ -8,6 +8,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
     public class EnterpriseInfo
     {
         public int EnterpriseId { get; set; }
+
         /// <summary>
         /// 企业名称
         /// </summary>
@@ -88,8 +89,10 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// <summary>
         /// 企业状态
         /// </summary>
-        public int StateId { get; set; }
+        public EnterpriseStateType EnterpriseState { get; set; }
 
-        public string Email { get; set; }
+        public string EmailAddress { get; set; }
+
+        public string MobilePhone { get; set; }
     }
 }

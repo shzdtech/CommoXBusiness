@@ -69,7 +69,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public IList<RequirementInfo> GetRequirements(int chainId)
         {
-            IList<RequirementObject> requirementObjects = _chainService.GetChainRequirements(chainId);
+            IList<RequirementObject> requirementObjects = null;//_chainService.GetChainRequirements(chainId);
             if (requirementObjects == null || requirementObjects.Count == 0)
                 return null;
 

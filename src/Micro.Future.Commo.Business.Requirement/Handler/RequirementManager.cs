@@ -10,6 +10,7 @@ using Micro.Future.Business.MongoDB.Commo.Handler;
 using Micro.Future.Business.MongoDB.Commo.BizObjects;
 using Micro.Future.Commo.Business.Abstraction.Handler;
 using mongodbObjects = Micro.Future.Business.MongoDB.Commo.BizObjects;
+using Micro.Future.Business.MongoDB.Commo.QueryObjects;
 
 namespace Micro.Future.Commo.Business.Requirement.Handler
 {
@@ -166,13 +167,48 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public SearchResult<RequirementInfo> SearchRequirements(RequirementSearchCriteria searchCriteria)
         {
-            throw new NotImplementedException();
+            RequirementQuery query = new RequirementQuery();
+
+            string orderBy = string.Empty;
+
+            int pageNo = searchCriteria.PageNo;
+            int pageSize = searchCriteria.PageSize;
+            int totalRecords = 0;
+            IList<RequirementObject> findRequirements = _matcherService.QueryRequirementsByRequirementFilter(query, orderBy, out pageNo, out pageSize, out totalRecords);
+
+            SearchResult<RequirementInfo> searchResult = new SearchResult<RequirementInfo>();
+            searchResult.PageNo = pageNo;
+            searchResult.PageSize = pageSize;
+            searchResult.TotalCount = totalRecords;
+
+            if(findRequirements != null && findRequirements.Count > 0)
+            {
+                searchResult.Result = new List<RequirementInfo>();
+                foreach(var requirement in findRequirements)
+                {
+                    searchResult.Result.Add(ConvertToRequirementInfo(requirement));
+                }
+            }
+
+            return searchResult;
         }
 
 
         public IList<RequirementInfo> QueryRequirementsByEnterpriseId(int enterpriseId, RequirementState state)
         {
-            throw new NotImplementedException();
+            int stateId = (int)state;
+
+            IList<RequirementObject> requirements =  _matcherService.QueryRequirementsByEnterpriseId(enterpriseId, (mongodbObjects.RequirementStatus) stateId);
+            if (requirements == null || requirements.Count == 0)
+                return null;
+
+            IList<RequirementInfo> infoList = new List<RequirementInfo>();
+            foreach(var requirement in requirements)
+            {
+                infoList.Add(ConvertToRequirementInfo(requirement));
+            }
+
+            return infoList;
         }
 
 

@@ -14,5 +14,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         BizTResult<int> AddEnterprise(EnterpriseInfo enterprise);
 
         BizTResult<bool> UpdateEnterprise(EnterpriseInfo enterprise);
+
+        bool UpdateEnterpriseState(int enterpriseId, EnterpriseStateType stateType);
     }
 }

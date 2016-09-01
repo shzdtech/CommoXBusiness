@@ -10,8 +10,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
     /// </summary>
     public class RequirementChainInfo
     {
-        // 是否应该加上ProductType、ProductName等属性，用于查询
+        public string ProductType { get; set; }
 
+        public string ProductName { get; set; }
+
+        public decimal TradeAmount { get; set; }
 
         /// <summary>
         /// 撮合链ID
