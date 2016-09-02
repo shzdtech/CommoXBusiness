@@ -56,6 +56,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         private EnterpriseInfo EnterpriseToBizObject(Enterprise entity)
         {
             EnterpriseInfo info = new EnterpriseInfo();
+            info.EnterpriseId = entity.EnterpriseId;
             info.Address = entity.Address;
             info.AnnualInspection = entity.AnnualInspection;
             info.BusinessRange = entity.BusinessRange;
@@ -84,6 +85,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         private Enterprise EnterpriseToEntityObject(EnterpriseInfo info)
         {
             Enterprise entity = new Enterprise();
+            entity.EnterpriseId = info.EnterpriseId;
             entity.Address = info.Address;
             entity.AnnualInspection = info.AnnualInspection;
             entity.BusinessRange = info.BusinessRange;
