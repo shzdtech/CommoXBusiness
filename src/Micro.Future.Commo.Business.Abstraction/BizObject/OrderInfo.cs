@@ -80,7 +80,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// <summary>
         /// 执行者用户名
         /// </summary>
-        public int ExecuteUserId { get; set; }
+        public string ExecuteUserId { get; set; }
 
         #endregion
 
