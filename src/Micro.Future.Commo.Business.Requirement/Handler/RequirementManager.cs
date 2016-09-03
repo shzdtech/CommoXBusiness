@@ -10,11 +10,11 @@ using Micro.Future.Business.MongoDB.Commo.Handler;
 using Micro.Future.Business.MongoDB.Commo.BizObjects;
 using Micro.Future.Commo.Business.Abstraction.Handler;
 using mongodbObjects = Micro.Future.Business.MongoDB.Commo.BizObjects;
-using Micro.Future.Business.MongoDB.Commo.QueryObjects;
+using System.Reflection;
 
 namespace Micro.Future.Commo.Business.Requirement.Handler
 {
-    public class RequirementManager : IRequirementManager
+    public class RequirementManager : BaseBizHandler, IRequirementManager
     {
         protected MatcherHandler _matcherService = null;
 
@@ -165,52 +165,143 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         }
 
+
+        private bool AreNotEmptyAndEqual(string source,string target, StringComparison compairison = StringComparison.CurrentCultureIgnoreCase)
+        {
+            if (string.IsNullOrWhiteSpace(source) || string.IsNullOrWhiteSpace(target))
+                return false;
+
+            return string.Equals(source, target, compairison);
+        }
+
+
+        private bool IsRequirementMatchSearchCriteria(RequirementObject requirementObj, RequirementSearchCriteria searchCriteria)
+        {
+            if (!AreNotEmptyAndEqual(searchCriteria.ProductName, requirementObj.ProductName))
+                return false;
+
+            if (!AreNotEmptyAndEqual(searchCriteria.ProductType, requirementObj.ProductType))
+                return false;
+
+
+            if (searchCriteria.RequirementType.HasValue && (int)requirementObj.RequirementTypeId != (int)searchCriteria.RequirementType.Value)
+                return false;
+
+            if (searchCriteria.RequirementState.HasValue && (int)requirementObj.RequirementStateId != (int)searchCriteria.RequirementState.Value)
+                return false;
+
+            if (searchCriteria.StartTradeAmount > 0m && requirementObj.TradeAmount < searchCriteria.StartTradeAmount.Value)
+                return false;
+
+            if (searchCriteria.EndTradeAmount > 0m && requirementObj.TradeAmount > searchCriteria.EndTradeAmount.Value)
+                return false;
+
+
+            return true;
+
+        }
+
+        public static string GetObjectPropertyValue<T>(T t, string propertyname)
+        {
+            Type type = typeof(T);
+
+            PropertyInfo property = type.GetProperty(propertyname);
+
+            if (property == null) return property.Name;
+
+            object o = property.GetValue(t, null);
+
+            if (o == null) return string.Empty;
+
+            return o.ToString();
+        }
+
         public SearchResult<RequirementInfo> SearchRequirements(RequirementSearchCriteria searchCriteria)
         {
-            RequirementQuery query = new RequirementQuery();
-
-            string orderBy = string.Empty;
-
-            int pageNo = searchCriteria.PageNo;
-            int pageSize = searchCriteria.PageSize;
-            int totalRecords = 0;
-            IList<RequirementObject> findRequirements = _matcherService.QueryRequirementsByRequirementFilter(query, orderBy, out pageNo, out pageSize, out totalRecords);
+            _stopwatch.Restart();
 
             SearchResult<RequirementInfo> searchResult = new SearchResult<RequirementInfo>();
-            searchResult.PageNo = pageNo;
-            searchResult.PageSize = pageSize;
-            searchResult.TotalCount = totalRecords;
+            searchResult.PageNo = searchCriteria.PageNo;
+            searchResult.PageSize = searchCriteria.PageSize;
 
-            if(findRequirements != null && findRequirements.Count > 0)
+            var queryRequirements = _matcherService.QueryRequirementsByLinq(f => IsRequirementMatchSearchCriteria(f, searchCriteria));
+            int totalRecords = queryRequirements.Count();
+
+            IList<RequirementInfo> requirementInfoList = null;
+            if (totalRecords > 0)
             {
-                searchResult.Result = new List<RequirementInfo>();
-                foreach(var requirement in findRequirements)
+                requirementInfoList = new List<RequirementInfo>();
+
+                if (searchCriteria.OrderByFields != null && searchCriteria.OrderByFields.Count > 0)
                 {
-                    searchResult.Result.Add(ConvertToRequirementInfo(requirement));
+                    foreach(var field in searchCriteria.OrderByFields)
+                    {
+                        if(string.IsNullOrWhiteSpace(field.OrderBy) || string.Equals(field.OrderBy, "asc", StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            queryRequirements = queryRequirements.OrderBy(f => f.GetType().GetProperty(field.Field).PropertyType);
+                        }
+                        else
+                        {
+                            queryRequirements = queryRequirements.OrderByDescending(f => f.GetType().GetProperty(field.Field).PropertyType);
+                        }
+                    }
+                }
+
+                var findRequirements = queryRequirements.Skip((searchCriteria.PageNo - 1) * searchCriteria.PageSize).Take(searchCriteria.PageSize);
+
+                foreach (var reqObj in findRequirements)
+                {
+                    requirementInfoList.Add(ConvertToRequirementInfo(reqObj));
                 }
             }
 
+            searchResult.TotalCount = totalRecords;
+            searchResult.Result = requirementInfoList;
+
+            _stopwatch.Stop();
+            searchResult.ElapsedTime = _stopwatch.ElapsedMilliseconds;
             return searchResult;
         }
 
 
-        public IList<RequirementInfo> QueryRequirementsByEnterpriseId(int enterpriseId, RequirementState state)
+        public CommoBizTResult<IList<RequirementInfo>> QueryRequirementsByEnterpriseId(int enterpriseId, RequirementState? state)
         {
-            int stateId = (int)state;
+            _stopwatch.Restart();
+            IList<RequirementInfo> infoList = null;
+            BizException _bizException = null;
 
-            IList<RequirementObject> requirements =  _matcherService.QueryRequirementsByEnterpriseId(enterpriseId, (mongodbObjects.RequirementStatus) stateId);
-            if (requirements == null || requirements.Count == 0)
-                return null;
+            int stateId = -1;
+            if (state.HasValue)
+                stateId = (int)state.Value;
 
-            IList<RequirementInfo> infoList = new List<RequirementInfo>();
-            foreach(var requirement in requirements)
+            IList<RequirementObject> requirements = null;
+
+            if (stateId == -1)
             {
-                infoList.Add(ConvertToRequirementInfo(requirement));
+                requirements = _matcherService.QueryRequirementsByEnterpriseId(enterpriseId);
+            }
+            else
+            {
+                requirements = _matcherService.QueryRequirementsByEnterpriseId(enterpriseId, (mongodbObjects.RequirementStatus)stateId);
             }
 
-            return infoList;
-        }
+            if (requirements != null && requirements.Count > 0)
+            {
+                infoList = new List<RequirementInfo>();
+                foreach (var requirement in requirements)
+                {
+                    infoList.Add(ConvertToRequirementInfo(requirement));
+                }
+            }
 
+            _stopwatch.Stop();
+
+            var bizResult = new CommoBizTResult<IList<RequirementInfo>>(infoList, _bizException);
+            bizResult.ElapsedTime = _stopwatch.ElapsedMilliseconds;
+
+            return bizResult;
+        }
+        
 
         #endregion
 
@@ -437,8 +528,11 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return rule;
         }
 
-
+       
 
         #endregion
     }
+
+
+
 }

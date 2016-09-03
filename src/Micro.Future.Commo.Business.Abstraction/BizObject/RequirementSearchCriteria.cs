@@ -10,12 +10,12 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// <summary>
         /// 需求状态
         /// </summary>
-        public RequirementState RequirementState { get; set; }
+        public RequirementState? RequirementState { get; set; }
 
         /// <summary>
         /// 需求类型：买/卖/补贴
         /// </summary>
-        public RequirementType RequirementType { get; set; }
+        public RequirementType? RequirementType { get; set; }
 
         /// <summary>
         /// 货物名称，
@@ -31,11 +31,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// <summary>
         /// 起始贸易量
         /// </summary>
-        public decimal StartTradeAmount { get; set; }
+        public decimal? StartTradeAmount { get; set; }
 
         /// <summary>
         /// 结束贸易量
         /// </summary>
-        public decimal EndTradeAmount { get; set; }
+        public decimal? EndTradeAmount { get; set; }
     }
 }

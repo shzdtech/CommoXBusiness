@@ -19,10 +19,10 @@ namespace Micro.Future.Common.Business.xUnit
             _chainManager = serviceProvider.GetService<IChainManager>();
         }
 
-        //[Fact]
+        [Fact]
         public void Test_QueryAllChains()
         {
-            var allChains = _chainManager.QueryAllChains(Commo.Business.Abstraction.BizObject.ChainStatusType.CONFIRMED);
+            var bizResult = _chainManager.QueryAllChains(Commo.Business.Abstraction.BizObject.ChainStatusType.CONFIRMED);
         }
 
         [Fact]
@@ -35,9 +35,9 @@ namespace Micro.Future.Common.Business.xUnit
         [Fact]
         public void Test_QueryChainsByRequirementId()
         {
-            int requirementId = 5862;
+            int requirementId = 6441;
 
-            var chains = _chainManager.QueryChainsByRequirementId(requirementId, ChainStatusType.CONFIRMED);
+            var bizResult = _chainManager.QueryChainsByRequirementId(requirementId, ChainStatusType.OPEN);
         }
 
 

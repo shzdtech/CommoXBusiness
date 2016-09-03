@@ -15,8 +15,6 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
 
         BizTResult<IEnumerable<RequirementInfo>> QueryRequirements(string userId);
 
-        
-
         BizTResult<RequirementInfo> QueryRequirementInfo(int requirementId);
 
         BizTResult<RequirementInfo> AddRequirementInfo(RequirementInfo requirement);
@@ -35,6 +33,6 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         /// </summary>
         /// <param name="enterpriseId"></param>
         /// <returns></returns>
-        IList<RequirementInfo> QueryRequirementsByEnterpriseId(int enterpriseId, RequirementState state);
+        CommoBizTResult<IList<RequirementInfo>> QueryRequirementsByEnterpriseId(int enterpriseId, RequirementState? state);
     }
 }

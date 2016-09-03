@@ -13,10 +13,11 @@ using Micro.Future.Business.MongoDB.Commo.BizObjects;
 using mongoDB = Micro.Future.Business.MongoDB.Commo;
 using Micro.Future.Business.MongoDB.Commo.MongoInterface;
 using Micro.Future.Business.MongoDB.Commo.Handler;
+using Micro.Future.Commo.Business.Abstraction.Handler;
 
 namespace Micro.Future.Commo.Business.Requirement.Handler
 {
-    public class ChainManager : IChainManager
+    public class ChainManager : BaseBizHandler, IChainManager
     {
         private IChainDAL _chainService = null;
         private ITrade _tradeService = null;
@@ -65,21 +66,6 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             }
 
             return info;
-        }
-
-        public IList<RequirementInfo> GetRequirements(int chainId)
-        {
-            IList<RequirementObject> requirementObjects = null;//_chainService.GetChainRequirements(chainId);
-            if (requirementObjects == null || requirementObjects.Count == 0)
-                return null;
-
-            List<RequirementInfo> infoList = new List<RequirementInfo>();
-            foreach(var requirementObj in requirementObjects)
-            {
-                infoList.Add(RequirementManager.ConvertToRequirementInfo(requirementObj));
-            }
-
-            return infoList;
         }
 
         public bool LockChain(int chainId)
@@ -164,8 +150,14 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return isConfirmed;
         }
 
-        public IList<RequirementChainInfo> QueryChainsByRequirementId(int requirementId, ChainStatusType type)
+        public CommoBizTResult<IList<RequirementChainInfo>> QueryChainsByRequirementId(int requirementId, ChainStatusType type)
         {
+            _stopwatch.Restart();
+
+            IList<RequirementChainInfo> chainInfoList = null;
+            BizException bizException = null;
+
+
             bool latestVersion = type == ChainStatusType.OPEN ? true : false;
             IList<ChainObject> chainList = _matcherService.GetMatcherChainsByRequirementId(requirementId, (ChainStatus)type, latestVersion);
 
@@ -202,7 +194,14 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 chainObject.UserIdChain = newUserIds;
             }
 
-            return ConvertChainObjectsToChainInfoList(chainList);
+            chainInfoList = ConvertChainObjectsToChainInfoList(chainList);
+
+            _stopwatch.Stop();
+
+            CommoBizTResult<IList<RequirementChainInfo>> bizResult = new CommoBizTResult<IList<RequirementChainInfo>>(chainInfoList, bizException);
+            bizResult.ElapsedTime = _stopwatch.ElapsedMilliseconds;
+
+            return bizResult;
         }
 
         private IList<RequirementChainInfo> ConvertChainObjectsToChainInfoList(IList<ChainObject> chainObjects)
@@ -219,8 +218,14 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return infoList;
         }
 
-        public IList<RequirementChainInfo> QueryChainsByUserId(string userId, ChainStatusType type)
+        public CommoBizTResult<IList<RequirementChainInfo>> QueryChainsByUserId(string userId, ChainStatusType type)
         {
+            _stopwatch.Restart();
+
+            IList<RequirementChainInfo> chainInfoList = null;
+            BizException bizException = null;
+
+
             bool latestVersion = type == ChainStatusType.OPEN ? true : false;
             IList<ChainObject> chainList = _matcherService.GetMatcherChainsByUserId(userId, (ChainStatus)type, latestVersion);
 
@@ -257,19 +262,55 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 chainObject.UserIdChain = newUserIds;
             }
 
-            return ConvertChainObjectsToChainInfoList(chainList);
+            chainInfoList = ConvertChainObjectsToChainInfoList(chainList);
+
+
+            _stopwatch.Stop();
+
+            CommoBizTResult<IList<RequirementChainInfo>> bizResult = new CommoBizTResult<IList<RequirementChainInfo>>(chainInfoList, bizException);
+            bizResult.ElapsedTime = _stopwatch.ElapsedMilliseconds;
+
+            return bizResult;
         }
 
-        public IList<RequirementChainInfo> QueryAllChains(ChainStatusType type)
+        public CommoBizTResult<IList<RequirementChainInfo>> QueryAllChains(ChainStatusType type)
         {
+            _stopwatch.Restart();
+
+            IList<RequirementChainInfo> chainInfoList = null;
+            BizException bizException = null;
+
             bool latestVersion = type == ChainStatusType.OPEN ? true : false;
             IList<ChainObject> chainList = _matcherService.GetMatcherChains((ChainStatus)type, latestVersion);
-            return ConvertChainObjectsToChainInfoList(chainList);
+            chainInfoList = ConvertChainObjectsToChainInfoList(chainList);
+
+            _stopwatch.Stop();
+
+            CommoBizTResult<IList<RequirementChainInfo>> bizResult = new CommoBizTResult<IList<RequirementChainInfo>>(chainInfoList, bizException);
+            bizResult.ElapsedTime = _stopwatch.ElapsedMilliseconds;
+
+            return bizResult;
         }
 
-        public IList<RequirementChainInfo> QueryChainsByEnterpriseId(int enterpriseId, ChainStatusType type)
+        public CommoBizTResult<IList<RequirementChainInfo>> QueryChainsByEnterpriseId(int enterpriseId, ChainStatusType type)
         {
-            throw new NotImplementedException();
+
+            bool latestVersion = type == ChainStatusType.OPEN ? true : false;
+
+            _stopwatch.Restart();
+
+            IList<RequirementChainInfo> chainInfoList = null;
+            BizException bizException = null;
+
+            IList<ChainObject> chainList = _matcherService.GetMatcherChainsByRequirementId(enterpriseId,(ChainStatus)type, latestVersion);
+            chainInfoList = ConvertChainObjectsToChainInfoList(chainList);
+
+            _stopwatch.Stop();
+
+            CommoBizTResult<IList<RequirementChainInfo>> bizResult = new CommoBizTResult<IList<RequirementChainInfo>>(chainInfoList, bizException);
+            bizResult.ElapsedTime = _stopwatch.ElapsedMilliseconds;
+
+            return bizResult;
         }
     }
 }
