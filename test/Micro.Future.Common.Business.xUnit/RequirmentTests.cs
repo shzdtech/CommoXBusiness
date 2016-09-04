@@ -23,7 +23,7 @@ namespace Micro.Future.Common.Business.xUnit
 
         public RequirmentTests()
         {
-            fakeUsers = CreateFakeUsers(1000, 50);
+            //fakeUsers = CreateFakeUsers(1000, 50);
         }
 
         [Fact]
@@ -40,6 +40,26 @@ namespace Micro.Future.Common.Business.xUnit
             var requirements = bizResult.Result;
             int count = requirements.Count();
             Assert.NotEqual<int>(count, 0);
+        }
+
+
+
+
+        [Fact]
+        public void Test_SearchRequirements()
+        {
+            //1675
+
+            RequirementSearchCriteria criteria = new RequirementSearchCriteria()
+            {
+                PageNo = 1,
+                PageSize = 10
+            };
+
+
+            IRequirementManager manager = new RequirementManager();
+            var bizResult = manager.SearchRequirements(criteria);
+            
         }
 
 

@@ -177,10 +177,10 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         private bool IsRequirementMatchSearchCriteria(RequirementObject requirementObj, RequirementSearchCriteria searchCriteria)
         {
-            if (!AreNotEmptyAndEqual(searchCriteria.ProductName, requirementObj.ProductName))
+            if (!string.IsNullOrWhiteSpace(searchCriteria.ProductName) && !AreNotEmptyAndEqual(searchCriteria.ProductName, requirementObj.ProductName))
                 return false;
 
-            if (!AreNotEmptyAndEqual(searchCriteria.ProductType, requirementObj.ProductType))
+            if (!string.IsNullOrWhiteSpace(searchCriteria.ProductType) && !AreNotEmptyAndEqual(searchCriteria.ProductType, requirementObj.ProductType))
                 return false;
 
 
