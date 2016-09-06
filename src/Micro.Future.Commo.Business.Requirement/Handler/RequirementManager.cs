@@ -177,6 +177,11 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         private bool IsRequirementMatchSearchCriteria(RequirementObject requirementObj, RequirementSearchCriteria searchCriteria)
         {
+            if(searchCriteria.EnterpriseId > 0 && requirementObj.EnterpriseId != searchCriteria.EnterpriseId)
+            {
+                return false;
+            }
+
             if (!string.IsNullOrWhiteSpace(searchCriteria.ProductName) && !AreNotEmptyAndEqual(searchCriteria.ProductName, requirementObj.ProductName))
                 return false;
 

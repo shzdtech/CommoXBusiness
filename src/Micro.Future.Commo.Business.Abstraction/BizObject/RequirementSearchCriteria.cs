@@ -7,6 +7,8 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
 {
     public class RequirementSearchCriteria : SearchCriteria
     {
+        public int EnterpriseId { get; set; }
+
         /// <summary>
         /// 需求状态
         /// </summary>
