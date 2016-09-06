@@ -22,6 +22,14 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public BizTResult<int> AddEnterprise(EnterpriseInfo enterprise)
         {
+            List<string> errors = ValidateEnterpriseInfo(enterprise);
+            if(errors!=null && errors.Count > 0)
+            {
+                string errorMsg = string.Join(Environment.NewLine, errors);
+                return new BizTResult<int>(-1,
+                  new BizException(BizErrorType.BIZ_ERROR, errorMsg));
+            }
+
             var entity = EnterpriseToEntityObject(enterprise);
             var result = _enterpriseService.AddEnterprise(entity); 
 
@@ -31,9 +39,10 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             }
             else
             {
-                return new BizTResult<int>(0, new BizException("添加失败！"));
+                return new BizTResult<int>(-1, new BizException("添加失败！"));
             }
         }
+
 
         public EnterpriseInfo QueryEnterpriseInfo(int enterpriseId)
         {
@@ -51,6 +60,34 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         public bool UpdateEnterpriseState(int enterpriseId, EnterpriseStateType stateType)
         {
             return _enterpriseService.UpdateEnterpriseState(enterpriseId, (int)stateType);
+        }
+
+
+        private List<string> ValidateEnterpriseInfo(EnterpriseInfo enterprise)
+        {
+            List<string> errors = new List<string>();
+            if(string.IsNullOrWhiteSpace(enterprise.Name))
+            {
+                errors.Add("“企业名称”不能为空！");
+            }
+
+            if (string.IsNullOrWhiteSpace(enterprise.EmailAddress))
+            {
+                errors.Add("“企业邮箱”不能为空！");
+            }
+
+
+            if (string.IsNullOrWhiteSpace(enterprise.Contacts))
+            {
+                errors.Add("“联系人”不能为空！");
+            }
+
+            if (string.IsNullOrWhiteSpace(enterprise.MobilePhone))
+            {
+                errors.Add("“联系人手机号码”不能为空！");
+            }
+
+            return errors;
         }
 
         private EnterpriseInfo EnterpriseToBizObject(Enterprise entity)

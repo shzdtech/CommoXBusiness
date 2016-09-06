@@ -436,14 +436,26 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             //user id
             if (string.IsNullOrEmpty(requirement.UserId))
             {
-                errors.Add("UserId is required.");
+                errors.Add("“UserId”不能为空！");
             }
+
             dto.UserId = requirement.UserId;
 
             if (requirement.Type ==  Abstraction.BizObject.RequirementType.None)
             {
-                errors.Add("RequirementType is required.");
+                errors.Add("“需求类型” 不能为空！");
             }
+
+
+            if(requirement.Type == Abstraction.BizObject.RequirementType.Buy || requirement.Type == Abstraction.BizObject.RequirementType.Sale)
+            {
+                if(string.IsNullOrEmpty(requirement.ProductName))
+                {
+                    errors.Add("“货物名称”不能为空！");
+                }
+            }
+
+
             dto.RequirementTypeId = (mongodbObjects.RequirementType)requirement.Type;
 
             dto.RequirementId = requirement.RequirementId;
@@ -456,6 +468,17 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
             if(requirement.Type == Abstraction.BizObject.RequirementType.Sale)
             {
+                if(requirement.ProductPrice<=0)
+                {
+                    errors.Add("“货物单价”必须大于0！");
+                }
+
+                if(requirement.ProductQuantity<=0)
+                {
+                    errors.Add("“货物数量”必须大于0！");
+                }
+
+
                 if (requirement.TradeAmount == 0)
                     dto.TradeAmount = requirement.ProductPrice * requirement.ProductQuantity;
                 else
@@ -468,10 +491,16 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                     dto.TradeAmount = requirement.PaymentAmount;
                 else
                     dto.TradeAmount = requirement.TradeAmount;
+
+                if (dto.TradeAmount <= 0m)
+                    errors.Add("“资金金额”必须大于0！");
+
             }
             else
             {
                 dto.TradeAmount = requirement.TradeAmount;
+                if (dto.TradeAmount <= 0m)
+                    errors.Add("“合同总额”必须大于0！");
             }
 
             dto.ProductName = requirement.ProductName;
@@ -490,8 +519,6 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             dto.InvoiceValue = requirement.InvoiceValue;
             dto.InvoiceIssueDateTime = requirement.InvoiceIssueDateTime;
             dto.InvoiceTransferMode = requirement.InvoiceTransferMode;
-
-
 
             dto.WarehouseState = requirement.WarehouseState;
             dto.WarehouseCity = requirement.WarehouseCity;
