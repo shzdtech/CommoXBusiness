@@ -411,11 +411,11 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         private List<RequirementFilter> ConvertToRequirementFilterDTOs(IEnumerable<RequirementRuleInfo> rules, ref List<string> errors)
         {
-            if (rules == null)
-            {
-                errors.Add("Rules are required.");
-                return null;
-            }
+            //if (rules == null)
+            //{
+            //    errors.Add("Rules are required.");
+            //    return null;
+            //}
 
             List<RequirementFilter> filters = new List<RequirementFilter>();
             RequirementFilter f = null;
