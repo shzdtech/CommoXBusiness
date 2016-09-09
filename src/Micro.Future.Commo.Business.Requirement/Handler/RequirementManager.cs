@@ -185,7 +185,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             if (!string.IsNullOrWhiteSpace(searchCriteria.ProductName)
                 && !string.IsNullOrWhiteSpace(requirementObj.ProductName)
                 && (!string.Equals(requirementObj.ProductName, searchCriteria.ProductName, StringComparison.CurrentCultureIgnoreCase)
-                && searchCriteria.ProductName.Contains(requirementObj.ProductName)
+                && !searchCriteria.ProductName.Contains(requirementObj.ProductName)
                 ))
             {
                 return false;
