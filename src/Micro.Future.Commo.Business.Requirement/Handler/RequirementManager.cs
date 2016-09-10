@@ -253,14 +253,14 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                         }
                         else
                         {
-                            queryRequirements = queryRequirements.OrderByDescending(f => f.GetType().GetProperty(field.Field).PropertyType);
+                            queryRequirements = queryRequirements.OrderByDescending(f => GetPropertyValue(f, field.Field));
                         }
                     }
                 }
 
-                var findRequirements = queryRequirements.Skip((searchCriteria.PageNo - 1) * searchCriteria.PageSize).Take(searchCriteria.PageSize);
+                queryRequirements = queryRequirements.Skip((searchCriteria.PageNo - 1) * searchCriteria.PageSize).Take(searchCriteria.PageSize);
 
-                foreach (var reqObj in findRequirements)
+                foreach (var reqObj in queryRequirements)
                 {
                     requirementInfoList.Add(ConvertToRequirementInfo(reqObj));
                 }
@@ -274,6 +274,11 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return searchResult;
         }
 
+        private static object GetPropertyValue(object obj, string property)
+        {
+            System.Reflection.PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
+            return propertyInfo.GetValue(obj, null);
+        }
 
         public CommoBizTResult<IList<RequirementInfo>> QueryRequirementsByEnterpriseId(int enterpriseId, RequirementState? state)
         {

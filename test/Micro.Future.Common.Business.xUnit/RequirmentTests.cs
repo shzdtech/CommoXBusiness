@@ -52,8 +52,19 @@ namespace Micro.Future.Common.Business.xUnit
 
             RequirementSearchCriteria criteria = new RequirementSearchCriteria()
             {
+                ProductName = "铁,锌",
                 PageNo = 1,
                 PageSize = 10
+            };
+
+
+            criteria.OrderByFields = new List<OrderByInfo>()
+            {
+                new OrderByInfo()
+                {
+                     Field = "CreateTime",
+                     OrderBy = "desc"
+                }
             };
 
 

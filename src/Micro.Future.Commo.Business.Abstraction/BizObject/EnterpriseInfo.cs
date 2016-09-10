@@ -99,5 +99,10 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// 营业执照等证件保存路径
         /// </summary>
         public string LicenseImagePath { get; set; }
+
+        /// <summary>
+        /// 传真
+        /// </summary>
+        public string Fax { get; set; }
     }
 }
