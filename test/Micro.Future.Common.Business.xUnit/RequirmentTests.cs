@@ -12,18 +12,20 @@ using System.Data.OleDb;
 using System.IO;
 using System.Text;
 
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace Micro.Future.Common.Business.xUnit
 {
-    public class RequirmentTests
+    public class RequirmentTests : BaseTest
     {
-
+        private IRequirementManager manager = null;
         private static List<UserInfo> fakeUsers = null;
 
         public RequirmentTests()
         {
             //fakeUsers = CreateFakeUsers(1000, 50);
+            manager = serviceProvider.GetService<IRequirementManager>();
         }
 
         [Fact]
@@ -31,7 +33,6 @@ namespace Micro.Future.Common.Business.xUnit
         {
             //1675
             string userId = "0";
-            IRequirementManager manager = new RequirementManager();
             var bizResult =  manager.QueryRequirements(userId);
 
             Assert.False(bizResult.HasError);
@@ -68,7 +69,6 @@ namespace Micro.Future.Common.Business.xUnit
             };
 
 
-            IRequirementManager manager = new RequirementManager();
             var bizResult = manager.SearchRequirements(criteria);
             
         }
@@ -79,7 +79,6 @@ namespace Micro.Future.Common.Business.xUnit
         {
             //1675
             int enterpriseId = 123;
-            IRequirementManager manager = new RequirementManager();
             var bizResult = manager.QueryRequirementsByEnterpriseId(enterpriseId,null);
 
             Assert.False(bizResult.HasError);
@@ -95,7 +94,6 @@ namespace Micro.Future.Common.Business.xUnit
         {
             //1675
             int requirementId = 5743;
-            IRequirementManager manager = new RequirementManager();
             var bizResult = manager.QueryRequirementInfo(requirementId);
 
             Assert.False(bizResult.HasError);
@@ -110,7 +108,6 @@ namespace Micro.Future.Common.Business.xUnit
         {
             //1675
             int requirementId = 5743;
-            IRequirementManager manager = new RequirementManager();
             var bizResult = manager.QueryRequirementChains(requirementId);
 
             Assert.False(bizResult.HasError);
@@ -123,7 +120,6 @@ namespace Micro.Future.Common.Business.xUnit
         [Fact]
         public void Test_AddRequirement()
         {
-            IRequirementManager manager = new RequirementManager();
 
             UserInfo user = fakeUsers[0];
 
@@ -222,7 +218,6 @@ namespace Micro.Future.Common.Business.xUnit
             string[][] tablesal = ReadCvs(Path.Combine(folder, "sal.csv"));
             string[][] tablesub = ReadCvs(Path.Combine(folder, "sub.csv"));
 
-            IRequirementManager manager = new RequirementManager();
 
             int totalUsers = tableuser.Length;
 

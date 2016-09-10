@@ -13,29 +13,26 @@ using mongodbObjects = Micro.Future.Business.MongoDB.Commo.BizObjects;
 using System.Reflection;
 using Micro.Future.Business.DataAccess.Commo.CommonInterface;
 using Micro.Future.Business.DataAccess.Commo.CommoHandler;
+using Micro.Future.Business.MongoDB.Commo.MongoInterface;
 
 namespace Micro.Future.Commo.Business.Requirement.Handler
 {
     public class RequirementManager : BaseBizHandler, IRequirementManager
     {
-        private IEnterpriseManager _enterpriseService = null;
+        private IEnterprise _enterpriseService = null;
 
-        protected MatcherHandler _matcherService = null;
+        private IMatcher _matcherService = null;
+        //protected MatcherHandler _matcherService = null;
 
         public event Action<IList<RequirementChainInfo>> OnChainChanged;
 
         #region constructor
 
-        public RequirementManager()
-        {
-            _matcherService = new MatcherHandler();
-        }
-
-        public RequirementManager(IEnterpriseManager enterpriseService, MatcherHandler requirementHandler)
+        public RequirementManager(IEnterprise enterpriseService, IMatcher matchService)
         {
             _enterpriseService = enterpriseService;
-            _matcherService = requirementHandler;
-            _matcherService.OnChainChanged += _matcherService_OnChainChanged;
+            _matcherService = matchService;
+            //_matcherService.OnChainChanged += _matcherService_OnChainChanged;
         }
 
         private void _matcherService_OnChainChanged(IEnumerable<ChainObject> chains, MatcherHandler.ChainUpdateStatus status)
@@ -108,7 +105,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             
             try
             {
-                EnterpriseInfo enterpriseInfo = _enterpriseService.QueryEnterpriseInfo(requirement.EnterpriseId);
+                var enterpriseInfo = _enterpriseService.QueryEnterpriseInfo(requirement.EnterpriseId);
                 if(enterpriseInfo == null)
                 {
                     return new BizTResult<RequirementInfo>(null,
@@ -132,7 +129,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public BizTResult<IEnumerable<RequirementChainInfo>> QueryRequirementChains(int requirementId)
         {
-            var findChainObjects = this._matcherService.GetMatcherChainsByRequirementId(requirementId, ChainStatus.OPEN);//.QueryRequirementChains(requirementId);
+            var findChainObjects = _matcherService.GetMatcherChainsByRequirementId(requirementId, ChainStatus.OPEN, true);//.QueryRequirementChains(requirementId);
             if (findChainObjects == null)
                 return new BizTResult<IEnumerable<RequirementChainInfo>>(null, null);
 
@@ -290,7 +287,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
             if (stateId == -1)
             {
-                requirements = _matcherService.QueryRequirementsByEnterpriseId(enterpriseId);
+                requirements = _matcherService.QueryRequirementsByEnterpriseId(enterpriseId,null);
             }
             else
             {

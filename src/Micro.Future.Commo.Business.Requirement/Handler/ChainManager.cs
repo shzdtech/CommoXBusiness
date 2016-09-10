@@ -23,8 +23,12 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         private ITrade _tradeService = null;
         private IOrder _orderService = null;
         private IMatcher _matcherService = null;
+        
 
-        public ChainManager(IChainDAL chainService, ITrade tradeService, IOrder orderService, IMatcher matcherService)
+        public ChainManager(IChainDAL chainService, 
+            ITrade tradeService, 
+            IOrder orderService, 
+            IMatcher matcherService)
         {
             _chainService = chainService;
             _tradeService = tradeService;
@@ -55,13 +59,13 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             {
                 info.Requirements = new List<RequirementInfo>();
 
-                RequirementManager mgr = new RequirementManager();
                 foreach (var reqId in chainObj.RequirementIdChain)
                 {
-                    var bizResult = mgr.QueryRequirementInfo(reqId);
-                    if (bizResult.HasError || bizResult.Result == null)
+                    var requirement = _matcherService.QueryRequirementInfo(reqId);
+                    if (requirement == null)
                         continue;
-                    info.Requirements.Add(bizResult.Result);
+                    
+                    info.Requirements.Add(RequirementManager.ConvertToRequirementInfo(requirement));
                 }
             }
 
