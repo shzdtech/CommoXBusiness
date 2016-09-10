@@ -73,19 +73,10 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
     /// </summary>
     public enum RequirementRuleOperation
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        MoreThan = 1,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        Equal = 2,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        LessThan = 3
+        EQUAL = 1,
+        LESS = 2,
+        GREATER = 3,
+        IN = 4,
+        NOTIN = 5
     }
 }

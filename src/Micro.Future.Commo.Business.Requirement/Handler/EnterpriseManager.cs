@@ -30,6 +30,14 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                   new BizException(BizErrorType.BIZ_ERROR, errorMsg));
             }
 
+            bool isValid = _enterpriseService.ValidationEnterpriceRegister(enterprise.Name, enterprise.EmailAddress);
+            if (!isValid)
+            {
+                return new BizTResult<int>(-1,
+                 new BizException(BizErrorType.BIZ_ERROR, "企业名称或企业邮箱已注册！"));
+            }
+
+
             var entity = EnterpriseToEntityObject(enterprise);
             var result = _enterpriseService.AddEnterprise(entity); 
 
@@ -116,6 +124,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             info.EmailAddress = entity.EmailAddress;
             info.MobilePhone = entity.MobilePhone;
             info.LicenseImagePath = entity.LicenseImagePath;
+            info.Fax = entity.Fax;
             return info;
         }
 
@@ -145,6 +154,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             entity.EmailAddress = info.EmailAddress;
             entity.MobilePhone = info.MobilePhone;
             entity.LicenseImagePath = info.LicenseImagePath;
+            entity.Fax = info.Fax;
             return entity;
         }
     }

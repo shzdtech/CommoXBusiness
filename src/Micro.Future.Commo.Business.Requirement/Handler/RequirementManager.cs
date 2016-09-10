@@ -11,11 +11,15 @@ using Micro.Future.Business.MongoDB.Commo.BizObjects;
 using Micro.Future.Commo.Business.Abstraction.Handler;
 using mongodbObjects = Micro.Future.Business.MongoDB.Commo.BizObjects;
 using System.Reflection;
+using Micro.Future.Business.DataAccess.Commo.CommonInterface;
+using Micro.Future.Business.DataAccess.Commo.CommoHandler;
 
 namespace Micro.Future.Commo.Business.Requirement.Handler
 {
     public class RequirementManager : BaseBizHandler, IRequirementManager
     {
+        private IEnterpriseManager _enterpriseService = null;
+
         protected MatcherHandler _matcherService = null;
 
         public event Action<IList<RequirementChainInfo>> OnChainChanged;
@@ -27,8 +31,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             _matcherService = new MatcherHandler();
         }
 
-        public RequirementManager(MatcherHandler requirementHandler)
+        public RequirementManager(IEnterpriseManager enterpriseService, MatcherHandler requirementHandler)
         {
+            _enterpriseService = enterpriseService;
             _matcherService = requirementHandler;
             _matcherService.OnChainChanged += _matcherService_OnChainChanged;
         }
@@ -100,30 +105,21 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 return new BizTResult<RequirementInfo>(null,
                    new BizException(BizErrorType.BIZ_ERROR, errorMsg));
             }
-
-            //bool saveSuccess = false;
+            
             try
             {
+                EnterpriseInfo enterpriseInfo = _enterpriseService.QueryEnterpriseInfo(requirement.EnterpriseId);
+                if(enterpriseInfo == null)
+                {
+                    return new BizTResult<RequirementInfo>(null,
+                    new BizException(BizErrorType.BIZ_ERROR, "企业未注册或尚未认证！"));
+                }
+
+                dto.EnterpriseType = enterpriseInfo.BusinessTypeId.ToString();
+                dto.Filters = filters;
+
                 int requirementId = _matcherService.AddRequirement(dto);
                 requirement.RequirementId = requirementId;
-                //if(requirementId > 0)
-                //{
-                //    saveSuccess = true;
-                //}
-                //else
-                //{
-                //    saveSuccess = false;
-                //}
-
-                ////save filters
-                //if (saveSuccess && filters != null && filters.Count > 0)
-                //{
-                //    foreach (var filter in filters)
-                //    {
-                //        filter.RequirementId = requirementId;
-                //        //mongDBRequirementHandler.AddRequirementFilter(filter);
-                //    }
-                //}
 
             }
             catch(Exception ex)
@@ -433,11 +429,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             foreach (var rule in rules)
             {
                 f = new RequirementFilter();
-                f.FilterId = rule.RuleId;
                 f.FilterKey = rule.Key;
                 f.FilterValue = rule.Value;
-                f.OperationId = (int)rule.OperationType;
-                f.StateId = (int)rule.State;
+                f.OperationTypeId = (FilterOperationType)rule.OperationType;
                 filters.Add(f);
             }
             return filters;
@@ -563,11 +557,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         private RequirementRuleInfo ConvertToRequirementRule(RequirementFilter filter)
         {
             RequirementRuleInfo rule = new RequirementRuleInfo();
-            rule.RuleId = filter.FilterId;
             rule.Key = filter.FilterKey;
             rule.Value = filter.FilterValue;
-            rule.OperationType = (RequirementRuleOperation)filter.OperationId;
-            rule.State = (RequirementRuleState)filter.StateId;
+            rule.OperationType = (RequirementRuleOperation)filter.OperationTypeId;
             return rule;
         }
 

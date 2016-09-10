@@ -147,6 +147,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
 
         /// <summary>
         /// 企业类型
+        /// 1=国有企业/2=私有企业/3=外商独资/4=中外合资/5=港澳独资
         /// </summary>
         public string EnterpriseType { get; set; }
 

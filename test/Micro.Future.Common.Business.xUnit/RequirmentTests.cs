@@ -148,35 +148,31 @@ namespace Micro.Future.Common.Business.xUnit
 
             //必须是国有企业
             RequirementRuleInfo rule = new RequirementRuleInfo();
-            rule.RuleType = 1;
             rule.Key = RequirementRuleNames.EnterpriseNature;
             rule.Value = "国企";
-            rule.OperationType = RequirementRuleOperation.Equal;
+            rule.OperationType = RequirementRuleOperation.EQUAL;
             rules.Add(rule);
 
             //注册资本500万以上
             rule = new RequirementRuleInfo();
-            rule.RuleType = 1;
             rule.Key = RequirementRuleNames.EnterpriseRegisteredCaptial;
             rule.Value = "5000000";
-            rule.OperationType = RequirementRuleOperation.MoreThan;
+            rule.OperationType = RequirementRuleOperation.GREATER;
             rules.Add(rule);
 
             //注册地
             rule = new RequirementRuleInfo();
-            rule.RuleType = 1;
             rule.Key = RequirementRuleNames.EnterpriseRegisteredState;
             rule.Value = "上海";
-            rule.OperationType = RequirementRuleOperation.MoreThan;
+            rule.OperationType = RequirementRuleOperation.GREATER;
             rules.Add(rule);
 
 
             //支付方式，现金
             rule = new RequirementRuleInfo();
-            rule.RuleType = 4;
             rule.Key = RequirementRuleNames.PaymentPayMethod;
             rule.Value = "现金";
-            rule.OperationType = RequirementRuleOperation.MoreThan;
+            rule.OperationType = RequirementRuleOperation.GREATER;
             rules.Add(rule);
 
 
@@ -266,9 +262,9 @@ namespace Micro.Future.Common.Business.xUnit
                 requirementbuy.InvoiceIssueDateTime = testData[13];
                 requirementbuy.InvoiceTransferMode = testData[14];
 
-                rulebuy.RuleType = 1;
-                rulebuy.Key = testData[16];
-                rulebuy.Value = testData[17];
+                rulebuy.Key = "EnterpriseType";
+                rulebuy.Value = "1";
+                rulebuy.OperationType = RequirementRuleOperation.EQUAL;
 
                 rulesbuy.Add(rulebuy);
                 requirementbuy.Rules = rulesbuy;
@@ -313,9 +309,9 @@ namespace Micro.Future.Common.Business.xUnit
                 requirementsal.InvoiceIssueDateTime = testData[9];
                 requirementsal.InvoiceTransferMode = testData[10];
 
-                rulesal.RuleType = 1;
                 rulesal.Key = testData[12];
                 rulesal.Value = testData[13];
+                rulesal.OperationType = RequirementRuleOperation.EQUAL;
 
                 rulessal.Add(rulesal);
                 requirementsal.Rules = rulessal;
@@ -355,9 +351,10 @@ namespace Micro.Future.Common.Business.xUnit
                 requirementsub.InvoiceIssueDateTime = testData[4];
                 requirementsub.InvoiceTransferMode = testData[5];
 
-                rulesub.RuleType = 1;
+                
                 rulesub.Key = testData[6]; ;
                 rulesub.Value = testData[7];
+                rulesub.OperationType = RequirementRuleOperation.EQUAL;
 
                 rulessub.Add(rulesub);
                 requirementsub.Rules = rulessub;
