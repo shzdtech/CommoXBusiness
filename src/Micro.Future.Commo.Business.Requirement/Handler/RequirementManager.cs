@@ -476,7 +476,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             dto.RequirementStateId = (mongodbObjects.RequirementStatus)requirement.State;
             dto.RequirementTypeId = (mongodbObjects.RequirementType)requirement.Type;
 
-            if(requirement.Type == Abstraction.BizObject.RequirementType.Sale)
+            if(requirement.Type == Abstraction.BizObject.RequirementType.Sale || requirement.Type == Abstraction.BizObject.RequirementType.Buy)
             {
                 if(requirement.ProductPrice<=0)
                 {
@@ -495,17 +495,17 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                     dto.TradeAmount = requirement.TradeAmount;
 
             }
-            else if(requirement.Type == Abstraction.BizObject.RequirementType.Buy)
-            {
-                if (requirement.TradeAmount == 0 && requirement.PaymentAmount != 0)
-                    dto.TradeAmount = requirement.PaymentAmount;
-                else
-                    dto.TradeAmount = requirement.TradeAmount;
+            //else if(requirement.Type == Abstraction.BizObject.RequirementType.Buy)
+            //{
+            //    if (requirement.TradeAmount == 0 && requirement.PaymentAmount != 0)
+            //        dto.TradeAmount = requirement.PaymentAmount;
+            //    else
+            //        dto.TradeAmount = requirement.TradeAmount;
 
-                if (dto.TradeAmount <= 0m)
-                    errors.Add("“资金金额”必须大于0！");
+            //    if (dto.TradeAmount <= 0m)
+            //        errors.Add("“资金金额”必须大于0！");
 
-            }
+            //}
             else
             {
                 dto.TradeAmount = requirement.TradeAmount;
