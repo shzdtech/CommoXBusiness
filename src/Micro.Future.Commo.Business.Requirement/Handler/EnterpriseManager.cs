@@ -157,5 +157,39 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             entity.Fax = info.Fax;
             return entity;
         }
+
+        public BizTResult<IList<EnterpriseInfo>> QueryEnterprises(string name, EnterpriseStateType? stateType)
+        {
+            BizException bizException = null;
+            IList<EnterpriseInfo> infoList = null;
+
+            IEnumerable<Enterprise> enterpriseList = _enterpriseService.QueryEnterprises(f => IsEnterpriseMatch(f, name, stateType));
+            if (enterpriseList == null)
+                return new BizTResult<IList<EnterpriseInfo>>(null, bizException);
+
+            infoList = new List<EnterpriseInfo>();
+            foreach(var obj in enterpriseList)
+            {
+                infoList.Add(EnterpriseToBizObject(obj));
+            }
+
+            return new BizTResult<IList<EnterpriseInfo>>(infoList, bizException);
+        }
+
+        private bool IsEnterpriseMatch(Enterprise enterpriseObj, string name, EnterpriseStateType? stateType)
+        {
+            if (!string.IsNullOrWhiteSpace(name) && (string.IsNullOrWhiteSpace(enterpriseObj.Name) || !enterpriseObj.Name.Contains(name)))
+            {
+                return false;
+            }
+
+            if(stateType.HasValue && enterpriseObj.StateId != (int)stateType.Value)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
     }
 }

@@ -52,5 +52,14 @@ namespace Micro.Future.Common.Business.xUnit
 
             Assert.Equal<Commo.Business.Abstraction.BizObject.EnterpriseStateType>(Commo.Business.Abstraction.BizObject.EnterpriseStateType.REJECTED, enterpriseInfo.EnterpriseState);
         }
+
+        [Fact]
+        public void Test_QueryEnterprises()
+        {
+            var result = _enterpriseManager.QueryEnterprises(null, Commo.Business.Abstraction.BizObject.EnterpriseStateType.UNAPPROVED);
+            Assert.False(result.HasError);
+            Assert.NotNull(result.Result);
+            Assert.NotEqual<int>(0, result.Result.Count);
+        }
     }
 }
