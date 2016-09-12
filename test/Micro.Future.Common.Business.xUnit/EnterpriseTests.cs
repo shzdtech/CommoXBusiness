@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Microsoft.Extensions.DependencyInjection;
+using Micro.Future.Commo.Business.Abstraction.BizObject;
 
 namespace Micro.Future.Common.Business.xUnit
 {
@@ -60,6 +61,23 @@ namespace Micro.Future.Common.Business.xUnit
             Assert.False(result.HasError);
             Assert.NotNull(result.Result);
             Assert.NotEqual<int>(0, result.Result.Count);
+        }
+
+        [Fact]
+        public void Test_AddEnterprise()
+        {
+            EnterpriseInfo enterprise = new EnterpriseInfo()
+            {
+                Name = "mm company",
+                Address = "mm address",
+                EmailAddress = "mm@mm.com",
+                Contacts = "mm",
+                MobilePhone = "13568745893",
+                Fax = "1234556"
+            };
+
+           var result =  _enterpriseManager.AddEnterprise(enterprise);
+
         }
     }
 }
