@@ -17,6 +17,8 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
 
         BizTResult<bool> UpdateEnterprise(EnterpriseInfo enterprise);
 
+        BizTResult<IList<EnterpriseInfo>> QueryEnterprises(string name, EnterpriseStateType? stateType);
+
         bool UpdateEnterpriseState(int enterpriseId, EnterpriseStateType stateType);
 
         void SaveEmailVerifyCode(string requestId, string email, string code, DateTime sendTime);
