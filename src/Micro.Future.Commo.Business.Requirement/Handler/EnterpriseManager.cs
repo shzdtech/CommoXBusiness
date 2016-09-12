@@ -163,7 +163,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             BizException bizException = null;
             IList<EnterpriseInfo> infoList = null;
 
-            IEnumerable<Enterprise> enterpriseList = _enterpriseService.QueryEnterprises(f => IsEnterpriseMatch(f, name, stateType));
+            IQueryable<Enterprise> enterpriseList = _enterpriseService.QueryEnterprises(f => IsEnterpriseMatch(f, name, stateType));
             if (enterpriseList == null)
                 return new BizTResult<IList<EnterpriseInfo>>(null, bizException);
 
