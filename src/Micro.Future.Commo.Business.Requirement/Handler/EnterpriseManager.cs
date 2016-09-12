@@ -14,10 +14,12 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
     public class EnterpriseManager : IEnterpriseManager
     {
         private IEnterprise _enterpriseService = null;
+        private IEmailVerifyCode _emailVerifyCodeService = null;
 
-        public EnterpriseManager(IEnterprise enterpriseService)
+        public EnterpriseManager(IEnterprise enterpriseService, IEmailVerifyCode emailVerifyCodeService)
         {
             _enterpriseService = enterpriseService;
+            _emailVerifyCodeService = emailVerifyCodeService;
         }
 
         public BizTResult<int> AddEnterprise(EnterpriseInfo enterprise)
@@ -58,6 +60,11 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return EnterpriseToBizObject(entity);
         }
 
+        public bool EmailHasBeenRegistered(string email)
+        {
+            return _enterpriseService.EmailHasBeenRegistered(email);
+        }
+
         public BizTResult<bool> UpdateEnterprise(EnterpriseInfo enterprise)
         {
             var entity = EnterpriseToEntityObject(enterprise);
@@ -70,6 +77,20 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return _enterpriseService.UpdateEnterpriseState(enterpriseId, (int)stateType);
         }
 
+        public void SaveEmailVerifyCode(string requestId, string email, string code, DateTime sendTime)
+        {
+            _emailVerifyCodeService.SaveEmailVerifyCode(requestId, email, code, sendTime);
+        }
+
+        public bool HasExceedLimitationPerDay(string email)
+        {
+            return _emailVerifyCodeService.HasExceedLimitationPerDay(email);
+        }
+
+        public bool CanResend(string email)
+        {
+            return _emailVerifyCodeService.CanResend(email);
+        }
 
         private List<string> ValidateEnterpriseInfo(EnterpriseInfo enterprise)
         {

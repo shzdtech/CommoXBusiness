@@ -11,10 +11,18 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
     {
         EnterpriseInfo QueryEnterpriseInfo(int enterpriseId);
 
+        bool EmailHasBeenRegistered(string email);
+
         BizTResult<int> AddEnterprise(EnterpriseInfo enterprise);
 
         BizTResult<bool> UpdateEnterprise(EnterpriseInfo enterprise);
 
         bool UpdateEnterpriseState(int enterpriseId, EnterpriseStateType stateType);
+
+        void SaveEmailVerifyCode(string requestId, string email, string code, DateTime sendTime);
+
+        bool HasExceedLimitationPerDay(string email);
+
+        bool CanResend(string email);
     }
 }
