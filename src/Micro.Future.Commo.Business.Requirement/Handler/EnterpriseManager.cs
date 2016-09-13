@@ -92,6 +92,11 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return _emailVerifyCodeService.CanResend(email);
         }
 
+        public bool CheckEmailVerifyCode(string email, string verificationCode)
+        {
+            return _emailVerifyCodeService.CheckEmailVerifyCode(email, verificationCode);
+        }
+
         private List<string> ValidateEnterpriseInfo(EnterpriseInfo enterprise)
         {
             List<string> errors = new List<string>();

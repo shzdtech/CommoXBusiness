@@ -26,5 +26,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         bool HasExceedLimitationPerDay(string email);
 
         bool CanResend(string email);
+
+        bool CheckEmailVerifyCode(string email, string verificationCode);
     }
 }
