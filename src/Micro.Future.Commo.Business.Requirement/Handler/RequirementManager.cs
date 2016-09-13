@@ -90,7 +90,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         {
             if (requirement == null)
                 return new BizTResult<RequirementInfo>(null, new BizException(BizErrorType.BIZ_ERROR, "RequirementInfo is null"));
-
+            
             List<string> errors = null;
             RequirementObject dto = ConvertToRequirementDto(requirement, out errors);
 
@@ -106,10 +106,10 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             try
             {
                 var enterpriseInfo = _enterpriseService.QueryEnterpriseInfo(requirement.EnterpriseId);
-                if(enterpriseInfo == null)
+                if(enterpriseInfo == null || enterpriseInfo.StateId != 2)
                 {
                     return new BizTResult<RequirementInfo>(null,
-                    new BizException(BizErrorType.BIZ_ERROR, "企业未注册或尚未认证！"));
+                    new BizException(BizErrorType.BIZ_ERROR, "企业尚未认证通过，不能发布需求！"));
                 }
 
                 dto.EnterpriseType = enterpriseInfo.BusinessTypeId.ToString();
