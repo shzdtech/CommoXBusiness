@@ -32,6 +32,7 @@ namespace Micro.Future.Commo.Business.Requirement
             services.AddTransient<IOrder, OrderHandler>();
             services.AddTransient<IRequirement, RequirementHandler>();
             services.AddTransient<IEmailVerifyCode, EmailVerifyCodeHandler>();
+            services.AddTransient<IOperationRecord, OperationRecordHandler>();
 
             //mongodb
             services.AddTransient<IChainDAL, ChainDAL>();

@@ -54,14 +54,14 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         /// </summary>
         /// <param name="chainId"></param>
         /// <returns></returns>
-        bool LockChain(int chainId);
+        bool LockChain(string userId, int chainId);
 
         /// <summary>
         /// 解锁撮合连
         /// </summary>
         /// <param name="chainId"></param>
         /// <returns></returns>
-        bool UnlockChain(int chainId);
+        bool UnlockChain(string userId, int chainId);
 
         /// <summary>
         /// 确认撮合连，生成订单并且返回tradeId
@@ -69,6 +69,6 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         /// <param name="chainId"></param>
         /// <param name="tradeId"></param>
         /// <returns></returns>
-        bool ComfirmChain(int chainId, out int tradeId);
+        bool ComfirmChain(string userId, int chainId, out int tradeId);
     }
 }

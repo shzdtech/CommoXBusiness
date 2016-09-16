@@ -44,18 +44,19 @@ namespace Micro.Future.Common.Business.xUnit
         [Fact]
         public void Test_LockUnlockChain()
         {
-            int chainId = 11223;
+            int chainId = 11404;
+            string userId = "110022";
             var chainInfo = _chainManager.GetChainInfo(chainId);
 
             if(chainInfo.ChainStatus == ChainStatusType.OPEN)
             {
-                var lockSuccess = _chainManager.LockChain(chainId);
+                var lockSuccess = _chainManager.LockChain(userId, chainId);
                 Assert.True(lockSuccess);
 
                 chainInfo = _chainManager.GetChainInfo(chainId);
                 Assert.Equal<ChainStatusType>(chainInfo.ChainStatus, ChainStatusType.LOCKED);
 
-                var unlockSuccess = _chainManager.UnlockChain(chainId);
+                var unlockSuccess = _chainManager.UnlockChain(userId, chainId);
                 Assert.True(unlockSuccess);
 
                 chainInfo = _chainManager.GetChainInfo(chainId);
@@ -63,13 +64,13 @@ namespace Micro.Future.Common.Business.xUnit
             }
             else if(chainInfo.ChainStatus == ChainStatusType.LOCKED)
             {
-                var unlockSuccess = _chainManager.UnlockChain(chainId);
+                var unlockSuccess = _chainManager.UnlockChain(userId, chainId);
                 Assert.True(unlockSuccess);
 
                 chainInfo = _chainManager.GetChainInfo(chainId);
                 Assert.Equal<ChainStatusType>(chainInfo.ChainStatus, ChainStatusType.OPEN);
 
-                var lockSuccess = _chainManager.LockChain(chainId);
+                var lockSuccess = _chainManager.LockChain(userId, chainId);
                 Assert.True(lockSuccess);
 
                 chainInfo = _chainManager.GetChainInfo(chainId);
@@ -77,7 +78,7 @@ namespace Micro.Future.Common.Business.xUnit
             }
             else if(chainInfo.ChainStatus == ChainStatusType.CONFIRMED)
             {
-                var lockSuccess = _chainManager.LockChain(chainId);
+                var lockSuccess = _chainManager.LockChain(userId, chainId);
                 Assert.True(lockSuccess);
 
                 chainInfo = _chainManager.GetChainInfo(chainId);
@@ -89,8 +90,9 @@ namespace Micro.Future.Common.Business.xUnit
         public void Test_ConfirmChain()
         {
             int chainId = 11223;
+            string userId = "110022";
             int tradeId = 0;
-            var isConfirmed = _chainManager.ComfirmChain(chainId, out tradeId);
+            var isConfirmed = _chainManager.ComfirmChain(userId, chainId, out tradeId);
 
             Assert.True(isConfirmed);
             Assert.NotEqual<int>(tradeId, 0);

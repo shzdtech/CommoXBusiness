@@ -23,17 +23,20 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         private ITrade _tradeService = null;
         private IOrder _orderService = null;
         private IMatcher _matcherService = null;
-        
+        private IOperationRecord _operatorService = null;
+
 
         public ChainManager(IChainDAL chainService, 
             ITrade tradeService, 
             IOrder orderService, 
-            IMatcher matcherService)
+            IMatcher matcherService,
+            IOperationRecord operatorService)
         {
             _chainService = chainService;
             _tradeService = tradeService;
             _orderService = orderService;
             _matcherService = matcherService;
+            _operatorService = operatorService;
         }
         
 
@@ -72,22 +75,50 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return info;
         }
 
-        public bool LockChain(int chainId)
+        public bool LockChain(string userId, int chainId)
         {
-            return _matcherService.LockMatcherChain(chainId);
+            bool result = _matcherService.LockMatcherChain(chainId);
+            if (result)
+            {
+                OperationRecord record = new OperationRecord();
+                record.UserId = userId;
+                record.ObjectType = "Chain";
+                record.ObjectValue = chainId.ToString();
+                record.Operation = "1";
+                _operatorService.AddOperationRecord(record);
+            }
+           
+            return result;
         }
 
-        public bool UnlockChain(int chainId)
+        public bool UnlockChain(string userId, int chainId)
         {
-            return _matcherService.UnLockMatcherChain(chainId);
+            bool result = _matcherService.UnLockMatcherChain(chainId);
+            if (result)
+            {
+                OperationRecord record = new OperationRecord();
+                record.UserId = userId;
+                record.ObjectType = "Chain";
+                record.ObjectValue = chainId.ToString();
+                record.Operation = "2";
+                _operatorService.AddOperationRecord(record);
+            }
+            return result;
         }
 
-        public bool ComfirmChain(int chainId,out int tradeId)
+        public bool ComfirmChain(string userId, int chainId,out int tradeId)
         {
             tradeId = 0;
             bool isConfirmed = _matcherService.ConfirmMatcherChain(chainId);
             if(isConfirmed)
             {
+                OperationRecord record = new OperationRecord();
+                record.UserId = userId;
+                record.ObjectType = "Chain";
+                record.ObjectValue = chainId.ToString();
+                record.Operation = "3";
+                _operatorService.AddOperationRecord(record);
+
                 //生成订单
                 RequirementChainInfo chain = GetChainInfo(chainId);
 
