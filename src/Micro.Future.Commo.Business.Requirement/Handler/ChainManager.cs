@@ -77,7 +77,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public bool LockChain(string userId, int chainId)
         {
-            bool result = _matcherService.LockMatcherChain(chainId);
+            bool result = _matcherService.LockMatcherChain(chainId,userId);
             if (result)
             {
                 OperationRecord record = new OperationRecord();
@@ -93,7 +93,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public bool UnlockChain(string userId, int chainId)
         {
-            bool result = _matcherService.UnLockMatcherChain(chainId);
+            bool result = _matcherService.UnLockMatcherChain(chainId,userId);
             if (result)
             {
                 OperationRecord record = new OperationRecord();
@@ -109,7 +109,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         public bool ComfirmChain(string userId, int chainId,out int tradeId)
         {
             tradeId = 0;
-            bool isConfirmed = _matcherService.ConfirmMatcherChain(chainId);
+            bool isConfirmed = _matcherService.ConfirmMatcherChain(chainId,userId);
             if(isConfirmed)
             {
                 OperationRecord record = new OperationRecord();
