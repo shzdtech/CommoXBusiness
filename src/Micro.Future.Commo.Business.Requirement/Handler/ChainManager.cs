@@ -14,6 +14,7 @@ using mongoDB = Micro.Future.Business.MongoDB.Commo;
 using Micro.Future.Business.MongoDB.Commo.MongoInterface;
 using Micro.Future.Business.MongoDB.Commo.Handler;
 using Micro.Future.Commo.Business.Abstraction.Handler;
+using Micro.Future.Business.MatchMaker.Abstraction.Models;
 
 namespace Micro.Future.Commo.Business.Requirement.Handler
 {
@@ -24,19 +25,22 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         private IOrder _orderService = null;
         private IMatcher _matcherService = null;
         private IOperationRecord _operatorService = null;
+        private BaseMatchMaker _matchMaker = null;
 
 
         public ChainManager(IChainDAL chainService, 
             ITrade tradeService, 
             IOrder orderService, 
             IMatcher matcherService,
-            IOperationRecord operatorService)
+            IOperationRecord operatorService,
+            BaseMatchMaker matchMaker)
         {
             _chainService = chainService;
             _tradeService = tradeService;
             _orderService = orderService;
             _matcherService = matcherService;
             _operatorService = operatorService;
+            _matchMaker = matchMaker;
         }
         
 
@@ -346,6 +350,27 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             bizResult.ElapsedTime = _stopwatch.ElapsedMilliseconds;
 
             return bizResult;
+        }
+
+        public IList<RequirementInfo> FindReplacedRequirementsForChain(int chainId, int replacedNodeIndex, int topN = 5)
+        {
+            var requirementObjects =  _matchMaker.FindReplacedRequirementsForChain(chainId, replacedNodeIndex, topN);
+
+            if (requirementObjects == null || requirementObjects.Count == 0)
+                return null;
+            IList<RequirementInfo> requirementList = new List<RequirementInfo>();
+
+            foreach(var obj in requirementObjects)
+            {
+                requirementList.Add(RequirementManager.ConvertToRequirementInfo(obj));
+            }
+
+            return requirementList;
+        }
+
+        public bool ReplaceRequirementsForChain(int chainId, IList<int> replacedNodeIndexes, IList<int> replacingRequirementIds)
+        {
+            return _matcherService.ReplaceRequirementsForChain(chainId, replacedNodeIndexes, replacingRequirementIds);
         }
     }
 }

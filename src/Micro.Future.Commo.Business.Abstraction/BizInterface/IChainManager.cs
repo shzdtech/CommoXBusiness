@@ -70,5 +70,24 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         /// <param name="tradeId"></param>
         /// <returns></returns>
         bool ComfirmChain(string userId, int chainId, out int tradeId);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="chainId"></param>
+        /// <param name="replacedNodeIndex"></param>
+        /// <param name="topN"></param>
+        /// <returns></returns>
+        IList<RequirementInfo> FindReplacedRequirementsForChain(int chainId, int replacedNodeIndex, int topN = 5);
+
+        /// <summary>
+        /// Replace Requirements for chain
+        /// </summary>
+        /// 给定的Chain必须为锁定状态
+        /// <param name="chainId"></param>
+        /// <param name="replacedNodeIndexArr"></param>
+        /// <param name="replacingRequirementIds"></param>
+        /// <returns></returns>
+        bool ReplaceRequirementsForChain(int chainId, IList<int> replacedNodeIndexes, IList<int> replacingRequirementIds);
     }
 }
