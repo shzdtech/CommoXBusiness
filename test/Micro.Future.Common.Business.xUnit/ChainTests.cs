@@ -97,5 +97,19 @@ namespace Micro.Future.Common.Business.xUnit
             Assert.True(isConfirmed);
             Assert.NotEqual<int>(tradeId, 0);
         }
+
+        [Fact]
+        public void Test_FindReplaceRequirement()
+        {
+            int chanId = 11417;
+            var requirments = _chainManager.FindReplacedRequirementsForChain(chanId, 0);
+        }
+
+        [Fact]
+        public void Test_ReplaceChainRequirement()
+        {
+            int chainId = 11417;
+            var result = _chainManager.ReplaceRequirementsForChain(chainId, new List<int>() { 0 }, new List<int> { 6679 });
+        }
     }
 }
