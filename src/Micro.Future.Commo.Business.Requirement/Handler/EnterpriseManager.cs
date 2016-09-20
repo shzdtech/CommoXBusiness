@@ -217,5 +217,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return true;
         }
 
+        public bool DeleteEnterprise(int enterpriseId)
+        {
+            return _enterpriseService.DeleteEnterprise(enterpriseId);
+        }
     }
 }

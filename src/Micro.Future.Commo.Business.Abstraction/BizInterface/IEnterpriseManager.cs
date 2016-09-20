@@ -28,5 +28,12 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         bool CanResend(string email);
 
         bool CheckEmailVerifyCode(string email, string verificationCode);
+
+        /// <summary>
+        /// 删除一个企业信息
+        /// </summary>
+        /// <param name="enterpriseId"></param>
+        /// <returns></returns>
+        bool DeleteEnterprise(int enterpriseId);
     }
 }
