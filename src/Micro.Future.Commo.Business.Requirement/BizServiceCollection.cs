@@ -1,6 +1,8 @@
 ﻿using Micro.Future.Business.DataAccess.Commo;
 using Micro.Future.Business.DataAccess.Commo.CommoHandler;
 using Micro.Future.Business.DataAccess.Commo.CommonInterface;
+using Micro.Future.Business.MatchMaker.Abstraction.Models;
+using Micro.Future.Business.MatchMaker.Commo.Models;
 using Micro.Future.Business.MongoDB.Commo.Handler;
 using Micro.Future.Business.MongoDB.Commo.MongoInterface;
 using Micro.Future.Commo.Business.Abstraction.BizObject;
@@ -37,6 +39,7 @@ namespace Micro.Future.Commo.Business.Requirement
             //mongodb
             services.AddTransient<IChainDAL, ChainDAL>();
             services.AddTransient<IMatcher, MatcherHandler>();
+            services.AddTransient<BaseMatchMaker, RankingMatchMaker>();
 
             return services;
         }
