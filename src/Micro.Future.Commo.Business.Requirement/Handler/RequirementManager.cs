@@ -425,6 +425,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             RequirementFilter f = null;
             foreach (var rule in rules)
             {
+                if (string.IsNullOrWhiteSpace(rule.Value))
+                    continue;
+
                 f = new RequirementFilter();
                 f.FilterKey = rule.Key;
                 f.FilterValue = rule.Value;
