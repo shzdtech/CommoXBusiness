@@ -431,7 +431,10 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 f = new RequirementFilter();
                 f.FilterKey = rule.Key;
                 f.FilterValue = rule.Value;
+                f.FilterDirectionTypeId = FilterDirectionType.BIDIRECT;
+                f.FilterValueTypeId = FilterValueType.STRING;
                 f.OperationTypeId = (FilterOperationType)rule.OperationType;
+                f.IsSoftFilter = false;
                 filters.Add(f);
             }
             return filters;
