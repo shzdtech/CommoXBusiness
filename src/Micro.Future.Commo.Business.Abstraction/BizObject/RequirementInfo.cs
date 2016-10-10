@@ -109,7 +109,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         #endregion
 
         /// <summary>
-        /// 电子仓单
+        /// 电子仓单 - new
         /// </summary>
         public string EWarehouseReceipt { get; set; }
 
@@ -135,27 +135,27 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         public string PaymentType { get; set; }
 
         /// <summary>
-        /// 支付银行开户行名称
+        /// 支付银行开户行名称 - new
         /// </summary>
         public string PaymentBankName { get; set; }
 
         /// <summary>
-        /// 支付银行帐号
+        /// 支付银行帐号 - new
         /// </summary>
         public string PaymentBankAccount { get; set; }
 
         /// <summary>
-        /// 支付银行行号
+        /// 支付银行行号 - new
         /// </summary>
         public int PaymentBankId { get; set; }
 
         /// <summary>
-        /// 支付银行地址
+        /// 支付银行地址 - new
         /// </summary>
         public string PaymentBankAddress { get; set; }
 
         /// <summary>
-        /// 支付银行是否开通银承电子票口
+        /// 支付银行是否开通银承电子票口  - new
         /// </summary>
         public bool IsAcceptanceBillETicket { get; set; }
 
@@ -192,7 +192,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         public decimal Subsidies { get; set; }
 
         /// <summary>
-        /// 支付风控
+        /// 支付风控 - new
         /// </summary>
         public string PaymentRiskControl { get; set; }
 
@@ -212,7 +212,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         public string InvoiceValue { get; set; }
 
         /// <summary>
-        /// 开票要求
+        /// 开票要求 - new
         /// </summary>
         public string InvoiceRequirement { get; set; }
 
