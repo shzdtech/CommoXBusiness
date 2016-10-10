@@ -104,5 +104,51 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// 传真
         /// </summary>
         public string Fax { get; set; }
+
+
+        #region
+
+
+        //企业开票资料
+        public string InvoiceMaterial { get; set; }
+        
+        //企业开户仓库
+        public string RegisterWarehouse { get; set; }
+        //每月最大交易量
+        public string MaxTradeAmountPerMonth { get; set; }
+
+        //企业交易支付银行信息：开户行名称/帐号/行号/地址/是否开通银承电子票口
+
+        /// <summary>
+        /// 开户行名称
+        /// </summary>
+        public string PaymentBankName { get; set; }
+
+        /// <summary>
+        /// 帐号
+        /// </summary>
+        public string PaymentBankAccount { get; set; }
+
+        /// <summary>
+        /// 行号
+        /// </summary>
+        public int PaymentBankId { get; set; }
+        /// <summary>
+        /// 地址
+        /// </summary>
+        public string PaymentBankAddress { get; set; }
+        /// <summary>
+        /// 是否开通银承电子票口
+        /// </summary>
+        public bool IsAcceptanceBillETicket { get; set; }
+
+        //企业营业执照
+        //企业开户银行
+        //发票面额
+        //企业类型：国企（地方国企）/央企/上市公司/混合制/民营企业
+        //主营范围
+
+        #endregion
+
     }
 }

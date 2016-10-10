@@ -108,6 +108,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
 
         #endregion
 
+        /// <summary>
+        /// 电子仓单
+        /// </summary>
+        public string EWarehouseReceipt { get; set; }
+
 
         #endregion
 
@@ -129,7 +134,30 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// </summary>
         public string PaymentType { get; set; }
 
+        /// <summary>
+        /// 支付银行开户行名称
+        /// </summary>
+        public string PaymentBankName { get; set; }
 
+        /// <summary>
+        /// 支付银行帐号
+        /// </summary>
+        public string PaymentBankAccount { get; set; }
+
+        /// <summary>
+        /// 支付银行行号
+        /// </summary>
+        public int PaymentBankId { get; set; }
+
+        /// <summary>
+        /// 支付银行地址
+        /// </summary>
+        public string PaymentBankAddress { get; set; }
+
+        /// <summary>
+        /// 支付银行是否开通银承电子票口
+        /// </summary>
+        public bool IsAcceptanceBillETicket { get; set; }
 
         #endregion
 
@@ -163,6 +191,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// </summary>
         public decimal Subsidies { get; set; }
 
+        /// <summary>
+        /// 支付风控
+        /// </summary>
+        public string PaymentRiskControl { get; set; }
+
         #endregion
 
 
@@ -177,6 +210,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// 发票面额
         /// </summary>
         public string InvoiceValue { get; set; }
+
+        /// <summary>
+        /// 开票要求
+        /// </summary>
+        public string InvoiceRequirement { get; set; }
 
         /// <summary>
         /// 发票开具时间
