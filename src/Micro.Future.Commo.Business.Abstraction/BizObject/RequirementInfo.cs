@@ -108,10 +108,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
 
         #endregion
 
-        /// <summary>
-        /// 电子仓单 - new
-        /// </summary>
-        public string EWarehouseReceipt { get; set; }
+       
 
 
         #endregion
@@ -134,30 +131,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// </summary>
         public string PaymentType { get; set; }
 
-        /// <summary>
-        /// 支付银行开户行名称 - new
-        /// </summary>
-        public string PaymentBankName { get; set; }
-
-        /// <summary>
-        /// 支付银行帐号 - new
-        /// </summary>
-        public string PaymentBankAccount { get; set; }
-
-        /// <summary>
-        /// 支付银行行号 - new
-        /// </summary>
-        public int PaymentBankId { get; set; }
-
-        /// <summary>
-        /// 支付银行地址 - new
-        /// </summary>
-        public string PaymentBankAddress { get; set; }
-
-        /// <summary>
-        /// 支付银行是否开通银承电子票口  - new
-        /// </summary>
-        public bool IsAcceptanceBillETicket { get; set; }
+       
 
         #endregion
 
@@ -184,17 +158,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// </summary>
         public string BusinessRange { get; set; }
 
-
         /// <summary>
         /// 不需要了？
         /// 补贴额度，比如：我要1个亿的贸易量，我补贴贸易量的5%
         /// </summary>
         public decimal Subsidies { get; set; }
-
-        /// <summary>
-        /// 支付风控 - new
-        /// </summary>
-        public string PaymentRiskControl { get; set; }
 
         #endregion
 
@@ -211,10 +179,6 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// </summary>
         public string InvoiceValue { get; set; }
 
-        /// <summary>
-        /// 开票要求 - new
-        /// </summary>
-        public string InvoiceRequirement { get; set; }
 
         /// <summary>
         /// 发票开具时间
@@ -235,5 +199,53 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// 需求的撮合规则
         /// </summary>
         public IEnumerable<RequirementRuleInfo> Rules { get; set; }
+
+
+        #region 1.1 新增属性
+
+
+        /// <summary>
+        /// 电子仓单 - new
+        /// </summary>
+        public string EWarehouseReceipt { get; set; }
+
+        /// <summary>
+        /// 支付银行开户行名称 - new
+        /// </summary>
+        public string PaymentBankName { get; set; }
+
+        /// <summary>
+        /// 支付银行帐号 - new
+        /// </summary>
+        public string PaymentBankAccount { get; set; }
+
+        /// <summary>
+        /// 支付银行行号 - new
+        /// </summary>
+        public int PaymentBankId { get; set; }
+
+        /// <summary>
+        /// 支付银行地址 - new
+        /// </summary>
+        public string PaymentBankAddress { get; set; }
+
+        /// <summary>
+        /// 支付银行是否开通银承电子票口  - new
+        /// </summary>
+        public bool IsAcceptanceBillETicket { get; set; }
+
+        /// <summary>
+        /// 支付风控 - new
+        /// </summary>
+        public string PaymentRiskControl { get; set; }
+
+
+        /// <summary>
+        /// 开票要求 - new
+        /// </summary>
+        public string InvoiceRequirement { get; set; }
+
+        #endregion
+
     }
 }
