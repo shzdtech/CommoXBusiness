@@ -16,7 +16,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// <summary>
         /// 产品类型
         /// </summary>
-        public string ProductTypeId { get; set; }
+        public int ProductTypeId { get; set; }
         /// <summary>
         /// 产品价格
         /// </summary>
@@ -49,10 +49,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
                 dictErrors.Add("ProductName", "产品名称不能为空！");
             }
 
-            if (string.IsNullOrWhiteSpace(ProductTypeId))
-            {
-                dictErrors.Add("ProductTypeId", "请选择产品类型！");
-            }
+            
 
             if (Price<=0d)
             {
