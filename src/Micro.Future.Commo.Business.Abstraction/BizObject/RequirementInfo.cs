@@ -245,6 +245,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// </summary>
         public string InvoiceRequirement { get; set; }
 
+        /// <summary>
+        /// 货物交接方式 - new
+        /// </summary>
+        public string ProductTransferMode { get; set; }
+
         #endregion
 
     }
