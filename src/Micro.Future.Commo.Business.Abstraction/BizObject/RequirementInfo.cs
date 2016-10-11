@@ -246,6 +246,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         public string InvoiceRequirement { get; set; }
 
         /// <summary>
+        /// 开票量（交易当月） - new
+        /// </summary>
+        public string InvoiceAmount { get; set; }
+
+        /// <summary>
         /// 货物交接方式 - new
         /// </summary>
         public string ProductTransferMode { get; set; }
