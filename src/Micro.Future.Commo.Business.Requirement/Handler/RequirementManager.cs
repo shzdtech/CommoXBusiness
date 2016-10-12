@@ -410,6 +410,19 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             requirement.TradeAmount = dto.TradeAmount;
             requirement.Subsidies = dto.Subsidies;
 
+
+            requirement.EWarehouseReceipt = dto.EWarehouseReceipt;
+            requirement.PaymentBankName = dto.PaymentBankName;
+            requirement.PaymentBankAccount = dto.PaymentBankAccount;
+            requirement.PaymentBankId = dto.PaymentBankId;
+            requirement.PaymentBankAddress = dto.PaymentBankAddress;
+            requirement.IsAcceptanceBillETicket = dto.IsAcceptanceBillETicket;
+
+            requirement.PaymentRiskControl = dto.PaymentRiskControl;
+            requirement.InvoiceRequirement = dto.InvoiceRequirement;
+            requirement.InvoiceAmount = dto.InvoiceAmount;
+            requirement.ProductTransferMode = dto.ProductTransferMode;
+
             return requirement;
         }
 
@@ -540,6 +553,22 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
             //dto.TradeAmount = requirement.TradeAmount;
             dto.Subsidies = requirement.Subsidies;
+
+
+
+
+            dto.EWarehouseReceipt = requirement.EWarehouseReceipt;
+            dto.PaymentBankName = requirement.PaymentBankName;
+            dto.PaymentBankAccount = requirement.PaymentBankAccount;
+            dto.PaymentBankId = requirement.PaymentBankId;
+            dto.PaymentBankAddress = requirement.PaymentBankAddress;
+            dto.IsAcceptanceBillETicket = requirement.IsAcceptanceBillETicket;
+
+            dto.PaymentRiskControl = requirement.PaymentRiskControl;
+            dto.InvoiceRequirement = requirement.InvoiceRequirement;
+            dto.InvoiceAmount = requirement.InvoiceAmount;
+           dto.ProductTransferMode = requirement.ProductTransferMode;
+
 
             return dto;
         }

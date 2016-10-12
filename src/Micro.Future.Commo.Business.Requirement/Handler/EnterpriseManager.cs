@@ -151,6 +151,11 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             info.MobilePhone = entity.MobilePhone;
             info.LicenseImagePath = entity.LicenseImagePath;
             info.Fax = entity.Fax;
+
+            info.InvoiceMaterial = entity.InvoiceMaterial;
+            info.RegisterWarehouse = entity.RegisterWarehouse;
+            info.MaxTradeAmountPerMonth = entity.MaxTradeAmountPerMonth;
+            info.IsAcceptanceBillETicket = entity.IsAcceptanceBillETicket??false;
             return info;
         }
 
@@ -181,6 +186,12 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             entity.MobilePhone = info.MobilePhone;
             entity.LicenseImagePath = info.LicenseImagePath;
             entity.Fax = info.Fax;
+
+            entity.InvoiceMaterial = info.InvoiceMaterial;
+            entity.RegisterWarehouse = info.RegisterWarehouse;
+            entity.MaxTradeAmountPerMonth = info.MaxTradeAmountPerMonth;
+            entity.IsAcceptanceBillETicket = info.IsAcceptanceBillETicket;
+
             return entity;
         }
 

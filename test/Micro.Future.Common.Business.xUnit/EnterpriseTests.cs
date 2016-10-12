@@ -21,7 +21,7 @@ namespace Micro.Future.Common.Business.xUnit
         [Fact]
         public void Test_QueryEnterpriseInfo()
         {
-            int enterpriseId = 100;
+            int enterpriseId = 200;
             var enterpriseInfo =  _enterpriseManager.QueryEnterpriseInfo(enterpriseId);
 
             Assert.NotNull(enterpriseInfo);
