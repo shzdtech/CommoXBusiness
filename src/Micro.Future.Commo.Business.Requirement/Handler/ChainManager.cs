@@ -372,5 +372,30 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         {
             return _matcherService.ReplaceRequirementsForChain(chainId, replacedNodeIndexes, replacingRequirementIds);
         }
+
+        public RequirementChainInfo CreateEmptyChain(int length = 3)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AddChainRequirement(RequirementInfo newRequirement, int chainId, int position)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AddChainRequirement(int requirementId, int chainId, int position)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<RequirementInfo> FindChainMatchRequirements(int chain, int position)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RequirementChainInfo AutoMatchEmptyChain(int chainId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -89,5 +89,50 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         /// <param name="replacingRequirementIds"></param>
         /// <returns></returns>
         bool ReplaceRequirementsForChain(int chainId, IList<int> replacedNodeIndexes, IList<int> replacingRequirementIds);
+
+
+        #region 手动撮合
+
+        /// <summary>
+        /// 创建一个空链
+        /// </summary>
+        /// <param name="length">链的长度</param>
+        /// <returns></returns>
+        RequirementChainInfo CreateEmptyChain(int length = 3);
+
+        /// <summary>
+        /// 手动向链中添加一个新需求
+        /// </summary>
+        /// <param name="newRequirement">新需求</param>
+        /// <param name="chainId">链Id</param>
+        /// <param name="position">需求位置pos</param>
+        /// <returns></returns>
+        bool AddChainRequirement(RequirementInfo newRequirement, int chainId, int position);
+
+        /// <summary>
+        /// 手动向链中添加一个已创建的需求
+        /// </summary>
+        /// <param name="requirementId">需求Id</param>
+        /// <param name="chainId">链id</param>
+        /// <param name="position">需求位置position</param>
+        /// <returns></returns>
+        bool AddChainRequirement(int requirementId, int chainId, int position);
+
+        /// <summary>
+        /// 链中指定一个位置，撮合匹配的需求，返回最有5条结果
+        /// </summary>
+        /// <param name="chain"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        IList<RequirementInfo> FindChainMatchRequirements(int chain, int position);
+
+        /// <summary>
+        /// 撮合空链，自动撮合并补充空缺的需求，返回一条完整撮合链
+        /// </summary>
+        /// <param name="chainId"></param>
+        /// <returns></returns>
+        RequirementChainInfo AutoMatchEmptyChain(int chainId);
+
+        #endregion
     }
 }
