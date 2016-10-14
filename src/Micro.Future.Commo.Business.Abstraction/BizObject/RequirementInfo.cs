@@ -46,8 +46,6 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
 
         #endregion
 
-
-
         #region 销售
 
         /// <summary>
@@ -254,6 +252,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// 货物交接方式 - new
         /// </summary>
         public string ProductTransferMode { get; set; }
+
+        /// <summary>
+        /// 创建人UID
+        /// </summary>
+        public string CreateUserId { get; set; }
 
         #endregion
 

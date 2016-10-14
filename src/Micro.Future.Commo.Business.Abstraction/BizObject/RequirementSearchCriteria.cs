@@ -39,5 +39,10 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// 结束贸易量
         /// </summary>
         public decimal? EndTradeAmount { get; set; }
+
+        /// <summary>
+        /// 创建人UID
+        /// </summary>
+        public string CreateUserId { get; set; }
     }
 }

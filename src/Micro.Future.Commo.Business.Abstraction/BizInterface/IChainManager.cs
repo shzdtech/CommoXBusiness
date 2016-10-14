@@ -94,44 +94,24 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         #region 手动撮合
 
         /// <summary>
-        /// 创建一个空链
+        /// 指定几个需求，撮合一条需求列表
         /// </summary>
-        /// <param name="length">链的长度</param>
+        /// <param name="requirementIds">
+        /// 指定的一些需求id列表，不能为空，或者全是0。
+        /// 固定位置时，留空的需求Id填0.
+        /// </param>
+        /// <param name="fixedLength">传值表示固定长度</param>
+        /// <param name="isPositionFixed">已有的需求是否固定位置。 true表示固定位置；false表示不固定 </param>
         /// <returns></returns>
-        RequirementChainInfo CreateEmptyChain(int length = 3);
+        IList<RequirementInfo> AutoMatchRequirements(IList<int> requirementIds, int? fixedLength, bool? isPositionFixed);
 
         /// <summary>
-        /// 手动向链中添加一个新需求
+        /// 指定需求列表，直接生成一条链
         /// </summary>
-        /// <param name="newRequirement">新需求</param>
-        /// <param name="chainId">链Id</param>
-        /// <param name="position">需求位置pos</param>
+        /// <param name="requirementids">需求列表，长度必须大于等于3，所有Id不能为0</param>
+        /// <param name="opUserId">操作员</param>
         /// <returns></returns>
-        bool AddChainRequirement(RequirementInfo newRequirement, int chainId, int position);
-
-        /// <summary>
-        /// 手动向链中添加一个已创建的需求
-        /// </summary>
-        /// <param name="requirementId">需求Id</param>
-        /// <param name="chainId">链id</param>
-        /// <param name="position">需求位置position</param>
-        /// <returns></returns>
-        bool AddChainRequirement(int requirementId, int chainId, int position);
-
-        /// <summary>
-        /// 链中指定一个位置，撮合匹配的需求，返回最有5条结果
-        /// </summary>
-        /// <param name="chain"></param>
-        /// <param name="position"></param>
-        /// <returns></returns>
-        IList<RequirementInfo> FindChainMatchRequirements(int chain, int position);
-
-        /// <summary>
-        /// 撮合空链，自动撮合并补充空缺的需求，返回一条完整撮合链
-        /// </summary>
-        /// <param name="chainId"></param>
-        /// <returns></returns>
-        RequirementChainInfo AutoMatchEmptyChain(int chainId);
+        RequirementChainInfo CreateChain(IList<int> requirementids, string opUserId);
 
         #endregion
     }

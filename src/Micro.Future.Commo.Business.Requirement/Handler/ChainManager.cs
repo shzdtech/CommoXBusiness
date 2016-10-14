@@ -373,27 +373,12 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return _matcherService.ReplaceRequirementsForChain(chainId, replacedNodeIndexes, replacingRequirementIds);
         }
 
-        public RequirementChainInfo CreateEmptyChain(int length = 3)
+        public IList<RequirementInfo> AutoMatchRequirements(IList<int> requirementIds, int? fixedLength, bool? isPositionFixed)
         {
             throw new NotImplementedException();
         }
 
-        public bool AddChainRequirement(RequirementInfo newRequirement, int chainId, int position)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool AddChainRequirement(int requirementId, int chainId, int position)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IList<RequirementInfo> FindChainMatchRequirements(int chain, int position)
-        {
-            throw new NotImplementedException();
-        }
-
-        public RequirementChainInfo AutoMatchEmptyChain(int chainId)
+        public RequirementChainInfo CreateChain(IList<int> requirementids, string opUserId)
         {
             throw new NotImplementedException();
         }
