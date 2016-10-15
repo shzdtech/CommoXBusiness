@@ -372,13 +372,14 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         {
             return _matcherService.ReplaceRequirementsForChain(chainId, replacedNodeIndexes, replacingRequirementIds);
         }
+        
 
-        public IList<RequirementInfo> AutoMatchRequirements(IList<int> requirementIds, int? fixedLength, bool isPositionFixed = false)
+        public RequirementChainInfo CreateChain(IList<int> requirementids, string opUserId)
         {
             throw new NotImplementedException();
         }
 
-        public RequirementChainInfo CreateChain(IList<int> requirementids, string opUserId)
+        public RequirementChainInfo AutoMatchRequirements(string opUserId, IList<int> requirementIds, int? fixedLength, bool isPositionFixed = false)
         {
             throw new NotImplementedException();
         }

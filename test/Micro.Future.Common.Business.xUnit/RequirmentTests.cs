@@ -126,19 +126,8 @@ namespace Micro.Future.Common.Business.xUnit
             RequirementInfo requirement = new RequirementInfo();
             requirement.UserId = user.UserId;
             requirement.EnterpriseId = user.EnterpriseId;
-
-            //requirement.ProductName = "铜";
             requirement.Type = RequirementType.Subsidy;
-            //requirement.WarehouseState = "浙江";
-            //requirement.WarehouseCity = "杭州";
-            //requirement.WarehouseAddress1 = "滨江区文山路xxx号";
-            //requirement.ProductPrice = 1000m;
-            //requirement.ProductQuantity = 100;
-            //requirement.ProductUnit = "吨";
-
             requirement.TradeAmount = 200000;
-            //requirement.Subsidies = 20;
-
 
             List<RequirementRuleInfo> rules = new List<RequirementRuleInfo>();
 

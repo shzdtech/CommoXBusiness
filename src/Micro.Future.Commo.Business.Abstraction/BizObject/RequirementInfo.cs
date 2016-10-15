@@ -256,7 +256,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// <summary>
         /// 创建人UID
         /// </summary>
-        public string CreateUserId { get; set; }
+        public string OpUserId { get; set; }
 
         #endregion
 

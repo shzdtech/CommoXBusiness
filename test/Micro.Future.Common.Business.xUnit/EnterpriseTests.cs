@@ -21,7 +21,7 @@ namespace Micro.Future.Common.Business.xUnit
         [Fact]
         public void Test_QueryEnterpriseInfo()
         {
-            int enterpriseId = 200;
+            int enterpriseId = 205;
             var enterpriseInfo =  _enterpriseManager.QueryEnterpriseInfo(enterpriseId);
 
             Assert.NotNull(enterpriseInfo);
@@ -30,9 +30,13 @@ namespace Micro.Future.Common.Business.xUnit
         [Fact]
         public void Test_UpdateEnterpriseInfo()
         {
-            int enterpriseId = 100;
+            int enterpriseId = 205;
             var enterpriseInfo = _enterpriseManager.QueryEnterpriseInfo(enterpriseId);
-            enterpriseInfo.Address = "111111";
+            enterpriseInfo.InvoiceMaterial = "test111";
+            enterpriseInfo.RegisterWarehouse = "上海金山xxx仓库";
+            enterpriseInfo.MaxTradeAmountPerMonth = "10亿";
+            enterpriseInfo.IsAcceptanceBillETicket = true;
+
 
             var result =  _enterpriseManager.UpdateEnterprise(enterpriseInfo);
 
