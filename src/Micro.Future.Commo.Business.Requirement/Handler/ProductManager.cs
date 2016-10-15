@@ -77,6 +77,21 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return ConvertProductToInfo(p);
         }
 
+        public IList<ProductInfo> GetProductsByType(int productTypeId)
+        {
+            IList<Product> products = _productService.queryProductByType(productTypeId);
+            if (products == null || products.Count == 0)
+                return null;
+
+            List<ProductInfo> productInfoList = new List<ProductInfo>();
+            foreach (var p in products)
+            {
+                productInfoList.Add(ConvertProductToInfo(p));
+            }
+
+            return productInfoList;
+        }
+
         public bool UpdateProductInfo(ProductInfo product)
         {
             Product p = ConvertProductInfoToObject(product);

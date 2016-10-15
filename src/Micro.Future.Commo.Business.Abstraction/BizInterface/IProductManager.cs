@@ -28,6 +28,8 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         /// <returns></returns>
         IList<ProductInfo> GetAllProducts();
 
+        IList<ProductInfo> GetProductsByType(int productTypeId);
+
         IList<ProductTypeInfo> GetAllProductTypes();
 
         bool UpdateProductInfo(ProductInfo product);
