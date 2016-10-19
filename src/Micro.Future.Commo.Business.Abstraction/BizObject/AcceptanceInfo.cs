@@ -41,5 +41,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// 更新时间
         /// </summary>
         public DateTime UpdateTime { get; set; }
+
+        public bool IsDelete { get; set; }
     }
 }

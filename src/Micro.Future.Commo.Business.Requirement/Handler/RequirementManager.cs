@@ -391,12 +391,12 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
             requirement.PaymentAmount = dto.PaymentAmount;
             requirement.PaymentDateTime = dto.PaymentDateTime;
-            requirement.PaymentType = dto.PaymentType;
+            //requirement.PaymentType = dto.PaymentType;
             requirement.TradeProfit = dto.TradeProfit;
             requirement.EnterpriseType = dto.EnterpriseType;
             requirement.BusinessRange = dto.BusinessRange;
             requirement.WarehouseAccount = dto.WarehouseAccount;
-            requirement.InvoiceValue = dto.InvoiceValue;
+            //requirement.InvoiceValue = dto.InvoiceValue;
             requirement.InvoiceIssueDateTime = dto.InvoiceIssueDateTime;
             requirement.InvoiceTransferMode = dto.InvoiceTransferMode;
 
@@ -418,10 +418,10 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             requirement.PaymentBankAddress = dto.PaymentBankAddress;
             requirement.IsAcceptanceBillETicket = dto.IsAcceptanceBillETicket;
 
-            requirement.PaymentRiskControl = dto.PaymentRiskControl;
-            requirement.InvoiceRequirement = dto.InvoiceRequirement;
+            //requirement.PaymentRiskControl = dto.PaymentRiskControl;
+            //requirement.InvoiceRequirement = dto.InvoiceRequirement;
             requirement.InvoiceAmount = dto.InvoiceAmount;
-            requirement.ProductTransferMode = dto.ProductTransferMode;
+            //requirement.ProductTransferMode = dto.ProductTransferMode;
 
             return requirement;
         }
@@ -537,12 +537,12 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
             
             dto.PaymentDateTime = requirement.PaymentDateTime;
-            dto.PaymentType = requirement.PaymentType;
+            //dto.PaymentType = requirement.PaymentType;
             dto.TradeProfit = requirement.TradeProfit;
             dto.EnterpriseType = requirement.EnterpriseType;
             dto.BusinessRange = requirement.BusinessRange;
             dto.WarehouseAccount = requirement.WarehouseAccount;
-            dto.InvoiceValue = requirement.InvoiceValue;
+            //dto.InvoiceValue = requirement.InvoiceValue;
             dto.InvoiceIssueDateTime = requirement.InvoiceIssueDateTime;
             dto.InvoiceTransferMode = requirement.InvoiceTransferMode;
 
@@ -564,10 +564,10 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             dto.PaymentBankAddress = requirement.PaymentBankAddress;
             dto.IsAcceptanceBillETicket = requirement.IsAcceptanceBillETicket;
 
-            dto.PaymentRiskControl = requirement.PaymentRiskControl;
-            dto.InvoiceRequirement = requirement.InvoiceRequirement;
+            //dto.PaymentRiskControl = requirement.PaymentRiskControl;
+            //dto.InvoiceRequirement = requirement.InvoiceRequirement;
             dto.InvoiceAmount = requirement.InvoiceAmount;
-           dto.ProductTransferMode = requirement.ProductTransferMode;
+           //dto.ProductTransferMode = requirement.ProductTransferMode;
 
 
             return dto;

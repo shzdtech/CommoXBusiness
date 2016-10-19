@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Micro.Future.Commo.Business.Abstraction.BizObject.Enums
 {
     /// <summary>
-    /// 货物交接方式
+    /// 货物交接方式， 1=入库过户； 2=委托过户；3=提单背书
     /// </summary>
     public enum ProductTransferType
     {

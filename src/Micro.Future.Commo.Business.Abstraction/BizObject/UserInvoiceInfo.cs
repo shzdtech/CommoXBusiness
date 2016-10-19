@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Micro.Future.Commo.Business.Abstraction.BizObject.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// <summary>
         /// 开票要求
         /// </summary>
-        public string InvoiceRequirement { get; set; }
+        public InvoiceRequirementType InvoiceRequirement { get; set; }
 
 
         /// <summary>

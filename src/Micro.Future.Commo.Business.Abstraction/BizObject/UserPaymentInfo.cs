@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Micro.Future.Commo.Business.Abstraction.BizObject.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,9 +23,14 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         public string Paytime { get; set; }
 
         /// <summary>
+        /// 交易要求
+        /// </summary>
+        public TradeRequirementType TradeRequirement { get; set; }
+
+        /// <summary>
         /// 支付方式
         /// </summary>
-        public string PaymentMethod { get; set; }
+        public PaymentMethodType PaymentMethod { get; set; }
 
 
         /// <summary>

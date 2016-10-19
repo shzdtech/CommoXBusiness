@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Micro.Future.Commo.Business.Abstraction.BizObject.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -124,10 +125,6 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// </summary>
         public string PaymentDateTime { get; set; }
 
-        /// <summary>
-        /// 支付方式
-        /// </summary>
-        public string PaymentType { get; set; }
 
        
 
@@ -172,10 +169,6 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// </summary>
         public string WarehouseAccount { get; set; }
 
-        /// <summary>
-        /// 发票面额
-        /// </summary>
-        public string InvoiceValue { get; set; }
 
 
         /// <summary>
@@ -201,6 +194,22 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
 
         #region 1.1 新增属性
 
+        /// <summary>
+        /// 销售 - 交易要求
+        /// </summary>
+        public TradeRequirementType TradeRequirement { get; set; }
+
+
+        /// <summary>
+        /// 支付方式 改枚举
+        /// </summary>
+        public PaymentMethodType PaymentType { get; set; }
+
+
+        /// <summary>
+        /// 发票面额 改枚举
+        /// </summary>
+        public InvoiceValueType InvoiceValue { get; set; }
 
         /// <summary>
         /// 电子仓单 - new
@@ -235,13 +244,13 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// <summary>
         /// 支付风控 - new
         /// </summary>
-        public string PaymentRiskControl { get; set; }
+        public RiskControlType PaymentRiskControl { get; set; }
 
 
         /// <summary>
         /// 开票要求 - new
         /// </summary>
-        public string InvoiceRequirement { get; set; }
+        public InvoiceRequirementType InvoiceRequirement { get; set; }
 
         /// <summary>
         /// 开票量（交易当月） - new
@@ -251,7 +260,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// <summary>
         /// 货物交接方式 - new
         /// </summary>
-        public string ProductTransferMode { get; set; }
+        public ProductTransferType ProductTransferMode { get; set; }
 
         /// <summary>
         /// 创建人UID

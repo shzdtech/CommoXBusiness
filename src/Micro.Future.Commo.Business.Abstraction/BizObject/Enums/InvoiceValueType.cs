@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Micro.Future.Commo.Business.Abstraction.BizObject.Enums
 {
     /// <summary>
-    /// 发票面额
+    /// 发票面额, 1:千元版; 2:万元版; 3:十万元版; 4:百万元版; 5:千万元版
     /// </summary>
     public enum InvoiceValueType
     {

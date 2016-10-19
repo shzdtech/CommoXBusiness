@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Micro.Future.Commo.Business.Abstraction.BizObject.Enums
 {
+    /// <summary>
+    /// 发票开票要求，0:不限; 1:款货后票; 2:款货（实提数）后票
+    /// </summary>
     public enum InvoiceRequirementType
     {
         /// <summary>

@@ -234,7 +234,7 @@ namespace Micro.Future.Common.Business.xUnit
                 requirementbuy.PaymentAmount = Convert.ToDecimal(testData[2]);
                 requirementbuy.TradeAmount = requirementbuy.PaymentAmount;
                 requirementbuy.PaymentDateTime = testData[3];
-                requirementbuy.PaymentType = testData[4];
+                //requirementbuy.PaymentType = testData[4];
                 requirementbuy.WarehouseAccount = testData[5];
                 requirementbuy.ProductType = testData[6];
                 requirementbuy.ProductName = testData[7];
@@ -242,7 +242,7 @@ namespace Micro.Future.Common.Business.xUnit
                 requirementbuy.ProductPrice = Convert.ToDecimal(testData[9]);
                 requirementbuy.ProductQuantity = Convert.ToDecimal(testData[10]);
                 requirementbuy.WarehouseAddress1 = testData[11];
-                requirementbuy.InvoiceValue = testData[12];
+                //requirementbuy.InvoiceValue = testData[12];
                 requirementbuy.InvoiceIssueDateTime = testData[13];
                 requirementbuy.InvoiceTransferMode = testData[14];
 
@@ -289,7 +289,7 @@ namespace Micro.Future.Common.Business.xUnit
                 requirementsal.ProductPrice = Convert.ToDecimal(testData[5]);
                 requirementsal.ProductQuantity = Convert.ToDecimal(testData[6]);
                 requirementsal.WarehouseAddress1 = testData[7];
-                requirementsal.InvoiceValue = testData[8];
+                //requirementsal.InvoiceValue = testData[8];
                 requirementsal.InvoiceIssueDateTime = testData[9];
                 requirementsal.InvoiceTransferMode = testData[10];
 
@@ -331,7 +331,7 @@ namespace Micro.Future.Common.Business.xUnit
                 requirementsub.TradeAmount = Convert.ToDecimal(testData[0]);
                 requirementsub.TradeProfit = Convert.ToDecimal(testData[1]);
                 requirementsub.BusinessRange = testData[2];
-                requirementsub.InvoiceValue = testData[3];
+                //requirementsub.InvoiceValue = testData[3];
                 requirementsub.InvoiceIssueDateTime = testData[4];
                 requirementsub.InvoiceTransferMode = testData[5];
 
