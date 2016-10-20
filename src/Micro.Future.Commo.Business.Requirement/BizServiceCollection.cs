@@ -3,10 +3,12 @@ using Micro.Future.Business.DataAccess.Commo.CommoHandler;
 using Micro.Future.Business.DataAccess.Commo.CommonInterface;
 using Micro.Future.Business.MatchMaker.Abstraction.Models;
 using Micro.Future.Business.MatchMaker.Commo.Models;
+using Micro.Future.Business.MongoDB.Commo.Config;
 using Micro.Future.Business.MongoDB.Commo.Handler;
 using Micro.Future.Business.MongoDB.Commo.MongoInterface;
 using Micro.Future.Commo.Business.Abstraction.BizObject;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -26,6 +28,12 @@ namespace Micro.Future.Commo.Business.Requirement
 
             //sql server
             services.AddDbContext<CommoXContext>(options => options.UseSqlServer(bizOptions.ConnectionString));
+            if(!string.IsNullOrWhiteSpace(bizOptions.MongoDBConnectionString))
+                MongoDBConfig.mongoAddr = bizOptions.MongoDBConnectionString;
+
+            if(!string.IsNullOrWhiteSpace(bizOptions.MongoDBName))
+                MongoDBConfig.DATABASE = bizOptions.MongoDBName;
+
 
             services.AddTransient<ICommon, CommonHandler>();
             services.AddTransient<IProduct, ProductHandler>();
