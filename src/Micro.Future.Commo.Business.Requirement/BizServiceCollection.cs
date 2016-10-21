@@ -28,12 +28,6 @@ namespace Micro.Future.Commo.Business.Requirement
 
             //sql server
             services.AddDbContext<CommoXContext>(options => options.UseSqlServer(bizOptions.ConnectionString));
-            if(!string.IsNullOrWhiteSpace(bizOptions.MongoDBConnectionString))
-                MongoDBConfig.mongoAddr = bizOptions.MongoDBConnectionString;
-
-            if(!string.IsNullOrWhiteSpace(bizOptions.MongoDBName))
-                MongoDBConfig.DATABASE = bizOptions.MongoDBName;
-
 
             services.AddTransient<ICommon, CommonHandler>();
             services.AddTransient<IProduct, ProductHandler>();
@@ -44,6 +38,7 @@ namespace Micro.Future.Commo.Business.Requirement
             services.AddTransient<IEmailVerifyCode, EmailVerifyCodeHandler>();
             services.AddTransient<IOperationRecord, OperationRecordHandler>();
             services.AddTransient<IFinancialProduct, FinancialProductHandler>();
+
             services.AddTransient<IAcceptance, AcceptanceHandler>();
 
             //mongodb
