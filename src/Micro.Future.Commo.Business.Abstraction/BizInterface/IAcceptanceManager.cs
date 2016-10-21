@@ -17,6 +17,13 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         /// <returns></returns>
         IList<AcceptanceInfo> QueryAllAcceptance();
 
+
+        /// <summary>
+        /// 查询承兑汇票
+        /// </summary>
+        /// <returns></returns>
+        AcceptanceInfo QueryAcceptanceInfo(int infoId);
+
         /// <summary>
         /// 新增承兑汇票
         /// </summary>

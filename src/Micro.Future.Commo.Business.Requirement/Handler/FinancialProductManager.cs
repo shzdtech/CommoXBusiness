@@ -62,6 +62,24 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return infoList;
         }
 
+        public FinancialProductInfo QueryFinancialProductInfo(int productId)
+        {
+            var p = _financialDAO.QueryFinancialProduct(productId);
+            if (p == null)
+                return null;
+
+            return new FinancialProductInfo()
+            {
+                BankAddress = p.BankAddress,
+                CreatedTime = p.CreatedTime,
+                IsDeleted = p.IsDeleted,
+                ProductId = p.ProductId,
+                ProductTerm = p.ProductTerm,
+                ProductYield = p.ProductYield,
+                UpdatedTime = p.UpdatedTime
+            };
+        }
+
         public bool UpdateFinancialProduct(FinancialProductInfo productInfo)
         {
            return _financialDAO.UpdateFinancialProduct(new FinancialProduct()

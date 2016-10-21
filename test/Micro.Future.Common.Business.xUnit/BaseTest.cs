@@ -35,6 +35,9 @@ namespace Micro.Future.Common.Business.xUnit
             services.AddTransient<IMatchMakerManager, MatchMakerManager>();
             services.AddTransient<IRequirementManager, RequirementManager>();
 
+            services.AddTransient<IAcceptanceManager, AcceptanceManager>();
+            services.AddTransient<IFinancialProductManager, FinancialProductManager>();
+
             serviceProvider = services.BuildServiceProvider();
         }
     }

@@ -18,6 +18,12 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         IList<FinancialProductInfo> QueryAllFinancialProducts();
 
         /// <summary>
+        /// 查询所有理财产品
+        /// </summary>
+        /// <returns></returns>
+        FinancialProductInfo QueryFinancialProductInfo(int productId);
+
+        /// <summary>
         /// 新增理财产品
         /// </summary>
         /// <param name="productInfo"></param>

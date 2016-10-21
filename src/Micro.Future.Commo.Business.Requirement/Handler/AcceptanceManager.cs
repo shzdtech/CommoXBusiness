@@ -38,6 +38,26 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return _acceptanceHandler.DeleteAcceptance(acceptanceId);
         }
 
+        public AcceptanceInfo QueryAcceptanceInfo(int infoId)
+        {
+            var acceptance = _acceptanceHandler.QueryAcceptance(infoId);
+            if (acceptance == null)
+                return null;
+
+            return new AcceptanceInfo()
+            {
+                AcceptanceType = acceptance.AcceptanceType,
+                Amount = acceptance.Amount,
+                BankName = acceptance.BankName,
+                DrawTime = acceptance.DrawTime,
+                DueDate = acceptance.DueDate,
+                UpdateTime = acceptance.UpdateTime,
+                AcceptanceId = acceptance.AcceptanceId,
+                IsDelete = acceptance.IsDelete,
+                CreateTime = acceptance.CreateTime
+            };
+        }
+
         public IList<AcceptanceInfo> QueryAllAcceptance()
         {
             var list = _acceptanceHandler.QueryAllAcceptances();
