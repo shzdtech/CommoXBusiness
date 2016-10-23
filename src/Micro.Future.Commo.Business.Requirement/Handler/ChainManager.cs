@@ -383,9 +383,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return ConvertChainObjectToInfo(chainObj);
         }
 
-        public RequirementChainInfo AutoMatchRequirements(string opUserId, IList<int> requirementIds, int? fixedLength, int? maxLength, bool isPositionFixed = false)
+        public RequirementChainInfo AutoMatchRequirements(string opUserId, IList<int> requirementIds, int? fixedLength, bool isPositionFixed = false, int maxLength = 6)
         {
-            ChainObject chainObj = _matchMaker.AutoMatchRequirements(opUserId, requirementIds, fixedLength ?? 0, isPositionFixed, maxLength ?? 0);
+            ChainObject chainObj = _matchMaker.AutoMatchRequirements(opUserId, requirementIds, fixedLength ?? 0, isPositionFixed, maxLength);
             if (chainObj == null)
                 return null;
 

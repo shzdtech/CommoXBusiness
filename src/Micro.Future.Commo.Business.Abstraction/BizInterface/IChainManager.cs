@@ -104,7 +104,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         /// <param name="fixedLength">传值表示固定长度</param>
         /// <param name="isPositionFixed">已有的需求是否固定位置。 true表示固定位置；false表示不固定 </param>
         /// <returns></returns>
-        RequirementChainInfo AutoMatchRequirements(string opUserId, IList<int> requirementIds,  int? fixedLength, int? maxLength, bool isPositionFixed = false);
+        RequirementChainInfo AutoMatchRequirements(string opUserId, IList<int> requirementIds,  int? fixedLength, bool isPositionFixed = false, int maxLength = 6);
 
         /// <summary>
         /// 指定需求列表，直接生成一条链
