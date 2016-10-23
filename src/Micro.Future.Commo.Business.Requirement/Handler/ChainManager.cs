@@ -376,12 +376,20 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public RequirementChainInfo CreateChain(IList<int> requirementids, string opUserId)
         {
-            throw new NotImplementedException();
+            ChainObject chainObj = _matcherService.CreateChain(requirementids, opUserId);
+            if (chainObj == null)
+                return null;
+
+            return ConvertChainObjectToInfo(chainObj);
         }
 
-        public RequirementChainInfo AutoMatchRequirements(string opUserId, IList<int> requirementIds, int? fixedLength, bool isPositionFixed = false)
+        public RequirementChainInfo AutoMatchRequirements(string opUserId, IList<int> requirementIds, int? fixedLength, int? maxLength, bool isPositionFixed = false)
         {
-            throw new NotImplementedException();
+            ChainObject chainObj = _matchMaker.AutoMatchRequirements(opUserId, requirementIds, fixedLength ?? 0, isPositionFixed, maxLength ?? 0);
+            if (chainObj == null)
+                return null;
+
+            return ConvertChainObjectToInfo(chainObj);
         }
     }
 }
