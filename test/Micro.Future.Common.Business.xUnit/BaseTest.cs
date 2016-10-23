@@ -1,4 +1,5 @@
-﻿using Micro.Future.Commo.Business.Abstraction.BizInterface;
+﻿using Micro.Future.Business.MongoDB.Commo.Config;
+using Micro.Future.Commo.Business.Abstraction.BizInterface;
 using Micro.Future.Commo.Business.Abstraction.BizObject;
 using Micro.Future.Commo.Business.Requirement;
 using Micro.Future.Commo.Business.Requirement.Handler;
@@ -19,6 +20,10 @@ namespace Micro.Future.Common.Business.xUnit
 
         public BaseTest()
         {
+
+            MongoDBConfig.mongoAddr = "mongodb://root:Xhmz372701@114.55.54.144:3718/admin";
+            MongoDBConfig.DATABASE = "testdb";
+
             services = new ServiceCollection();
 
             BizServiceOptions options = new BizServiceOptions()

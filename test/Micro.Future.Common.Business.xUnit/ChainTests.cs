@@ -111,5 +111,14 @@ namespace Micro.Future.Common.Business.xUnit
             int chainId = 11417;
             var result = _chainManager.ReplaceRequirementsForChain(chainId, new List<int>() { 0 }, new List<int> { 6679 });
         }
+
+
+        [Fact]
+        public void AutoMatchRequirements()
+        {
+            IList<int> requirmentIds = new List<int>() { -1, 1022, 0, 1023 };
+
+            var chain = _chainManager.AutoMatchRequirements("111", requirmentIds, null, true);
+        }
     }
 }
