@@ -29,6 +29,18 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// 分为：电票/纸票
         /// </summary>
         public string AcceptanceType { get; set; }
+
+        /// <summary>
+        /// 贴息  单位%
+        /// </summary>
+        public double Subsidies { get; set; }
+
+        /// <summary>
+        /// 年化贴息  单位%
+        /// </summary>
+        public double YearSubsidies { get; set; }
+
+
         /// <summary>
         /// 出票时间
         /// </summary>

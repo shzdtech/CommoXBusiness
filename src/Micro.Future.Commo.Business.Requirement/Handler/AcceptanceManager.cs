@@ -28,7 +28,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 CreateTime = DateTime.Now,
                 DrawTime = acceptance.DrawTime,
                 DueDate = acceptance.DueDate,
-                UpdateTime = DateTime.Now
+                UpdateTime = DateTime.Now,
+                 Subsidies = acceptance.Subsidies,
+                  YearSubsidies = acceptance.YearSubsidies
             });
             return newInfo == null ? 0 : newInfo.AcceptanceId;
         }
@@ -54,7 +56,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 UpdateTime = acceptance.UpdateTime,
                 AcceptanceId = acceptance.AcceptanceId,
                 IsDelete = acceptance.IsDelete,
-                CreateTime = acceptance.CreateTime
+                CreateTime = acceptance.CreateTime,
+                 Subsidies = acceptance.Subsidies,
+                  YearSubsidies = acceptance.YearSubsidies
             };
         }
 
@@ -77,7 +81,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                     UpdateTime = acceptance.UpdateTime,
                     AcceptanceId = acceptance.AcceptanceId,
                     IsDelete = acceptance.IsDelete,
-                    CreateTime = acceptance.CreateTime
+                    CreateTime = acceptance.CreateTime,
+                     Subsidies = acceptance.Subsidies,
+                      YearSubsidies = acceptance.YearSubsidies
                 });
             }
 
@@ -95,7 +101,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 DueDate = acceptance.DueDate,
                 UpdateTime = DateTime.Now,
                 AcceptanceId = acceptance.AcceptanceId,
-                IsDelete = acceptance.IsDelete
+                IsDelete = acceptance.IsDelete,
+                 Subsidies = acceptance.Subsidies,
+                  YearSubsidies = acceptance.YearSubsidies
             });
 
         }
