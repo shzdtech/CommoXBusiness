@@ -441,11 +441,12 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             RequirementFilter f = null;
             foreach (var rule in rules)
             {
-                if (string.IsNullOrWhiteSpace(rule.Value))
+                if (string.IsNullOrWhiteSpace(rule.Value) || string.IsNullOrWhiteSpace(rule.Key))
                     continue;
 
                 f = new RequirementFilter();
-                f.FilterKey = rule.Key;
+
+                f.FilterKey = rule.Key.ToLower();
                 f.FilterValue = rule.Value;
                 f.FilterDirectionTypeId = (FilterDirectionType)rule.DirectionType;
                 f.FilterValueTypeId = FilterValueType.STRING;
