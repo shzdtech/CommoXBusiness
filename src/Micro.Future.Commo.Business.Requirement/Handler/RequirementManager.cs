@@ -447,7 +447,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 f = new RequirementFilter();
                 f.FilterKey = rule.Key;
                 f.FilterValue = rule.Value;
-                f.FilterDirectionTypeId = FilterDirectionType.BIDIRECT;
+                f.FilterDirectionTypeId = (FilterDirectionType)rule.DirectionType;
                 f.FilterValueTypeId = FilterValueType.STRING;
                 f.OperationTypeId = (FilterOperationType)rule.OperationType;
                 f.IsSoftFilter = false;
@@ -596,6 +596,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             rule.Key = filter.FilterKey;
             rule.Value = filter.FilterValue;
             rule.OperationType = (RequirementRuleOperation)filter.OperationTypeId;
+            rule.DirectionType = (Abstraction.BizObject.RuleDirectionType)filter.FilterDirectionTypeId;
             return rule;
         }
 

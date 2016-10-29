@@ -24,5 +24,18 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// 规则名称与值之间的关系，是相等，还是包含
         /// </summary>
         public RequirementRuleOperation OperationType { get; set; }
+
+        /// <summary>
+        /// filter 上下游要求
+        /// </summary>
+        public RuleDirectionType DirectionType { get; set; }
+    }
+
+
+    public enum RuleDirectionType
+    {
+        BIDIRECT = 0,
+        UP = 1,
+        DOWN = 2
     }
 }
