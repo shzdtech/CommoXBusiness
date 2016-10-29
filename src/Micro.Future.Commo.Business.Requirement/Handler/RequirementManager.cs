@@ -451,7 +451,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
                 f = new RequirementFilter();
 
-                f.FilterKey = rule.Key.ToLower();
+                f.FilterKey = rule.Key;
                 f.FilterValue = rule.Value;
                 f.FilterDirectionTypeId = (FilterDirectionType)rule.DirectionType;
                 f.FilterValueTypeId = FilterValueType.STRING;
