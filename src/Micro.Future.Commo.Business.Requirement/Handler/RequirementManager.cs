@@ -426,6 +426,11 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
             requirement.OpUserId = dto.OpUserId;
 
+            if (dto.Filters != null && dto.Filters.Count > 0)
+            {
+                //requirement.Rules = ConvertToRequirementRules(dto.Filters);
+            }
+
             return requirement;
         }
 
@@ -578,7 +583,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return dto;
         }
 
-        private IEnumerable<RequirementRuleInfo> ConvertToRequirementRules(IEnumerable<RequirementFilter> filters)
+        private static IEnumerable<RequirementRuleInfo> ConvertToRequirementRules(IEnumerable<RequirementFilter> filters)
         {
             if (filters == null)
                 return null;
@@ -591,7 +596,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return rules;
         }
 
-        private RequirementRuleInfo ConvertToRequirementRule(RequirementFilter filter)
+        private static RequirementRuleInfo ConvertToRequirementRule(RequirementFilter filter)
         {
             RequirementRuleInfo rule = new RequirementRuleInfo();
             rule.Key = filter.FilterKey;
