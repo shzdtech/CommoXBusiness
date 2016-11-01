@@ -9,7 +9,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 {
     public class BasisManager : IBasisManager
     {
-        public IList<BasisInfo> QueryBasisInfos()
+        public IList<BasisInfo> QueryBasisInfos(string productCode)
         {
             throw new NotImplementedException();
         }
