@@ -8,6 +8,6 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
 {
     public interface IBasisManager
     {
-        IList<BasisInfo> QueryBasisInfos(string productCode);
+        string QueryBasisInfos(string exchange, string productCode, string startDateTime, string endDateTime = null);
     }
 }
