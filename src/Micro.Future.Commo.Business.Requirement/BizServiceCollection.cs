@@ -45,6 +45,7 @@ namespace Micro.Future.Commo.Business.Requirement
             services.AddTransient<IChainDAL, ChainDAL>();
             services.AddTransient<IMatcher, MatcherHandler>();
             services.AddTransient<BaseMatchMaker, RankingMatchMaker>();
+            services.AddTransient<IDataVisual, DataVisualHandler>();
 
             return services;
         }
