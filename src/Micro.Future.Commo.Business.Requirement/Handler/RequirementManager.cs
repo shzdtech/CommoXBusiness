@@ -396,7 +396,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             requirement.PaymentType =  (PaymentMethodType) dto.PaymentType;
             requirement.TradeProfit = dto.TradeProfit;
             requirement.EnterpriseType = dto.EnterpriseType;
-            requirement.EnterpriseName = dto.EnterpriseName;
+            requirement.EnterpriseName = string.IsNullOrWhiteSpace(dto.EnterpriseName) ? dto.EnterpriseId.ToString() : dto.EnterpriseName;
             requirement.BusinessRange = dto.BusinessRange;
             requirement.WarehouseAccount = dto.WarehouseAccount;
             requirement.InvoiceValue = (InvoiceValueType) dto.InvoiceValue;

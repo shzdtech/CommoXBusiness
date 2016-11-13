@@ -32,7 +32,7 @@ namespace Micro.Future.Common.Business.xUnit
         public void Test_QueryRequirementsByUser()
         {
             //1675
-            string userId = "0";
+            string userId = "14ae98b7-6314-4df4-93a0-52a3324305c9";
             var bizResult =  manager.QueryRequirements(userId);
 
             Assert.False(bizResult.HasError);
@@ -53,7 +53,7 @@ namespace Micro.Future.Common.Business.xUnit
 
             RequirementSearchCriteria criteria = new RequirementSearchCriteria()
             {
-                ProductName = "铁,锌",
+                ProductName = "铁",
                 PageNo = 1,
                 PageSize = 10
             };
