@@ -129,13 +129,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 Trade trade = new Trade();
                 trade.TradeTime = DateTime.Now;
 
-                Trade newTrade = _tradeService.submitTrade(trade);
-                if (newTrade == null || newTrade.TradeId <= 0)
-                {
-                    throw new BizException("生产订单失败！");
-                }
 
-                tradeId = newTrade.TradeId;
+
+                IList<Order> orderList = new List<Order>();
 
                 Order order = null;
                 int sequence = 0;
@@ -148,14 +144,13 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                         CreateTime = trade.TradeTime,
                         EnterpriseId = requirement.EnterpriseId,
                         EnterpriseType = requirement.EnterpriseType,
+                        EnterpriseName = requirement.EnterpriseName,
                         InvoiceIssueDateTime = requirement.InvoiceIssueDateTime,
                         InvoiceTransferMode = requirement.InvoiceTransferMode,
-                        //InvoiceValue = requirement.InvoiceValue,
                         ModifyTime = DateTime.Now,
-                        OrderStateId = (int)OrderStatusType.WAITING,
+                        OrderStateId = 1,
                         PaymentAmount = requirement.PaymentAmount,
                         PaymentDateTime = requirement.PaymentDateTime,
-                        //PaymentType = requirement.PaymentType,
                         ProductName = requirement.ProductName,
                         ProductPrice = requirement.ProductPrice,
                         ProductQuantity = requirement.ProductQuantity,
@@ -168,7 +163,6 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                         RequirementTypeId = (int)requirement.Type,
                         Subsidies = requirement.Subsidies,
                         TradeAmount = requirement.TradeAmount,
-                        TradeId = tradeId,
                         TradeProfit = requirement.TradeProfit,
                         UserId = requirement.UserId,
                         WarehouseAccount = requirement.WarehouseAccount,
@@ -176,13 +170,37 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                         WarehouseAddress2 = requirement.WarehouseAddress2,
                         WarehouseCity = requirement.WarehouseCity,
                         WarehouseState = requirement.WarehouseState,
-                        TradeSequence = sequence
+                        TradeSequence = sequence,
                     };
 
                     order.CreateTime = trade.TradeTime;
                     order.ModifyTime = trade.TradeTime;
 
-                    _orderService.submitOrder(order);
+                    orderList.Add(order);
+
+                    if(requirement.Type == Abstraction.BizObject.RequirementType.Sale)
+                    {
+                        trade.TradeTitle = DateTime.Now.ToString("yyyyMMdd") + " " + requirement.ProductName;
+                        trade.TradeAmount = (double)requirement.TradeAmount;
+                        trade.TradeQuota = (double)requirement.ProductQuantity;
+                    }
+                }
+
+
+                trade.ParticipatorCount = orderList.Count;
+                trade.CurrentState = "1";
+
+                Trade newTrade = _tradeService.submitTrade(trade);
+                if (newTrade == null || newTrade.TradeId <= 0)
+                {
+                    throw new BizException("生产订单失败！");
+                }
+                tradeId = newTrade.TradeId;
+
+                foreach(var o in orderList)
+                {
+                    o.TradeId = tradeId;
+                    _orderService.submitOrder(o);
                 }
 
             }
@@ -380,6 +398,12 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             if (chainObj == null)
                 return null;
 
+            if (chainObj.ChainId > 0 && chainObj.ChainStateId == ChainStatus.CONFIRMED)
+            {
+                int tradeId = 0;
+                ComfirmChain("SYSTEM", chainObj.ChainId, out tradeId);
+            }
+
             return ConvertChainObjectToInfo(chainObj);
         }
 
@@ -388,6 +412,12 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             ChainObject chainObj = _matchMaker.AutoMatchRequirements(opUserId, requirementIds, fixedLength ?? 0, isPositionFixed, maxLength);
             if (chainObj == null)
                 return null;
+
+            if (chainObj.ChainId > 0 && chainObj.ChainStateId == ChainStatus.CONFIRMED)
+            {
+                int tradeId = 0;
+                ComfirmChain("SYSTEM", chainObj.ChainId, out tradeId);
+            }
 
             return ConvertChainObjectToInfo(chainObj);
         }

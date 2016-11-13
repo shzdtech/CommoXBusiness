@@ -192,5 +192,19 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 TradeTime = t.TradeTime
             };
         }
+
+        public IList<TradeInfo> QueryTradesByEnterprise(int enterpriseId, string state)
+        {
+            var trades =  _tradeService.queryTradesByEnterprise(enterpriseId, state);
+            if (trades == null || trades.Count == 0)
+                return null;
+
+            IList<TradeInfo> tradeList = new List<TradeInfo>();
+            foreach(var trade in trades)
+            {
+                tradeList.Add(ConvertTradeToInfo(trade));
+            }
+            return tradeList;
+        }
     }
 }

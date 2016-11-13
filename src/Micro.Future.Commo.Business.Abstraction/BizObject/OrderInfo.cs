@@ -8,9 +8,9 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
 
     public enum OrderStatusType
     {
-        PROCESS = 100,
-        FINISHED  = 101,
-        WAITING = 102
+        PROCESS = 2,
+        FINISHED  = 3,
+        WAITING = 1
     }
 
 

@@ -17,5 +17,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         OrderInfo GetOrderInfo(int orderId);
 
         bool UpdateTradeState(int tradeId, string state);
+
+        IList<TradeInfo> QueryTradesByEnterprise(int enterpriseId, string state);
     }
 }
