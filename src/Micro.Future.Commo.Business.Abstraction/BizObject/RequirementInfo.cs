@@ -149,6 +149,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         public string EnterpriseType { get; set; }
 
         /// <summary>
+        /// 企业名称
+        /// </summary>
+        public string EnterpriseName { get; set; }
+
+        /// <summary>
         /// 经营范围
         /// </summary>
         public string BusinessRange { get; set; }

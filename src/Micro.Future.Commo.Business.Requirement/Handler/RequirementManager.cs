@@ -114,6 +114,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 }
 
                 dto.EnterpriseType = enterpriseInfo.BusinessTypeId.ToString();
+                dto.EnterpriseName = enterpriseInfo.Name;
                 dto.Filters = filters;
 
                 int requirementId = _matcherService.AddRequirement(dto);
@@ -395,6 +396,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             requirement.PaymentType =  (PaymentMethodType) dto.PaymentType;
             requirement.TradeProfit = dto.TradeProfit;
             requirement.EnterpriseType = dto.EnterpriseType;
+            requirement.EnterpriseName = dto.EnterpriseName;
             requirement.BusinessRange = dto.BusinessRange;
             requirement.WarehouseAccount = dto.WarehouseAccount;
             requirement.InvoiceValue = (InvoiceValueType) dto.InvoiceValue;
@@ -549,6 +551,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             dto.PaymentType = (int)requirement.PaymentType;
             dto.TradeProfit = requirement.TradeProfit;
             dto.EnterpriseType = requirement.EnterpriseType;
+            dto.EnterpriseName = requirement.EnterpriseName;
             dto.BusinessRange = requirement.BusinessRange;
             dto.WarehouseAccount = requirement.WarehouseAccount;
             dto.InvoiceValue = (int)requirement.InvoiceValue;
