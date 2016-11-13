@@ -156,6 +156,14 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             info.RegisterWarehouse = entity.RegisterWarehouse;
             info.MaxTradeAmountPerMonth = entity.MaxTradeAmountPerMonth;
             info.IsAcceptanceBillETicket = entity.IsAcceptanceBillETicket??false;
+
+
+            info.PaymentBankName = entity.PaymentBankName;
+            info.PaymentBankAccount = entity.PaymentBankAccount;
+            info.PaymentBankAddress = entity.PaymentBankAddress;
+            info.PaymentBankId = entity.PaymentBankId;
+            info.InvoiceValue = entity.InvoiceValue;
+
             return info;
         }
 
@@ -191,6 +199,12 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             entity.RegisterWarehouse = info.RegisterWarehouse;
             entity.MaxTradeAmountPerMonth = info.MaxTradeAmountPerMonth;
             entity.IsAcceptanceBillETicket = info.IsAcceptanceBillETicket;
+
+            entity.PaymentBankName = info.PaymentBankName;
+            entity.PaymentBankAccount = info.PaymentBankAccount;
+            entity.PaymentBankAddress = info.PaymentBankAddress;
+            entity.PaymentBankId = info.PaymentBankId;
+            entity.InvoiceValue = info.InvoiceValue;
 
             return entity;
         }

@@ -119,29 +119,34 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
 
         //企业交易支付银行信息：开户行名称/帐号/行号/地址/是否开通银承电子票口
 
-        ///// <summary>
-        ///// 开户行名称
-        ///// </summary>
-        //public string PaymentBankName { get; set; }
+        /// <summary>
+        /// 开户行名称
+        /// </summary>
+        public string PaymentBankName { get; set; }
 
-        ///// <summary>
-        ///// 帐号
-        ///// </summary>
-        //public string PaymentBankAccount { get; set; }
+        /// <summary>
+        /// 帐号
+        /// </summary>
+        public string PaymentBankAccount { get; set; }
 
-        ///// <summary>
-        ///// 行号
-        ///// </summary>
-        //public int PaymentBankId { get; set; }
-        ///// <summary>
-        ///// 地址
-        ///// </summary>
-        //public string PaymentBankAddress { get; set; }
+        /// <summary>
+        /// 行号
+        /// </summary>
+        public int PaymentBankId { get; set; }
+        /// <summary>
+        /// 地址
+        /// </summary>
+        public string PaymentBankAddress { get; set; }
 
         /// <summary>
         /// 是否开通银承电子票口
         /// </summary>
         public bool IsAcceptanceBillETicket { get; set; }
+
+        /// <summary>
+        /// 发票面额
+        /// </summary>
+        public string InvoiceValue { get; set; }
 
         //企业营业执照
         //企业开户银行
