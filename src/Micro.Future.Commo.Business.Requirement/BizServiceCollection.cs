@@ -38,8 +38,8 @@ namespace Micro.Future.Commo.Business.Requirement
             services.AddTransient<IEmailVerifyCode, EmailVerifyCodeHandler>();
             services.AddTransient<IOperationRecord, OperationRecordHandler>();
             services.AddTransient<IFinancialProduct, FinancialProductHandler>();
-
             services.AddTransient<IAcceptance, AcceptanceHandler>();
+            services.AddTransient<IAcceptanceBank, AcceptanceBankHandler>();
 
             //mongodb
             services.AddTransient<IChainDAL, ChainDAL>();

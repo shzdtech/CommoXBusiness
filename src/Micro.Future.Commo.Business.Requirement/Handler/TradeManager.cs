@@ -134,12 +134,14 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             if (tradeObj == null)
                 return null;
 
-            return ConvertTradeToInfo(tradeObj);
+            TradeInfo tradeInfo = ConvertTradeToInfo(tradeObj);
+            tradeInfo.Orders = GetOrders(tradeId);
+            return tradeInfo;
         }
 
-        public IList<TradeInfo> GetTrades(string userId)
+        public IList<TradeInfo> GetTrades(string tradeState)
         {
-            IList<Trade> trades = _tradeService.queryAllTrade(userId);
+            IList<Trade> trades = _tradeService.queryAllTrade(tradeState);
             if (trades == null || trades.Count == 0)
                 return null;
 
@@ -200,9 +202,36 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 return null;
 
             IList<TradeInfo> tradeList = new List<TradeInfo>();
-            foreach(var trade in trades)
+
+            TradeInfo info = null;
+            IList<Order> tradeOrders = null;
+            foreach (var trade in trades)
             {
-                tradeList.Add(ConvertTradeToInfo(trade));
+                info = ConvertTradeToInfo(trade);
+                tradeOrders = _orderService.queryTradeOrder(trade.TradeId);
+                if (tradeOrders == null || tradeOrders.Count == 0)
+                    continue;
+
+
+                var myOrder = tradeOrders.FirstOrDefault(f => f.EnterpriseId == enterpriseId);
+                int myIndex = myOrder.TradeSequence;
+
+                info.Orders = new List<OrderInfo>();
+                var upstreamOrder = tradeOrders.FirstOrDefault(f => f.TradeSequence == myIndex - 1);
+                if(upstreamOrder!=null)
+                {
+                    info.Orders.Add(CovnertOrderObjectToInfo(upstreamOrder));
+                }
+
+                info.Orders.Add(CovnertOrderObjectToInfo(myOrder));
+
+                var downstreamOrder = tradeOrders.FirstOrDefault(f => f.TradeSequence == myIndex + 1);
+                if (downstreamOrder != null)
+                {
+                    info.Orders.Add(CovnertOrderObjectToInfo(downstreamOrder));
+                }
+
+                tradeList.Add(info);
             }
             return tradeList;
         }

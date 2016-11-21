@@ -38,7 +38,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         public int ParticipatorCount { get; set; }
 
         /// <summary>
-        /// 当前交易的状态：订单状态: 1=confirmed初始/进行中；2=已成交；3=已完成
+        /// 当前交易的状态：订单状态: 1=合同/2=资金/3=货物/4=发票/5=尾款
         /// </summary>
         public string CurrentState { get; set; }
         

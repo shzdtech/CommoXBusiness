@@ -1,4 +1,6 @@
-﻿using Micro.Future.Business.MongoDB.Commo.Config;
+﻿using Micro.Future.Business.DataAccess.Commo.CommoHandler;
+using Micro.Future.Business.DataAccess.Commo.CommonInterface;
+using Micro.Future.Business.MongoDB.Commo.Config;
 using Micro.Future.Commo.Business.Abstraction.BizInterface;
 using Micro.Future.Commo.Business.Abstraction.BizObject;
 using Micro.Future.Commo.Business.Requirement;
@@ -42,6 +44,8 @@ namespace Micro.Future.Common.Business.xUnit
 
             services.AddTransient<IAcceptanceManager, AcceptanceManager>();
             services.AddTransient<IFinancialProductManager, FinancialProductManager>();
+
+            services.AddTransient<IAcceptanceBankManager, AcceptanceBankManager>();
 
             serviceProvider = services.BuildServiceProvider();
         }

@@ -10,7 +10,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
     {
         TradeInfo GetTradeInfo(int tradeId);
 
-        IList<TradeInfo> GetTrades(string userId);
+        IList<TradeInfo> GetTrades(string tradeState);
 
         IList<OrderInfo> GetOrders(int tradeId);
 
