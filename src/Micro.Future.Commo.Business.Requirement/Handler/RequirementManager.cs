@@ -119,7 +119,8 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
                 int requirementId = _matcherService.AddRequirement(dto);
                 requirement.RequirementId = requirementId;
-
+                requirement.EnterpriseName = enterpriseInfo.Name;
+                requirement.EnterpriseType = dto.EnterpriseType;
             }
             catch(Exception ex)
             {
