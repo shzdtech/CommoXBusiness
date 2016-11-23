@@ -1,4 +1,5 @@
 ﻿using Micro.Future.Commo.Business.Abstraction.BizObject;
+using Micro.Future.Commo.Business.Abstraction.BizObject.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +11,14 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
     {
         TradeInfo GetTradeInfo(int tradeId);
 
-        IList<TradeInfo> GetTrades(string tradeState);
+        IList<TradeInfo> GetTrades(TradeState tradeState);
 
         IList<OrderInfo> GetOrders(int tradeId);
 
         OrderInfo GetOrderInfo(int orderId);
 
-        bool UpdateTradeState(int tradeId, string state);
+        bool UpdateTradeState(int tradeId, TradeState state);
 
-        IList<TradeInfo> QueryTradesByEnterprise(int enterpriseId, string state);
+        IList<TradeInfo> QueryTradesByEnterprise(int enterpriseId, TradeState state);
     }
 }

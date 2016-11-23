@@ -7,6 +7,7 @@ using Micro.Future.Commo.Business.Abstraction.BizObject;
 using Micro.Future.Business.DataAccess.Commo.CommoObject;
 using Micro.Future.Business.DataAccess.Commo.CommonInterface;
 using Micro.Future.Business.DataAccess.Commo.CommoHandler;
+using Micro.Future.Commo.Business.Abstraction.BizObject.Enums;
 
 namespace Micro.Future.Commo.Business.Requirement.Handler
 {
@@ -139,9 +140,11 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return tradeInfo;
         }
 
-        public IList<TradeInfo> GetTrades(string tradeState)
+        public IList<TradeInfo> GetTrades(TradeState tradeState)
         {
-            IList<Trade> trades = _tradeService.queryAllTrade(tradeState);
+            int intTradeState = (int)tradeState;
+
+            IList<Trade> trades = _tradeService.queryAllTrade(intTradeState.ToString());
             if (trades == null || trades.Count == 0)
                 return null;
 
@@ -157,9 +160,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return tradeInfos;
         }
 
-        public bool UpdateTradeState(int tradeId, string state)
+        public bool UpdateTradeState(int tradeId, TradeState state)
         {
-            return _tradeService.updateTradeState(tradeId, state);
+            return _tradeService.updateTradeState(tradeId, ((int)state).ToString());
         }
 
         private TradeInfo ConvertTradeToInfo(Trade t)
@@ -168,7 +171,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             {
                 TradeId = t.TradeId,
                 TradeTitle = t.TradeTitle,
-                CurrentState = t.CurrentState,
+                CurrentState = (TradeState)int.Parse(t.CurrentState),
                 ParticipatorCount = t.ParticipatorCount,
                 TradeAmount = t.TradeAmount,
                 TradeFee = t.TradeFee,
@@ -185,7 +188,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             {
                 TradeId = t.TradeId,
                 TradeTitle = t.TradeTitle,
-                CurrentState = t.CurrentState,
+                CurrentState = ((int)t.CurrentState).ToString(),
                 ParticipatorCount = t.ParticipatorCount,
                 TradeAmount = t.TradeAmount,
                 TradeFee = t.TradeFee,
@@ -195,9 +198,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             };
         }
 
-        public IList<TradeInfo> QueryTradesByEnterprise(int enterpriseId, string state)
+        public IList<TradeInfo> QueryTradesByEnterprise(int enterpriseId, TradeState state)
         {
-            var trades =  _tradeService.queryTradesByEnterprise(enterpriseId, state);
+            var trades =  _tradeService.queryTradesByEnterprise(enterpriseId, ((int)state).ToString());
             if (trades == null || trades.Count == 0)
                 return null;
 

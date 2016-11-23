@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Micro.Future.Commo.Business.Abstraction.BizObject.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// <summary>
         /// 当前交易的状态：订单状态: 1=合同/2=资金/3=货物/4=发票/5=尾款
         /// </summary>
-        public string CurrentState { get; set; }
+        public TradeState CurrentState { get; set; }
         
         
         ///// <summary>
