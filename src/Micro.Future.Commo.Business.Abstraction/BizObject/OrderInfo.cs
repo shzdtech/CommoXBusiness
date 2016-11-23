@@ -43,6 +43,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// </summary>
         public int EnterpriseId { get; set; }
 
+        /// <summary>
+        /// 企业名称
+        /// </summary>
+        public string EnterpriseName { get; set; }
+
 
         /// <summary>
         /// 需求状态
