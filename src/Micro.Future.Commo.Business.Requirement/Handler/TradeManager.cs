@@ -195,12 +195,8 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 }
             }
 
-
             return _tradeService.updateTradeState(tradeId, ((int)state).ToString());
         }
-
-
-
 
         private TradeInfo ConvertTradeToInfo(Trade t)
         {

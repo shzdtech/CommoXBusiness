@@ -32,9 +32,19 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject.Enums
         Payment = 2,
 
         /// <summary>
+        /// 资金已确认
+        /// </summary>
+        PaymentConfirmed = 11,
+
+        /// <summary>
         /// 货物
         /// </summary>
         Product = 3,
+
+        /// <summary>
+        /// 货物已确认
+        /// </summary>
+        ProductConfirmed = 12,
 
         /// <summary>
         /// 发票
@@ -55,6 +65,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject.Enums
         /// 尾款
         /// </summary>
         FinalPayment = 5,
+
+        /// <summary>
+        /// 尾款已确认
+        /// </summary>
+        FinalPaymentConfirmed = 13,
 
         /// <summary>
         /// 交易完成
