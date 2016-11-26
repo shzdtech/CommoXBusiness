@@ -248,19 +248,23 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 if (tradeOrders == null || tradeOrders.Count == 0)
                     continue;
 
-
+                //我的订单
                 var myOrder = tradeOrders.FirstOrDefault(f => f.EnterpriseId == enterpriseId);
                 int myIndex = myOrder.TradeSequence;
 
                 info.Orders = new List<OrderInfo>();
+
+                //上游
                 var upstreamOrder = tradeOrders.FirstOrDefault(f => f.TradeSequence == myIndex - 1);
                 if(upstreamOrder!=null)
                 {
                     info.Orders.Add(CovnertOrderObjectToInfo(upstreamOrder));
                 }
 
+                //我自己
                 info.Orders.Add(CovnertOrderObjectToInfo(myOrder));
 
+                //下游
                 var downstreamOrder = tradeOrders.FirstOrDefault(f => f.TradeSequence == myIndex + 1);
                 if (downstreamOrder != null)
                 {
