@@ -19,6 +19,14 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
 
         bool UpdateTradeState(int tradeId, TradeState state);
 
+        /// <summary>
+        /// 修改子订单状态
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        bool UpdateOrderState(int orderId, OrderStateType state, string opUserId);
+
         IList<TradeInfo> QueryTradesByEnterprise(int enterpriseId, TradeState state);
     }
 }

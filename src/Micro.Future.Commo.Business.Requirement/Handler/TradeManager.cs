@@ -8,6 +8,7 @@ using Micro.Future.Business.DataAccess.Commo.CommoObject;
 using Micro.Future.Business.DataAccess.Commo.CommonInterface;
 using Micro.Future.Business.DataAccess.Commo.CommoHandler;
 using Micro.Future.Commo.Business.Abstraction.BizObject.Enums;
+using Micro.Future.Business.Common;
 
 namespace Micro.Future.Commo.Business.Requirement.Handler
 {
@@ -49,7 +50,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 InvoiceIssueDateTime = orderObj.InvoiceIssueDateTime,
                 InvoiceTransferMode = orderObj.InvoiceTransferMode,
                 InvoiceValue = orderObj.InvoiceValue,
-                OrderStateId = orderObj.OrderStateId,
+                OrderStateId = (OrderStateType) orderObj.OrderStateId,
                 PaymentAmount = orderObj.PaymentAmount,
                 PaymentDateTime = orderObj.PaymentDateTime,
                 PaymentType = orderObj.PaymentType,
@@ -93,7 +94,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 InvoiceIssueDateTime = info.InvoiceIssueDateTime,
                 InvoiceTransferMode = info.InvoiceTransferMode,
                 InvoiceValue = info.InvoiceValue,
-                OrderStateId = info.OrderStateId,
+                OrderStateId = (int)info.OrderStateId,
                 PaymentAmount = info.PaymentAmount,
                 PaymentDateTime = info.PaymentDateTime,
                 PaymentType = info.PaymentType,
@@ -164,8 +165,42 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         public bool UpdateTradeState(int tradeId, TradeState state)
         {
+            IList<Order> orderList = _orderService.queryTradeOrder(tradeId);
+            if (orderList == null || orderList.Count == 0)
+            {
+                throw new BizException("子订单不存在！");
+            }
+
+            Order unConfirmedOrder = null;
+            int unConfirmedState = 0;
+
+            //修改状态成资金时, 需判断是否所有的order都已经签署合同
+            if (state == TradeState.Payment)
+            {
+                unConfirmedState = (int)OrderStateType.ContractConfirmed;
+                unConfirmedOrder = orderList.FirstOrDefault(f => f.OrderStateId != unConfirmedState);
+                if (unConfirmedOrder != null)
+                {
+                    throw new BizException("交易中存在尚未签署合同的企业！");
+                }
+            }
+            //修改状态成支付尾款时，需判断是否所有order都已经开具发票
+            else if(state == TradeState.FinalPayment)
+            {
+                unConfirmedState = (int)OrderStateType.InvoiceConfirmed;
+                unConfirmedOrder = orderList.FirstOrDefault(f => f.OrderStateId != unConfirmedState);
+                if (unConfirmedOrder != null)
+                {
+                    throw new BizException("交易中存在尚未开具发票的企业！");
+                }
+            }
+
+
             return _tradeService.updateTradeState(tradeId, ((int)state).ToString());
         }
+
+
+
 
         private TradeInfo ConvertTradeToInfo(Trade t)
         {
@@ -239,6 +274,18 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 tradeList.Add(info);
             }
             return tradeList;
+        }
+
+        /// <summary>
+        /// 修改子订单状态
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        public bool UpdateOrderState(int orderId, OrderStateType state,string opUserId)
+        {
+            return _orderService.updateOrderState(orderId, opUserId, (int)state);
+
         }
     }
 }

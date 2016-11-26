@@ -1,18 +1,11 @@
-﻿using System;
+﻿using Micro.Future.Commo.Business.Abstraction.BizObject.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Micro.Future.Commo.Business.Abstraction.BizObject
 {
-
-    public enum OrderStatusType
-    {
-        PROCESS = 2,
-        FINISHED  = 3,
-        WAITING = 1
-    }
-
 
     public class OrderInfo
     {
@@ -78,9 +71,9 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// </summary>
         public DateTime CompleteTime { get; set; }
         /// <summary>
-        /// 订单状态
+        /// 订单状态: 
         /// </summary>
-        public int OrderStateId { get; set; }
+        public OrderStateType OrderStateId { get; set; }
 
         /// <summary>
         /// 执行者用户名

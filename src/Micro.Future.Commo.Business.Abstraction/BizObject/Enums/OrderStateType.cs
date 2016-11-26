@@ -5,12 +5,26 @@ using System.Threading.Tasks;
 
 namespace Micro.Future.Commo.Business.Abstraction.BizObject.Enums
 {
-    public enum TradeState
+    /// <summary>
+    /// 子订单状态
+    /// </summary>
+    public enum OrderStateType
     {
         /// <summary>
-        /// 等待签署合同
+        /// 未签合同
         /// </summary>
         Contract = 1,
+
+        /// <summary>
+        /// 用户已签合同
+        /// </summary>
+        UserContract = 6,
+
+        /// <summary>
+        /// 管理员确认已签合同
+        /// </summary>
+        ContractConfirmed = 7,
+
 
         /// <summary>
         /// 资金
@@ -23,9 +37,19 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject.Enums
         Product = 3,
 
         /// <summary>
-        /// 等待开具发票
+        /// 发票
         /// </summary>
         Invoice = 4,
+
+        /// <summary>
+        /// 用户已开具发票
+        /// </summary>
+        UserInvoice = 8,
+
+        /// <summary>
+        /// 管理员确认用户已开具发票
+        /// </summary>
+        InvoiceConfirmed = 9,
 
         /// <summary>
         /// 尾款
