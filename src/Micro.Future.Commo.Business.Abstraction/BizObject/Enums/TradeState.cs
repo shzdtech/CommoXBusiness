@@ -31,5 +31,10 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject.Enums
         /// 尾款
         /// </summary>
         FinalPayment = 5,
+
+        /// <summary>
+        /// 订单完成
+        /// </summary>
+        Finished = 6
     }
 }
