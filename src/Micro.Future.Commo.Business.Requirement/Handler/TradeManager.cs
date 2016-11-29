@@ -16,11 +16,13 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
     {
         private ITrade _tradeService = null;
         private IOrder _orderService = null;
+        private IOrderImage _orderImageService = null;
 
-        public TradeManager(ITrade tradeService, IOrder orderService)
+        public TradeManager(ITrade tradeService, IOrder orderService, IOrderImage orderImageService)
         {
             _tradeService = tradeService;
             _orderService = orderService;
+            _orderImageService = orderImageService;
         }
 
         public OrderInfo GetOrderInfo(int orderId)
@@ -287,5 +289,118 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return _orderService.updateOrderState(orderId, opUserId, (int)state);
 
         }
+
+
+        #region 图片
+
+
+        private OrderImageInfo ConvertOrderImageObjectToInfo(OrderImage image)
+        {
+            return new OrderImageInfo()
+            {
+                ImageId = image.ImageId,
+                CreateTime = image.CreateTime,
+                ImagePath = image.ImagePath,
+                ImageType = (OrderImageType)image.ImageTypeId,
+                OrderId = image.OrderId,
+                Position = image.Position,
+                TradeId = image.TradeId,
+                UpdateTime = image.UpdateTime
+            };
+        }
+
+        private OrderImage ConvertOrderImageInfoToObject(OrderImageInfo image)
+        {
+            return new OrderImage()
+            {
+                ImageId = image.ImageId,
+                CreateTime = image.CreateTime,
+                ImagePath = image.ImagePath,
+                ImageTypeId = (int)image.ImageType,
+                OrderId = image.OrderId,
+                Position = image.Position,
+                TradeId = image.TradeId,
+                UpdateTime = image.UpdateTime
+            };
+        }
+
+
+        public bool BulkSaveOrderImages(IList<OrderImageInfo> imageList)
+        {
+            if (imageList == null || imageList.Count == 0)
+                return false;
+
+            IList<OrderImage> orderImages = new List<OrderImage>();
+            foreach(var img in imageList)
+            {
+                orderImages.Add(ConvertOrderImageInfoToObject(img));
+            }
+
+            return _orderImageService.BulkSaveOrderImages(orderImages);
+        }
+
+        public IList<OrderImageInfo> QueryOrderImages(int orderId)
+        {
+            var imageList = _orderImageService.QueryOrderImages(orderId);
+            if (imageList == null || imageList.Count == 0)
+                return null;
+
+            IList<OrderImageInfo> orderImages = new List<OrderImageInfo>();
+            foreach(var img in imageList)
+            {
+                orderImages.Add(ConvertOrderImageObjectToInfo(img));
+            }
+
+            return orderImages;
+        }
+
+        public IList<OrderImageInfo> QueryOrderImagesByType(int orderId, OrderImageType imageType)
+        {
+            var imageList = _orderImageService.QueryOrderImagesByType(orderId, (int)imageType);
+            if (imageList == null || imageList.Count == 0)
+                return null;
+
+            IList<OrderImageInfo> orderImages = new List<OrderImageInfo>();
+            foreach (var img in imageList)
+            {
+                orderImages.Add(ConvertOrderImageObjectToInfo(img));
+            }
+
+            return orderImages;
+        }
+
+        public OrderImageInfo QueryOrderImageInfo(int imageId)
+        {
+            var image = _orderImageService.QueryOrderImageInfo(imageId);
+            if (image == null)
+                return null;
+
+            return ConvertOrderImageObjectToInfo(image);
+        }
+
+        public OrderImageInfo CreateOrderImage(OrderImageInfo newImage)
+        {
+            var orderImage = ConvertOrderImageInfoToObject(newImage);
+
+            var newOrderImage = _orderImageService.CreateOrderImage(orderImage);
+            if (newOrderImage == null)
+                return null;
+
+            newImage.ImageId = newOrderImage.ImageId;
+            return newImage;
+        }
+
+        public bool UpdateOrderImage(OrderImageInfo image)
+        {
+            var orderImage = ConvertOrderImageInfoToObject(image);
+            return _orderImageService.UpdateOrderImage(orderImage);
+        }
+
+        public bool DeleteOrderImage(int imageId)
+        {
+            return _orderImageService.DeleteOrderImage(imageId);
+        }
+
+        #endregion
     }
 }

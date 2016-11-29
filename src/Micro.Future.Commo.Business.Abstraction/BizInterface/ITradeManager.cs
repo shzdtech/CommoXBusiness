@@ -28,5 +28,23 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         bool UpdateOrderState(int orderId, OrderStateType state, string opUserId);
 
         IList<TradeInfo> QueryTradesByEnterprise(int enterpriseId, TradeState state);
+
+        #region 
+
+        bool BulkSaveOrderImages(IList<OrderImageInfo> imageList);
+
+        IList<OrderImageInfo> QueryOrderImages(int orderId);
+
+        IList<OrderImageInfo> QueryOrderImagesByType(int orderId, OrderImageType imageType);
+
+        OrderImageInfo QueryOrderImageInfo(int imageId);
+
+        OrderImageInfo CreateOrderImage(OrderImageInfo newImage);
+
+        bool UpdateOrderImage(OrderImageInfo image);
+
+        bool DeleteOrderImage(int imageId);
+
+        #endregion
     }
 }
