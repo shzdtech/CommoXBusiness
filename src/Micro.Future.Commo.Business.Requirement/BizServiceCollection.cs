@@ -34,6 +34,7 @@ namespace Micro.Future.Commo.Business.Requirement
             services.AddTransient<IEnterprise, EnterpriseHandler>();
             services.AddTransient<ITrade, TradeHandler>();
             services.AddTransient<IOrder, OrderHandler>();
+            services.AddTransient<IOrderImage, OrderImageHandler>();
             services.AddTransient<IRequirement, RequirementHandler>();
             services.AddTransient<IEmailVerifyCode, EmailVerifyCodeHandler>();
             services.AddTransient<IOperationRecord, OperationRecordHandler>();
