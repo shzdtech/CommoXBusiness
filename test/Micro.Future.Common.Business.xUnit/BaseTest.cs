@@ -18,13 +18,13 @@ namespace Micro.Future.Common.Business.xUnit
         protected IServiceProvider serviceProvider = null;
         protected IServiceCollection services = null;
 
-        private static readonly string connectionString = "Server=114.55.54.144;UID=sa;password=shzdtech!123;database=Commo-test;";
+        private static readonly string connectionString = "Server=114.55.54.144;UID=sa;password=shzdtech!123;database=Commo;";
 
         public BaseTest()
         {
 
-            MongoDBConfig.mongoAddr = "mongodb://root:Xhmz372701@114.55.54.144:3718/admin";
-            MongoDBConfig.DATABASE = "testdb";
+            MongoDBConfig.mongoAddr = "mongodb://root:Xhmz372701@114.55.54.144:3718";
+            MongoDBConfig.DATABASE = "releaseTest1";
 
             services = new ServiceCollection();
 

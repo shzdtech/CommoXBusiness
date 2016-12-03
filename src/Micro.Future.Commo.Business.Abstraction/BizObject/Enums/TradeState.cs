@@ -35,6 +35,6 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject.Enums
         /// <summary>
         /// 交易完成
         /// </summary>
-        Finished = 10
+        Finished = 6
     }
 }

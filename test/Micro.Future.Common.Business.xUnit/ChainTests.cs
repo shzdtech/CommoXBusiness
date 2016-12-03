@@ -89,7 +89,7 @@ namespace Micro.Future.Common.Business.xUnit
         [Fact]
         public void Test_ConfirmChain()
         {
-            int chainId = 11223;
+            int chainId = 10088;
             string userId = "110022";
             int tradeId = 0;
             var isConfirmed = _chainManager.ComfirmChain(userId, chainId, out tradeId);
