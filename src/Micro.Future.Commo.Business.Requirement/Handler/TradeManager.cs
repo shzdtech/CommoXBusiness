@@ -128,7 +128,9 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             IList<OrderInfo> orderInfoList = new List<OrderInfo>();
             foreach(var order in orders)
             {
-                orderInfoList.Add(CovnertOrderObjectToInfo(order));
+                var orderInfo = CovnertOrderObjectToInfo(order);
+                orderInfo.OrderImages = QueryOrderImages(order.OrderId);
+                orderInfoList.Add(orderInfo);
             }
 
             return orderInfoList;

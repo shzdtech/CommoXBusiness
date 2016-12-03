@@ -225,6 +225,6 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
 
         #endregion
 
-
+        public IList<OrderImageInfo> OrderImages { get; set; }
     }
 }

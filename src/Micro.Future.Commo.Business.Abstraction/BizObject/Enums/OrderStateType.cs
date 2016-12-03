@@ -17,6 +17,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject.Enums
         Contract = 1,
 
         /// <summary>
+        /// 管理员确认已签合同
+        /// </summary>
+        ContractConfirmed = 7,
+
+        /// <summary>
         /// 资金
         /// </summary>
         Payment = 2,
@@ -30,6 +35,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject.Enums
         /// 等待开具发票
         /// </summary>
         Invoice = 4,
+
+        /// <summary>
+        /// 管理员确认用户已开具发票
+        /// </summary>
+        InvoiceConfirmed = 9,
 
         /// <summary>
         /// 尾款
