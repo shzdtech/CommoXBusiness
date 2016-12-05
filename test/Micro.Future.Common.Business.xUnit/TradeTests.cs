@@ -35,5 +35,11 @@ namespace Micro.Future.Common.Business.xUnit
             Assert.NotEqual<int>(orders.Count, 0);
         }
 
+        [Fact]
+        public void Test_GetTrades()
+        {
+            var trades = _tradeManager.GetTrades(Commo.Business.Abstraction.BizObject.Enums.TradeState.Contract);
+        }
+
     }
 }

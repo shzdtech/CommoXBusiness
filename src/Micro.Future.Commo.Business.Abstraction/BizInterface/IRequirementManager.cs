@@ -34,5 +34,12 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
         /// <param name="enterpriseId"></param>
         /// <returns></returns>
         CommoBizTResult<IList<RequirementInfo>> QueryRequirementsByEnterpriseId(int enterpriseId, RequirementState? state);
+
+        /// <summary>
+        /// 删除需求
+        /// </summary>
+        /// <param name="requirementId"></param>
+        /// <returns></returns>
+        bool DeleteRequirement(int requirementId);
     }
 }

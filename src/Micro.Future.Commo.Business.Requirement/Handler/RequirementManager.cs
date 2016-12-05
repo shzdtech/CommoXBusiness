@@ -610,7 +610,21 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return rule;
         }
 
-       
+        /// <summary>
+        /// 删除需求
+        /// </summary>
+        /// <param name="requirementId"></param>
+        /// <returns></returns>
+        public bool DeleteRequirement(int requirementId)
+        {
+            var confirmedChains = _matcherService.GetMatcherChainsByRequirementId(requirementId, ChainStatus.CONFIRMED, false);
+            if(confirmedChains!= null && confirmedChains.Count > 0)
+            {
+                throw new BizException("不能删除已经确认的需求！");
+            }
+
+            return this._matcherService.CancelRequirement(requirementId);
+        }
 
         #endregion
     }
