@@ -17,10 +17,10 @@ namespace Micro.Future.Common.Business.xUnit
             _tradeManager = serviceProvider.GetService<ITradeManager>();
         }
 
-        //[Fact]
+        [Fact]
         public void Test_GetTradeInfo()
         {
-            int tradeId = 10084;
+            int tradeId = 10073;
             var tradeInfo = _tradeManager.GetTradeInfo(tradeId);
             Assert.NotNull(tradeInfo);
             Assert.Equal<int>(tradeInfo.TradeId, tradeId);

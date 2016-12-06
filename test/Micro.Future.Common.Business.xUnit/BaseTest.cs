@@ -18,7 +18,7 @@ namespace Micro.Future.Common.Business.xUnit
         protected IServiceProvider serviceProvider = null;
         protected IServiceCollection services = null;
 
-        private static readonly string connectionString = "Server=114.55.54.144;UID=sa;password=shzdtech!123;database=Commo;";
+        private static readonly string connectionString = "Server=114.55.54.144;UID=sa;password=shzdtech!123;database=Commo-test;";
 
         public BaseTest()
         {

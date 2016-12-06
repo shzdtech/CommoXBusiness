@@ -28,7 +28,10 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         public OrderInfo GetOrderInfo(int orderId)
         {
             Order orderObj = _orderService.queryOrder(orderId);
-            return CovnertOrderObjectToInfo(orderObj);
+            var orderInfo =  CovnertOrderObjectToInfo(orderObj);
+            if (orderInfo != null)
+                orderInfo.OrderImages = QueryOrderImages(orderInfo.OrderId);
+            return orderInfo;
         }
 
         private OrderInfo CovnertOrderObjectToInfo(Order orderObj)
@@ -258,20 +261,27 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
                 info.Orders = new List<OrderInfo>();
 
+                OrderInfo orderInfo = null;
                 //上游
                 var upstreamOrder = tradeOrders.FirstOrDefault(f => f.TradeSequence == myIndex - 1);
                 if(upstreamOrder!=null)
                 {
-                    info.Orders.Add(CovnertOrderObjectToInfo(upstreamOrder));
+                    orderInfo = CovnertOrderObjectToInfo(upstreamOrder);
+                    orderInfo.OrderImages = QueryOrderImages(orderInfo.OrderId);
+                    info.Orders.Add(orderInfo);
                 }
 
                 //我自己
+                orderInfo = CovnertOrderObjectToInfo(myOrder);
+                orderInfo.OrderImages = QueryOrderImages(orderInfo.OrderId);
                 info.Orders.Add(CovnertOrderObjectToInfo(myOrder));
 
                 //下游
                 var downstreamOrder = tradeOrders.FirstOrDefault(f => f.TradeSequence == myIndex + 1);
                 if (downstreamOrder != null)
                 {
+                    orderInfo = CovnertOrderObjectToInfo(downstreamOrder);
+                    orderInfo.OrderImages = QueryOrderImages(orderInfo.OrderId);
                     info.Orders.Add(CovnertOrderObjectToInfo(downstreamOrder));
                 }
 
