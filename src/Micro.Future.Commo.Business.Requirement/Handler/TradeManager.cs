@@ -274,7 +274,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 //我自己
                 orderInfo = CovnertOrderObjectToInfo(myOrder);
                 orderInfo.OrderImages = QueryOrderImages(orderInfo.OrderId);
-                info.Orders.Add(CovnertOrderObjectToInfo(myOrder));
+                info.Orders.Add(orderInfo);
 
                 //下游
                 var downstreamOrder = tradeOrders.FirstOrDefault(f => f.TradeSequence == myIndex + 1);
@@ -282,7 +282,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 {
                     orderInfo = CovnertOrderObjectToInfo(downstreamOrder);
                     orderInfo.OrderImages = QueryOrderImages(orderInfo.OrderId);
-                    info.Orders.Add(CovnertOrderObjectToInfo(downstreamOrder));
+                    info.Orders.Add(orderInfo);
                 }
 
                 tradeList.Add(info);

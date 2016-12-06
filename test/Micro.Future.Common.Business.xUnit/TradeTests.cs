@@ -41,5 +41,13 @@ namespace Micro.Future.Common.Business.xUnit
             var trades = _tradeManager.GetTrades(Commo.Business.Abstraction.BizObject.Enums.TradeState.Contract);
         }
 
+        ///200
+        ///
+        [Fact]
+        public void Test_QueryTradesByEnterprise()
+        {
+            var trades = _tradeManager.QueryTradesByEnterprise(200, Commo.Business.Abstraction.BizObject.Enums.TradeState.Contract);
+        }
+
     }
 }
