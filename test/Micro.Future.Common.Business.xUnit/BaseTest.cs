@@ -23,7 +23,7 @@ namespace Micro.Future.Common.Business.xUnit
         public BaseTest()
         {
 
-            MongoDBConfig.mongoAddr = "mongodb://root:Xhmz372701@114.55.54.144:3718";
+            MongoDBConfig.mongoAddr = "mongodb://root:Xhmz372701@114.55.54.144:3717/admin";
             MongoDBConfig.DATABASE = "releaseTest1";
 
             services = new ServiceCollection();
