@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
+using Micro.Future.Commo.Business.Abstraction.BizObject;
 
 namespace Micro.Future.Common.Business.xUnit
 {
@@ -49,5 +50,25 @@ namespace Micro.Future.Common.Business.xUnit
             var trades = _tradeManager.QueryTradesByEnterprise(200, Commo.Business.Abstraction.BizObject.Enums.TradeState.Contract);
         }
 
+        [Fact]
+        public void Test_BulkSaveOrderImages()
+        {
+            IList<OrderImageInfo> imageList = new List<OrderImageInfo>()
+            {
+                new OrderImageInfo()
+                {
+                    ImagePath = "/ddd/ddd/dd.jpg",
+                    CreateTime = DateTime.Now,
+                    ImageType = Commo.Business.Abstraction.BizObject.Enums.OrderImageType.Contract,
+                    OrderId = 1,
+                    Position = 1,
+                    TradeId = 1,
+                    UpdateTime = DateTime.Now
+
+                }
+            };
+
+            var newImageList = _tradeManager.BulkSaveOrderImages(imageList);
+        }
     }
 }
