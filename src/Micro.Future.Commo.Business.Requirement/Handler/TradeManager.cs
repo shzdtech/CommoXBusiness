@@ -337,18 +337,23 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         }
 
 
-        public bool BulkSaveOrderImages(IList<OrderImageInfo> imageList)
+        public IList<OrderImageInfo> BulkSaveOrderImages(IList<OrderImageInfo> imageList)
         {
             if (imageList == null || imageList.Count == 0)
-                return false;
+                return null;
 
             IList<OrderImage> orderImages = new List<OrderImage>();
-            foreach(var img in imageList)
+            foreach (var img in imageList)
             {
-                orderImages.Add(ConvertOrderImageInfoToObject(img));
+                var orderImage = ConvertOrderImageInfoToObject(img);
+                var newOrderImage = _orderImageService.CreateOrderImage(orderImage);
+                if (newOrderImage != null)
+                {
+                    img.ImageId = newOrderImage.ImageId;
+                }
             }
 
-            return _orderImageService.BulkSaveOrderImages(orderImages);
+            return imageList;
         }
 
         public IList<OrderImageInfo> QueryOrderImages(int orderId)

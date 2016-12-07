@@ -31,7 +31,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
 
         #region 
 
-        bool BulkSaveOrderImages(IList<OrderImageInfo> imageList);
+        IList<OrderImageInfo> BulkSaveOrderImages(IList<OrderImageInfo> imageList);
 
         IList<OrderImageInfo> QueryOrderImages(int orderId);
 
