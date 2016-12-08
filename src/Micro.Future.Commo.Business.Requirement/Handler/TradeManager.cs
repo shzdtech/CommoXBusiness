@@ -248,41 +248,63 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
             TradeInfo info = null;
             IList<Order> tradeOrders = null;
+
+            List<long> tradeIdList = new List<long>();
+
             foreach (var trade in trades)
             {
+                if (tradeIdList.Contains(trade.TradeId))
+                    continue;
+
                 info = ConvertTradeToInfo(trade);
                 tradeOrders = _orderService.queryTradeOrder(trade.TradeId);
                 if (tradeOrders == null || tradeOrders.Count == 0)
                     continue;
 
+                tradeIdList.Add(trade.TradeId);
+
                 //我的订单
-                var myOrder = tradeOrders.FirstOrDefault(f => f.EnterpriseId == enterpriseId);
-                int myIndex = myOrder.TradeSequence;
+                var myOrderList = tradeOrders.Where(f => f.EnterpriseId == enterpriseId).ToList();
+                if (myOrderList == null || myOrderList.Count == 0)
+                    continue;
 
-                info.Orders = new List<OrderInfo>();
+                List<int> myOrderIdList = new List<int>();
 
-                OrderInfo orderInfo = null;
-                //上游
-                var upstreamOrder = tradeOrders.FirstOrDefault(f => f.TradeSequence == myIndex - 1);
-                if(upstreamOrder!=null)
+                foreach (var myOrder in myOrderList)
                 {
-                    orderInfo = CovnertOrderObjectToInfo(upstreamOrder);
+                    if (myOrderIdList.Contains(myOrder.OrderId))
+                        continue;
+
+                    int myIndex = myOrder.TradeSequence;
+                    info.Orders = new List<OrderInfo>();
+
+                    OrderInfo orderInfo = null;
+                    //上游
+                    var upstreamOrder = tradeOrders.FirstOrDefault(f => f.TradeSequence == myIndex - 1);
+                    if (upstreamOrder != null && !myOrderIdList.Contains(upstreamOrder.OrderId))
+                    {
+                        orderInfo = CovnertOrderObjectToInfo(upstreamOrder);
+                        orderInfo.OrderImages = QueryOrderImages(orderInfo.OrderId);
+                        info.Orders.Add(orderInfo);
+                        myOrderIdList.Add(upstreamOrder.OrderId);
+                    }
+
+                    
+                    //我自己
+                    orderInfo = CovnertOrderObjectToInfo(myOrder);
                     orderInfo.OrderImages = QueryOrderImages(orderInfo.OrderId);
                     info.Orders.Add(orderInfo);
-                }
+                    myOrderIdList.Add(myOrder.OrderId);
 
-                //我自己
-                orderInfo = CovnertOrderObjectToInfo(myOrder);
-                orderInfo.OrderImages = QueryOrderImages(orderInfo.OrderId);
-                info.Orders.Add(orderInfo);
-
-                //下游
-                var downstreamOrder = tradeOrders.FirstOrDefault(f => f.TradeSequence == myIndex + 1);
-                if (downstreamOrder != null)
-                {
-                    orderInfo = CovnertOrderObjectToInfo(downstreamOrder);
-                    orderInfo.OrderImages = QueryOrderImages(orderInfo.OrderId);
-                    info.Orders.Add(orderInfo);
+                    //下游
+                    var downstreamOrder = tradeOrders.FirstOrDefault(f => f.TradeSequence == myIndex + 1);
+                    if (downstreamOrder != null && !myOrderIdList.Contains(downstreamOrder.OrderId))
+                    {
+                        orderInfo = CovnertOrderObjectToInfo(downstreamOrder);
+                        orderInfo.OrderImages = QueryOrderImages(orderInfo.OrderId);
+                        info.Orders.Add(orderInfo);
+                        myOrderIdList.Add(downstreamOrder.OrderId);
+                    }
                 }
 
                 tradeList.Add(info);
