@@ -398,7 +398,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             if (chainObj == null)
                 return null;
 
-            if (chainObj.ChainId > 0 && chainObj.ChainStateId == ChainStatus.CONFIRMED)
+            if (chainObj.ChainId > 0)
             {
                 int tradeId = 0;
                 ComfirmChain("SYSTEM", chainObj.ChainId, out tradeId);
@@ -413,7 +413,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             if (chainObj == null)
                 return null;
 
-            if (chainObj.ChainId > 0 && chainObj.ChainStateId == ChainStatus.CONFIRMED)
+            if (chainObj.ChainId > 0)
             {
                 int tradeId = 0;
                 ComfirmChain("SYSTEM", chainObj.ChainId, out tradeId);

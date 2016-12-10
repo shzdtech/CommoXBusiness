@@ -19,6 +19,15 @@ namespace Micro.Future.Common.Business.xUnit
             _chainManager = serviceProvider.GetService<IChainManager>();
         }
 
+
+
+        [Fact]
+        public void Test_QueryChainInfo()
+        {
+            var bizResult = _chainManager.GetChainInfo(1233);// (Commo.Business.Abstraction.BizObject.ChainStatusType.CONFIRMED);
+        }
+
+
         [Fact]
         public void Test_QueryAllChains()
         {
@@ -89,8 +98,8 @@ namespace Micro.Future.Common.Business.xUnit
         [Fact]
         public void Test_ConfirmChain()
         {
-            int chainId = 10088;
-            string userId = "110022";
+            int chainId = 1207;
+            string userId = "8a86bad0-fba6-47e8-b15b-c94090ceead9";
             int tradeId = 0;
             var isConfirmed = _chainManager.ComfirmChain(userId, chainId, out tradeId);
 
@@ -119,6 +128,15 @@ namespace Micro.Future.Common.Business.xUnit
             IList<int> requirmentIds = new List<int>() { -1, 1022, 0, 1023 };
 
             var chain = _chainManager.AutoMatchRequirements("111", requirmentIds, null, true);
+        }
+
+        [Fact]
+        public void Test_CreateChain()
+        {
+            string userId = "8a86bad0-fba6-47e8-b15b-c94090ceead9";
+            List<int> requirementIds = new List<int>() { 10325 , 10324 , 10322 };
+
+            var chainInfo = _chainManager.CreateChain(requirementIds, userId);
         }
     }
 }
