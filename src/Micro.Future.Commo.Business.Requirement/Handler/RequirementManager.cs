@@ -245,7 +245,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                     {
                         if(string.IsNullOrWhiteSpace(field.OrderBy) || string.Equals(field.OrderBy, "asc", StringComparison.CurrentCultureIgnoreCase))
                         {
-                            queryRequirements = queryRequirements.OrderBy(f => f.GetType().GetProperty(field.Field).PropertyType);
+                            queryRequirements = queryRequirements.OrderBy(f => GetPropertyValue(f, field.Field));
                         }
                         else
                         {

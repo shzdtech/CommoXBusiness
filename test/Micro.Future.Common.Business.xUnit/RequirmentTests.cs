@@ -53,9 +53,8 @@ namespace Micro.Future.Common.Business.xUnit
 
             RequirementSearchCriteria criteria = new RequirementSearchCriteria()
             {
-                ProductName = "铁",
                 PageNo = 1,
-                PageSize = 10
+                PageSize = 50
             };
 
 
@@ -63,8 +62,8 @@ namespace Micro.Future.Common.Business.xUnit
             {
                 new OrderByInfo()
                 {
-                     Field = "CreateTime",
-                     OrderBy = "desc"
+                     Field = "TradeAmount",
+                     OrderBy = "asc"
                 }
             };
 
