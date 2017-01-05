@@ -143,21 +143,21 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
         private RequirementInfo GetRequirementInfo(int requirementId)
         {
             var bizResult = QueryRequirementInfo(requirementId);
-            if (bizResult.HasError || bizResult.Result == null)
+            if (bizResult.HasError || bizResult.Data == null)
                 return null;
 
-            return bizResult.Result;
+            return bizResult.Data;
         }
 
         private IEnumerable<RequirementInfo> GetAllRequirement()
         {
             var bizResult = QueryAllRequirements();
-            if (bizResult.HasError || bizResult.Result == null)
+            if (bizResult.HasError || bizResult.Data == null)
                 return null;
 
             DateTime datetime = DateTime.Parse("2016/8/10");
 
-            return bizResult.Result.Where(f => DateTime.Compare(f.CreateTime, datetime) > 0).ToList();
+            return bizResult.Data.Where(f => DateTime.Compare(f.CreateTime, datetime) > 0).ToList();
 
         }
 
@@ -173,6 +173,10 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
 
         private bool IsRequirementMatchSearchCriteria(RequirementObject requirementObj, RequirementSearchCriteria searchCriteria)
         {
+            if (requirementObj.Deleted)
+            {
+                return false;
+            }
             if(searchCriteria.EnterpriseId > 0 && requirementObj.EnterpriseId != searchCriteria.EnterpriseId)
             {
                 return false;
@@ -344,10 +348,10 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 foreach(var requirementId in chainObj.RequirementIdChain)
                 {
                     var bizResult = QueryRequirementInfo(requirementId);
-                    if (bizResult.HasError || bizResult.Result == null)
+                    if (bizResult.HasError || bizResult.Data == null)
                         continue;
 
-                    info.Requirements.Add(bizResult.Result);
+                    info.Requirements.Add(bizResult.Data);
                 }
             }
 
