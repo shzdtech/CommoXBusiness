@@ -17,7 +17,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
         /// <summary>
         /// 图片类型
         /// </summary>
-        public OrderImageType ImageType { get; set; }
+        public OrderFileType ImageType { get; set; }
 
         /// <summary>
         /// 图片路径

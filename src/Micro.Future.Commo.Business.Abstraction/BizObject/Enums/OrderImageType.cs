@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Micro.Future.Commo.Business.Abstraction.BizObject.Enums
 {
-    public enum OrderImageType
+    public enum OrderFileType
     {
         Contract = 1,
 

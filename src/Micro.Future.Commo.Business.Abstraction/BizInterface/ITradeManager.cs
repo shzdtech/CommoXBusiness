@@ -35,7 +35,7 @@ namespace Micro.Future.Commo.Business.Abstraction.BizInterface
 
         IList<OrderImageInfo> QueryOrderImages(int orderId);
 
-        IList<OrderImageInfo> QueryOrderImagesByType(int orderId, OrderImageType imageType);
+        IList<OrderImageInfo> QueryOrderImagesByType(int orderId, OrderFileType imageType);
 
         OrderImageInfo QueryOrderImageInfo(int imageId);
 

@@ -335,7 +335,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
                 ImageId = image.ImageId,
                 CreateTime = image.CreateTime,
                 ImagePath = image.ImagePath,
-                ImageType = (OrderImageType)image.ImageTypeId,
+                ImageType = (OrderFileType)image.ImageTypeId,
                 OrderId = image.OrderId,
                 Position = image.Position,
                 TradeId = image.TradeId,
@@ -393,7 +393,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             return orderImages;
         }
 
-        public IList<OrderImageInfo> QueryOrderImagesByType(int orderId, OrderImageType imageType)
+        public IList<OrderImageInfo> QueryOrderImagesByType(int orderId, OrderFileType imageType)
         {
             var imageList = _orderImageService.QueryOrderImagesByType(orderId, (int)imageType);
             if (imageList == null || imageList.Count == 0)
