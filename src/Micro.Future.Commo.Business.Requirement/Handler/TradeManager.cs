@@ -184,7 +184,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             //修改状态成资金时, 需判断是否所有的order都已经签署合同
             if (state == TradeState.Payment)
             {
-                unConfirmedState = (int)OrderStateType.ContractConfirmed;
+                unConfirmedState = (int)OrderStateType.Payment;
                 unConfirmedOrder = orderList.FirstOrDefault(f => f.OrderStateId != unConfirmedState);
                 if (unConfirmedOrder != null)
                 {
@@ -194,7 +194,7 @@ namespace Micro.Future.Commo.Business.Requirement.Handler
             //修改状态成支付尾款时，需判断是否所有order都已经开具发票
             else if(state == TradeState.FinalPayment)
             {
-                unConfirmedState = (int)OrderStateType.InvoiceConfirmed;
+                unConfirmedState = (int)OrderStateType.FinalPayment;
                 unConfirmedOrder = orderList.FirstOrDefault(f => f.OrderStateId != unConfirmedState);
                 if (unConfirmedOrder != null)
                 {
