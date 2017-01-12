@@ -8,6 +8,11 @@ namespace Micro.Future.Commo.Business.Abstraction.BizObject
     public enum EnterpriseStateType
     {
         /// <summary>
+        /// 未提交审核
+        /// </summary>
+        UNSUBMITED = 0,
+
+        /// <summary>
         /// 未审核
         /// </summary>
         UNAPPROVED = 1,
